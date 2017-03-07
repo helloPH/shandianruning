@@ -34,6 +34,7 @@
 
 @property (nonatomic,assign)CGFloat ceWidth;
 @property (nonatomic,strong)UIButton * ceView;
+@property (nonatomic,assign)CGFloat beginX;
 @end
 @implementation GeRenZhongXinViewController
 #pragma mark  ----  懒加载
@@ -84,7 +85,7 @@
         if (CODE(ret)) {
             [self TapNextViewWith:model];
         }else{
-            
+            [CoreSVP showMessageInCenterWithMessage:msg];
         }
         [self reshView];
         
@@ -104,7 +105,7 @@
     
     
     //   账户 情况
-    [[Stockpile sharedStockpile] setUserYuE:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllMoney"]]];
+    [[Stockpile sharedStockpile] setUserYuE:[NSString stringWithFormat:@"%@",[models objectForKey:@"Money"]]];
     [[Stockpile sharedStockpile] setUserRank:[NSString stringWithFormat:@"%@",[models objectForKey:@"XingJi"]]];
     [[Stockpile sharedStockpile] setUserJiFen:[NSString stringWithFormat:@"%@",[models objectForKey:@"Jifen"]]];
     
@@ -114,9 +115,9 @@
     [[Stockpile sharedStockpile] setIsWork:[[NSString stringWithFormat:@"%@",[models objectForKey:@"OnOff"]] boolValue]];
     
     //银行信息
-    [[Stockpile sharedStockpile] setDefaultBankName:@""];
-    [[Stockpile sharedStockpile] setDefaultBankCardNum:@""];
-    [[Stockpile sharedStockpile] setDefaultBankCardKind:@""];
+//    [[Stockpile sharedStockpile] setDefaultBankName:@""];
+//    [[Stockpile sharedStockpile] setDefaultBankCardNum:@""];
+//    [[Stockpile sharedStockpile] setDefaultBankCardKind:@""];
     
     // 订单情况
     // 总的
@@ -233,6 +234,46 @@
     _ceView.backgroundColor=[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:.5];
 
     [_ceView addTarget:self action:@selector(PopVC:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
+    [_ceView addGestureRecognizer:pan];
+}
+-(void)pan:(UIPanGestureRecognizer *)pan{
+//    static float beginX;
+    
+    CGPoint point = [pan locationInView:self.view.superview];
+    
+    if (pan.state==UIGestureRecognizerStateBegan) {
+        _beginX=point.x;
+    }
+    
+    
+    [UIView animateWithDuration:0.0 animations:^{
+        self.view.left=point.x-_beginX;
+        float persentAlpha = self.view.right/self.view.width;
+        _ceView.alpha=persentAlpha;
+        
+        if(self.view.left>0){
+            self.view.left=0;
+        }
+    }];
+   
+    
+    if (pan.state==UIGestureRecognizerStateEnded) {
+        if (self.view.left<-RM_VWidth*0.5) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.view.left=-RM_VWidth;
+            }];
+            
+        }else{
+            [UIView animateWithDuration:0.3 animations:^{
+                self.view.left=0;
+            }];
+            
+        }
+    }  
 }
 
 
@@ -399,6 +440,12 @@
 
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row!=self.titleArray.count-1) {
+        if (![self judgeStatus]) {
+            return;
+        }
+    }
+    
     switch (indexPath.row) {
         case 0:
         {
@@ -454,11 +501,10 @@
                             NSString * qqString = [NSString stringWithFormat:@"%@",model[@"Value"]];
                             [self ShowAlertTitle:@"是否联系在线客服?" Message:qqString Delegate:self OKText:@"确定" CancelText:@"取消" Block:^(NSInteger index) {
                                 if (index == 1) {
-                                    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",qqString]] options:@{} completionHandler:^(BOOL success) {
-                                        if (!success) {
-                                            [CoreSVP showMessageInCenterWithMessage:@"打开QQ失败"];
-                                        }
-                                    }];
+                                    BOOL isSuccess = [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",qqString]]];
+                                    if (!isSuccess) {
+                                        [CoreSVP showMessageInCenterWithMessage:@"打开QQ失败"];
+                                    }
                                 }
                             }];
                         }else{
@@ -529,18 +575,18 @@
 }
 -(BOOL)judgeStatus{
     if ([Stockpile sharedStockpile].userStatus==0) {//可以正常接单
-        [self ShowOKAlertWithTitle:@"提示" Message:@"资料正在审核中！" WithButtonTitle:@"确定" Blcok:^{
+        [self ShowOKAlertWithTitle:nil Message:@"资料正在审核中！" WithButtonTitle:@"确定" Blcok:^{
         }];
         return NO;
     };
     if([Stockpile sharedStockpile].userStatus==1){
-        [self ShowOKAlertWithTitle:@"提示" Message:@"资料审核通过（请前往闪电培训课堂）！" WithButtonTitle:@"确定" Blcok:^{
+        [self ShowOKAlertWithTitle:nil Message:@"资料审核通过（请前往闪电培训课堂）！" WithButtonTitle:@"确定" Blcok:^{
         }];
         return NO;
     }
     
     if ([Stockpile sharedStockpile].userStatus==2) {//资料申请失败
-        [self ShowAlertTitle:@"提示" Message:@"资料审核失败，是否重新申请" Delegate:self Block:^(NSInteger index) {
+        [self ShowAlertTitle:nil Message:@"资料审核失败，是否重新申请" Delegate:self Block:^(NSInteger index) {
             if (index==1) {
                 ShenFenRenZhengViewController * renZheng = [[ShenFenRenZhengViewController alloc]init];
                 renZheng.ID=[Stockpile sharedStockpile].userID;
@@ -553,7 +599,7 @@
         return NO;
     }
     if ([Stockpile sharedStockpile].userStatus==4) {//注册成功，未申请
-        [self ShowAlertTitle:@"提示" Message:@"还未提交资料，是否申请？" Delegate:self Block:^(NSInteger index) {
+        [self ShowAlertTitle:nil Message:@"还未提交资料，是否申请？" Delegate:self Block:^(NSInteger index) {
             if (index==1) {
                 ShenFenRenZhengViewController * renZheng = [[ShenFenRenZhengViewController alloc]init];
                 renZheng.ID=[Stockpile sharedStockpile].userID;

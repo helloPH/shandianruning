@@ -456,8 +456,11 @@
 -(void)reshView{
     UIButton * topBtn =[self.view viewWithTag:44];
     [topBtn setAttributedTitle:[[NSString stringWithFormat:@"<white14> 订单配送中</white14>\n<white10> 预计%@送达</white10>",_dataDic[@"YuSongDaTime"]]attributedStringWithStyleBook:[self Style]] forState:UIControlStateNormal];
-    //    self.Style
+    if (self.orderType==OrderTypeHelp || self.orderType==OrderTypeQueueUp) {
+            [topBtn setAttributedTitle:[[NSString stringWithFormat:@"<white14> 待完成  </white14>\n<white10> 立即前往%@</white10>",@""]attributedStringWithStyleBook:[self Style]] forState:UIControlStateNormal];
+    }
     [topBtn sizeToFit];
+    
     
     if (_step==8) {
         [self ShowAlertTitle:@"提示" Message:@"该订单已被取消" Delegate:self OKText:@"继续查看" CancelText:@"返回主页" Block:^(NSInteger index) {
@@ -487,9 +490,9 @@
         _titleArray = @[@"致电联系人",@"我已到达",@"拍照",@"我已取货",@"致电收货人",@"我已送达",@"输入验证码"];
         if (step > 0) {
             topStep=1;
-            if (step > 2) {
+            if (step > 5) {
                 topStep=2;
-                if (step == 6) {
+                if (step > 6) {
                     topStep=3;
                 }
             }
@@ -502,11 +505,11 @@
     }
     if (self.orderType == OrderTypeHelp || self.orderType == OrderTypeQueueUp) {
         _titleArray = @[@"致电联系人",@"我已到达",@"拍照",@"我已完成"];
-        if (step > 1) {
+        if (step > 0) {
             topStep=1;
             if (step > 2) {
                 topStep=2;
-                if (_step == 3) {
+                if (step > 3) {
                     topStep=3;
                 }
             }
@@ -514,8 +517,8 @@
     }
     if(self.orderType == OrderTypeMotocycleTaxi){
         _titleArray = @[@"我已出发",@"我已完成"];
-        if (_step >= 0) {
-            topStep=2;
+        if (_step > 0) {
+            topStep=1;
             if (_step >= 1) {
                 topStep=3;
             }
@@ -551,30 +554,34 @@
         {
             point1.highlighted=YES;
             label1.highlighted=YES;
+            line1.highlighted=YES;
         }
             break;
         case 2:
         {
             point1.highlighted=YES;
             label1.highlighted=YES;
+            line1.highlighted=YES;
             
             point2.highlighted=YES;
             label2.highlighted=YES;
-            line1.highlighted=YES;
+            line2.highlighted=YES;
+          
         }
             break;
         case 3:
         {
             point1.highlighted=YES;
             label1.highlighted=YES;
+            line1.highlighted=YES;
             
             point2.highlighted=YES;
             label2.highlighted=YES;
-            line1.highlighted=YES;
+            line2.highlighted=YES;
             
             point3.highlighted=YES;
             label3.highlighted=YES;
-            line2.highlighted=YES;
+           
         }
             break;
         default:
@@ -720,15 +727,11 @@
                 if (self.orderType==OrderTypeBuy) { //
                     tel =[NSString stringWithFormat:@"%@",_dataDic[@"UserTel"]];
                 }
-               
-//
                 NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
-                //                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str] options:nil completionHandler:^(BOOL success) {
-                    if (success) {
-                        [self stepAction];/// 联系发货人
-                    }
-                }];
+                BOOL isSuccess = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+                if (isSuccess) {
+                    [self stepAction];/// 联系发货人
+                }
                 
                 break;
             }
@@ -763,12 +766,10 @@
                 
                 
                 NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
-                //                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str] options:nil completionHandler:^(BOOL success) {
-                    if (success) {
-                        [self stepAction];/// 联系发货人
-                    }
-                }];
+                BOOL isSuccess = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+                if (isSuccess) {
+                    [self stepAction];/// 联系发货人
+                }
                 break;
             }
             case 5:
@@ -799,12 +800,10 @@
 
                 
                 NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
-                //                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str] options:nil completionHandler:^(BOOL success) {
-                    if (success) {
-                        [self stepAction];/// 联系发货人
-                    }
-                }];
+               BOOL isSuccess = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+                if (isSuccess) {
+                    [self stepAction];/// 联系发货人
+                }
                 break;
             }
             case 1:

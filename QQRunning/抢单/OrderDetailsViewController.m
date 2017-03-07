@@ -115,6 +115,7 @@
     if (goodsTypeIndex >= 0  &&  goodsTypeIndex < self.orderTitles.count) {
         goodsType=self.orderTitles[goodsTypeIndex];
     }
+    goodsType=[[NSString stringWithFormat:@"%@",_dataDic[@"IsYiSui"]] isEqualToString:@"0"]?@"非易碎品":@"易碎品";
     
     
     // 保温箱
@@ -133,20 +134,19 @@
     
     NSLog(@"%@",_dataDic);
     self.orderType=[[NSString stringWithFormat:@"%@",_dataDic[@"Type"]] integerValue];
-    NSString * isYiShui = [[NSString stringWithFormat:@"%@",_dataDic[@"IsYiSui"]] isEqualToString:@"0"]?@"其他物品":@"易碎物品";
+
 
     if (self.orderType==OrderTypeBuy) {
         titleArray= @[@{@"title":@"订单编号",@"value":orderNum},
                       @{@"title":@"下单时间",@"value":xiaDanTime},
                       @{@"title":@"购买地址",@"value":qiDiZhi},
                       @{@"title":@"收货地址",@"value":zhongDiZhi},
-                      @{@"title":@"收货电话",@"value":qiTel},
-                      @{@"title":@"物品类型",@"value":isYiShui},
+                      @{@"title":@"收货电话",@"value":zhongTel},
+                      @{@"title":@"物品类型",@"value":goodsType},
                       @{@"title":@"购买商品",@"value":GoodsName},
                       @{@"title":@"订单金额",@"value":orderMoney},
                       @{@"title":@"商品金额",@"value":goodsMoney},
                       @{@"title":@"订单里程",@"value":songJuLi},
-                      @{@"title":@"物品类型",@"value":goodsType},
                       @{@"title":@"保 温 箱",@"value":baoWenXiang},
                       @{@"title":@"备注留言",@"value":liuYan}];
     }
@@ -161,12 +161,11 @@
             @{@"title":@"取货电话",@"value":qiTel},
             @{@"title":@"收货人",@"value":zhongPerson},
             @{@"title":@"收货电话",@"value":zhongTel},
-            @{@"title":@"物品类型",@"value":isYiShui},
+            @{@"title":@"物品类型",@"value":goodsType},
             @{@"title":@"购买商品",@"value":GoodsName},
             @{@"title":@"订单金额",@"value":orderMoney},
             @{@"title":@"商品金额",@"value":goodsMoney},
             @{@"title":@"订单里程",@"value":songJuLi},
-            @{@"title":@"物品类型",@"value":goodsType},
             @{@"title":@"保价",@"value":baojia},
             @{@"title":@"备注留言",@"value":liuYan}];
     }

@@ -19,269 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x4e2a;&#x4eba;&#x4e2d;&#x5fc3;/&#x4eca;&#x65e5;&#x6210;&#x5c31;/TodayChengJiuViewController.m"
-            timestampString = "508926674.030001"
+            filePath = "QQRunning/AppDelegate.m"
+            timestampString = "510455479.266597"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
-            landmarkName = "-shareButtonEvent:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x4e2a;&#x4eba;&#x4e2d;&#x5fc3;/&#x4eca;&#x65e5;&#x6210;&#x5c31;/TodayChengJiuViewController.m"
-            timestampString = "508926685.341631"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "-shareButtonEvent:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x4e2a;&#x4eba;&#x4e2d;&#x5fc3;/&#x4eca;&#x65e5;&#x6210;&#x5c31;/TodayChengJiuViewController.m"
-            timestampString = "508926718.187376"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
-            landmarkName = "-fen:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x4e2a;&#x4eba;&#x4e2d;&#x5fc3;/&#x6709;&#x5956;&#x63a8;&#x8350;/YouJiangTuiJianViewController.m"
-            timestampString = "509427543.467704"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "-shareButtonEvent:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x4e2a;&#x4eba;&#x4e2d;&#x5fc3;/GeRenZhongXinViewController.m"
-            timestampString = "510132781.691681"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
-            landmarkName = "-judgeStatus"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GeRenZhongXinViewController judgeStatus]"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E4%B8%AA%E4%BA%BA%E4%B8%AD%E5%BF%83/GeRenZhongXinViewController.m"
-                  timestampString = "510215753.203572"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "532"
-                  endingLineNumber = "532"
-                  offsetFromSymbolStart = "156">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__42-[GeRenZhongXinViewController judgeStatus]_block_invoke"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E4%B8%AA%E4%BA%BA%E4%B8%AD%E5%BF%83/GeRenZhongXinViewController.m"
-                  timestampString = "510215753.204972"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "533"
-                  endingLineNumber = "533"
-                  offsetFromSymbolStart = "12">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x4e2a;&#x4eba;&#x4e2d;&#x5fc3;/GeRenZhongXinViewController.m"
-            timestampString = "510132781.691681"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "537"
-            endingLineNumber = "537"
-            landmarkName = "-judgeStatus"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GeRenZhongXinViewController judgeStatus]"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E4%B8%AA%E4%BA%BA%E4%B8%AD%E5%BF%83/GeRenZhongXinViewController.m"
-                  timestampString = "510215753.207886"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "537"
-                  endingLineNumber = "537"
-                  offsetFromSymbolStart = "332">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__42-[GeRenZhongXinViewController judgeStatus]_block_invoke_2"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E4%B8%AA%E4%BA%BA%E4%B8%AD%E5%BF%83/GeRenZhongXinViewController.m"
-                  timestampString = "510215753.209307"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "538"
-                  endingLineNumber = "538"
-                  offsetFromSymbolStart = "12">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x4e2a;&#x4eba;&#x4e2d;&#x5fc3;/GeRenZhongXinViewController.m"
-            timestampString = "510132781.691681"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
-            landmarkName = "-judgeStatus"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/OrderDetailsViewController.m"
-            timestampString = "510025759.204457"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "-setupNewView"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/UnFinishOrderDetailsViewController.m"
-            timestampString = "510056072.455093"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
-            landmarkName = "-stepAction"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/UnFinishOrderDetailsViewController.m"
-            timestampString = "510055847.521836"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
-            landmarkName = "-stepAction"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__48-[UnFinishOrderDetailsViewController stepAction]_block_invoke.366"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/UnFinishOrderDetailsViewController.m"
-                  timestampString = "510215753.219594"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "437"
-                  endingLineNumber = "437"
-                  offsetFromSymbolStart = "244">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__48-[UnFinishOrderDetailsViewController stepAction]_block_invoke_2.367"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/UnFinishOrderDetailsViewController.m"
-                  timestampString = "510215753.22102"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "437"
-                  endingLineNumber = "437"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/TongSongShiShiOrderViewController.mm"
-            timestampString = "510140097.965112"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
-            landmarkName = "-setupOrderView"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "-application:didReceiveRemoteNotification:fetchCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -292,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QQRunning/&#x62a2;&#x5355;/ShouYeViewController.m"
-            timestampString = "510201751.735896"
+            timestampString = "510561554.448643"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1113"
-            endingLineNumber = "1113"
-            landmarkName = "-receiveOrder:"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
+            landmarkName = "-chooseButtonEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -308,12 +52,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QQRunning/&#x62a2;&#x5355;/ShouYeViewController.m"
-            timestampString = "510201751.735896"
+            timestampString = "510561554.448643"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1098"
-            endingLineNumber = "1098"
-            landmarkName = "-valiteNoti"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
+            landmarkName = "-chooseButtonEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -323,187 +67,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/KuaiCheViewController.mm"
-            timestampString = "510138159.030081"
+            filePath = "QQRunning/&#x62a2;&#x5355;/ShouYeViewController.m"
+            timestampString = "510561554.448643"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
-            landmarkName = "-bottomAction:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[KuaiCheViewController bottomAction:]"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510215753.23126"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "276"
-                  endingLineNumber = "276"
-                  offsetFromSymbolStart = "888">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[KuaiCheViewController bottomAction:]_block_invoke.254"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510215753.23265"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "276"
-                  endingLineNumber = "276"
-                  offsetFromSymbolStart = "48">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/KuaiCheViewController.mm"
-            timestampString = "510138270.621008"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
-            landmarkName = "-bottomAction:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[KuaiCheViewController bottomAction:]_block_invoke.254"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510215753.23555"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "293"
-                  endingLineNumber = "293"
-                  offsetFromSymbolStart = "1472">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[KuaiCheViewController bottomAction:]_block_invoke_2"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510215753.236928"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "293"
-                  endingLineNumber = "293"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/KuaiCheViewController.mm"
-            timestampString = "510138263.773383"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
-            landmarkName = "-bottomAction:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[KuaiCheViewController bottomAction:]_block_invoke.256"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510138263.788063"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "310"
-                  endingLineNumber = "310"
-                  offsetFromSymbolStart = "1628">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[KuaiCheViewController bottomAction:]_block_invoke.256"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510138263.791698"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "310"
-                  endingLineNumber = "310"
-                  offsetFromSymbolStart = "1792">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_.291"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510138263.79421"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "310"
-                  endingLineNumber = "310"
-                  offsetFromSymbolStart = "64">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.292"
-                  moduleName = "QQRunning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/KuaiCheViewController.mm"
-                  timestampString = "510138263.796515"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "310"
-                  endingLineNumber = "310"
-                  offsetFromSymbolStart = "36">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/UnFinishOrderDetailsViewController.m"
-            timestampString = "510142514.493244"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "715"
-            endingLineNumber = "715"
-            landmarkName = "-peiSongZhongTableViewCellDelegateWithIndex:"
+            startingLineNumber = "512"
+            endingLineNumber = "512"
+            landmarkName = "-chooseButtonEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -513,13 +83,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x767b;&#x5f55;/ShenFenRenZhengViewController.m"
-            timestampString = "510215817.451046"
+            filePath = "QQRunning/AppDelegate.m"
+            timestampString = "510566348.958683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "319"
-            endingLineNumber = "319"
-            landmarkName = "-takePhotoEvent:"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "-receive:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

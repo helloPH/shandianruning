@@ -195,7 +195,7 @@
 }
 
 #pragma mark- JPUSHRegisterDelegate
-// iOS 10 Support /// 前台
+// iOS 10 Support /// 后台
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
     // Required
     NSDictionary * userInfo = notification.request.content.userInfo;
@@ -213,7 +213,7 @@
  // 需要执 这个 法，选择 是否提醒 户，有Badge、Sound、Alert三种类型可以选择设置
 //     [self receive:userInfo];
 }
-// iOS 10 Support
+// iOS 10 Support // 前台
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
     // Required
     NSDictionary * userInfo = response.notification.request.content.userInfo;
@@ -249,7 +249,7 @@
             class.classId=orderId;
             [_shouYe.navigationController pushViewController:class animated:YES];
         }
-    }else if ([type isEqualToString:@"3"]){
+    }else if ([type isEqualToString:@"3"]){// 快车 支付成功
        
         if (_shouYe) {
             KuaiCheSuccess * success = [KuaiCheSuccess new];
@@ -260,22 +260,27 @@
         
         [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"%@",@"订单支付成功"]];
     }else{
-        [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"未知类型的通知：\n%@",userInfo[@"aps"][@"alert"]]];
+        [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"未知类型的通知：\n%@",userInfo]];
 
     }
 
 }
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    completionHandler(UIBackgroundFetchResultNewData);
-//    
-//}
-//
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-//    // Required,For systems with less than or equal to iOS6
-//    [JPUSHService handleRemoteNotification:userInfo];
-//    
-//}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    completionHandler(UIBackgroundFetchResultNewData);
+    UIApplicationState  state = [UIApplication sharedApplication].applicationState;
+    if (state==UIApplicationStateBackground) {//后台
+
+          completionHandler(UIBackgroundFetchResultNewData);
+        
+
+    };
+    if (state==UIApplicationStateActive) {//前台
+        [JPUSHService handleRemoteNotification:userInfo];
+        [self receive:userInfo];
+    };
+    
+}
 #pragma mark ------------------------------------------- 百度地图配置
 -(void)configBaiDuMap{
     _baiDuManager = [[BMKMapManager alloc]init];
@@ -359,6 +364,7 @@
     NSString *bieMing = [NSString stringWithFormat:@"SD%@",[Stockpile sharedStockpile].userID];
     NSLog(@"设置的别名 %@",bieMing);
     //
+//    [self registerRemoteNotification];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     [JPUSHService setTags:nil
@@ -369,7 +375,8 @@
 
 }
 -(void)turnOffNotification{
-    [JPUSHService setTags:nil alias:@"" fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    [JPUSHService setTags:nil alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
         NSLog(@"%d",iResCode);
     }];
 }

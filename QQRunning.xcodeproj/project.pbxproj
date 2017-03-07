@@ -102,7 +102,6 @@
 		2A0023781E20D37400EFFD59 /* lijipeisong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A0022FE1E20D37400EFFD59 /* lijipeisong@2x.png */; };
 		2A0023791E20D37400EFFD59 /* qiangdanchenggong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A0022FF1E20D37400EFFD59 /* qiangdanchenggong@2x.png */; };
 		2A00237A1E20D37400EFFD59 /* qiangdanshibai@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A0023001E20D37400EFFD59 /* qiangdanshibai@2x.png */; };
-		2A00237B1E20D37400EFFD59 /* quan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A0023011E20D37400EFFD59 /* quan@2x.png */; };
 		2A00237C1E20D37400EFFD59 /* shuaxin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A0023021E20D37400EFFD59 /* shuaxin@2x.png */; };
 		2A00237D1E20D37400EFFD59 /* shuaxin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A0023031E20D37400EFFD59 /* shuaxin@3x.png */; };
 		2A00237E1E20D37400EFFD59 /* sy-toux@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A0023041E20D37400EFFD59 /* sy-toux@2x.png */; };
@@ -451,7 +450,6 @@
 		2A0022FE1E20D37400EFFD59 /* lijipeisong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lijipeisong@2x.png"; sourceTree = "<group>"; };
 		2A0022FF1E20D37400EFFD59 /* qiangdanchenggong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qiangdanchenggong@2x.png"; sourceTree = "<group>"; };
 		2A0023001E20D37400EFFD59 /* qiangdanshibai@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qiangdanshibai@2x.png"; sourceTree = "<group>"; };
-		2A0023011E20D37400EFFD59 /* quan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quan@2x.png"; sourceTree = "<group>"; };
 		2A0023021E20D37400EFFD59 /* shuaxin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shuaxin@2x.png"; sourceTree = "<group>"; };
 		2A0023031E20D37400EFFD59 /* shuaxin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shuaxin@3x.png"; sourceTree = "<group>"; };
 		2A0023041E20D37400EFFD59 /* sy-toux@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sy-toux@2x.png"; sourceTree = "<group>"; };
@@ -1095,7 +1093,6 @@
 				2A0022FE1E20D37400EFFD59 /* lijipeisong@2x.png */,
 				2A0022FF1E20D37400EFFD59 /* qiangdanchenggong@2x.png */,
 				2A0023001E20D37400EFFD59 /* qiangdanshibai@2x.png */,
-				2A0023011E20D37400EFFD59 /* quan@2x.png */,
 				2A0023021E20D37400EFFD59 /* shuaxin@2x.png */,
 				2A0023031E20D37400EFFD59 /* shuaxin@3x.png */,
 				2A0023041E20D37400EFFD59 /* sy-toux@2x.png */,
@@ -2172,7 +2169,6 @@
 				2A0023901E20D37400EFFD59 /* sy_xiaoxi@3x.png in Resources */,
 				2A0023911E20D37400EFFD59 /* sy_zhongdian@2x.png in Resources */,
 				2A0023661E20D37400EFFD59 /* zc_mima@2x.png in Resources */,
-				2A00237B1E20D37400EFFD59 /* quan@2x.png in Resources */,
 				2A0023511E20D37400EFFD59 /* paiduididian@2x.png in Resources */,
 				AE16E5481E165C5D00DC96F3 /* RYNumberKeyboard.xib in Resources */,
 				2A0023251E20D37400EFFD59 /* gr_06@3x.png in Resources */,

@@ -24,6 +24,8 @@
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSArray *contentArray;
 
+@property (nonatomic,strong) NSString *keFuPhone;
+@property (nonatomic,strong) NSMutableDictionary * verSionDic;
 @end
 
 @implementation SettingViewContrller
@@ -49,6 +51,18 @@
         };
         [_tableView reloadData];
         
+    }];
+    
+    dic =@{@"type":@"1"};
+    [AnalyzeObject getVersionWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+        _verSionDic=[NSMutableDictionary dictionary];
+        
+        if (CODE(ret)) {
+            [_verSionDic addEntriesFromDictionary:model];
+        }else{
+            [CoreSVP showMessageInCenterWithMessage:msg];
+        }
+        [_tableView reloadData];
     }];
 }
 -(void)setupTableView
@@ -108,7 +122,7 @@
     }
     if (indexPath.row == 6) {
         cell.RigthImage.hidden = YES;
-        cell.ValueLabel.text=@"V1.0";
+        cell.ValueLabel.text=[NSString stringWithFormat:@"V%@",_verSionDic[@"verNum"]];
         
     }
     cell.topLine.hidden = indexPath.row != 0;
@@ -147,12 +161,6 @@
                 [self.navigationController pushViewController:changePasswordVC animated:YES];
                 break;
             }
-//        case 1:
-//            {
-////                ShiYongXuZhiViewController *tiXianZhanghuVC = [ShiYongXuZhiViewController new];
-////                [self.navigationController pushViewController:tiXianZhanghuVC animated:YES];
-//                break;
-//            }
         case 1:
         {
             AboutUsViewController * about=[AboutUsViewController new];
@@ -161,11 +169,12 @@
         }
         case 2:
         {
-            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[[NSMutableString alloc] initWithFormat:@"telprompt://%@",_keFuPhone]] options:@{} completionHandler:^(BOOL success) {
-                if (!success) {
-                    [CoreSVP showMessageInCenterWithMessage:@"拨打电话失败"];
-                }
-            }];
+       
+            BOOL isSuccess = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[NSMutableString alloc] initWithFormat:@"telprompt://%@",_keFuPhone]]];
+            if (!isSuccess) {
+                //               [CoreSVP showMessageInCenterWithMessage:@"拨打电话失败"];
+            }
+            
         }
                 break;
            
@@ -182,9 +191,9 @@
 //          [PHPopBox showAlertWithTitle:@"提示" message:@"保险说明" boxType:boxType1 buttons:@[[ControlStyle insWithTitle:@"确定" andColor:mainColor],[ControlStyle insWithTitle:@"取消" andColor:matchColor]] block:^(NSInteger index) {
 //              
 //          }];
-[PHPopBox showSheetWithButtonStyles:@[[ControlStyle insWithTitle:@"CONG" andColor:mainColor],[ControlStyle insWithTitle:@"取消" andColor:matchColor]] block:^(NSInteger index) {
-    
-}];
+//[PHPopBox showSheetWithButtonStyles:@[[ControlStyle insWithTitle:@"CONG" andColor:mainColor],[ControlStyle insWithTitle:@"取消" andColor:matchColor]] block:^(NSInteger index) {
+//    
+//}];
             break;
         }
         case 5:

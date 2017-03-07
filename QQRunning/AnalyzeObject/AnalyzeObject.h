@@ -154,7 +154,10 @@ typedef void(^Blocks)(id model, NSString *ret, NSString *msg);
  */
 +(void)findPassWordWithDic:(NSDictionary *)dic WithBlock:(Blocks)block;
 
-
+/*
+ *版本更新
+ */
++(void)getVersionWithDic:(NSDictionary *)dic WithBlock:(Blocks)block;
 
 
 

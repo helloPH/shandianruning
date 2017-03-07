@@ -8,19 +8,22 @@
 
 #import <UIKit/UIKit.h>
 typedef NS_ENUM(NSInteger,TabbarType){
-    TabbarTypeNumber =0,
-    TabbarTypeScrollUnderline=1,
-    TabbarTypeScrollRound=2,
+    TabbarTypeDefault =0, // 不能滚动 按钮的宽度会根据按钮的个数自动计算得出
+    TabbarTypeScrollUnderline=1,// 带有下划线的 可滚动的  按钮的宽度，根据自身内容算出
+    TabbarTypeScrollRound=2,// 不带下滑线的 可滚动的  按钮的宽度，根据自身内容算出
 };
 @interface PHTabbar : UIScrollView
 @property (nonatomic,strong)void (^block)(NSInteger index);
 @property (nonatomic,assign)NSInteger index;
 @property (nonatomic,assign)TabbarType tabbarType;
 
+@property (nonatomic,assign)BOOL isDrag;
 +(instancetype)insWithTitles:(NSArray *)titles type:(TabbarType)type themeColor:(UIColor*)themeColor frame:(CGRect)frame;
 -(UIScrollView*)initWithTitles:(NSArray *)titles type:(TabbarType)type themeColor:(UIColor*)themeColor frame:(CGRect)frame;
-
-
 -(void)changeType:(TabbarType)type;
 -(void)changeTitles:(NSArray<NSString *> *)titles;
+
+
+/* 调用该方法 可以使 bar 的下划线 实时的变化 */
+-(void)changeUnderLineOffSet:(float)percent; /* 向后翻传正的百分比  向前翻传负的百分比*/
 @end

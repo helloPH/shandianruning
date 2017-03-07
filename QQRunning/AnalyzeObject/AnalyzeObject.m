@@ -369,7 +369,7 @@
  *账户提现
  */
 +(void)withdrawWithDic:(NSDictionary *)dic WithBlock:(Blocks)block{
-    NSMutableDictionary * dicM=[NSMutableDictionary dictionaryWithDictionary:@{@"action":@"Get_ZhangHuTiXian"}];
+    NSMutableDictionary * dicM=[NSMutableDictionary dictionaryWithDictionary:@{@"action":@"Inser_TiXianShen"}];
     [dicM addEntriesFromDictionary:dic];
     AnalyzeObject * ana=[AnalyzeObject new];
     [ana loadData:dicM withUrl:@"interfaceDOC/firstProject/PerSongs.ashx?" WithBlock:^(id model, NSString *ret, NSString *msg) {
@@ -442,6 +442,16 @@
         block(model,ret,msg);
     }];
 }
-
+/*
+ *版本更新
+ */
++(void)getVersionWithDic:(NSDictionary *)dic WithBlock:(Blocks)block{
+    NSMutableDictionary * dicM=[NSMutableDictionary dictionaryWithDictionary:@{@"action":@"Get_Version"}];
+    [dicM addEntriesFromDictionary:dic];
+    AnalyzeObject * ana=[AnalyzeObject new];
+    [ana loadData:dicM withUrl:@"interfaceDOC/firstProject/PerSongs.ashx?" WithBlock:^(id model, NSString *ret, NSString *msg) {
+        block(model,ret,msg);
+    }];
+}
 
 @end

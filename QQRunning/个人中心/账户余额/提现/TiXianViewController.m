@@ -8,9 +8,8 @@
 
 #import "TiXianViewController.h"
 #import "CellView.h"
-#warning 现在还没有绑定过银行卡这只是用于测试  待有接口时请按流程走
 #import "BangDingCardViewController.h"
-@interface TiXianViewController ()
+@interface TiXianViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -75,6 +74,7 @@
     moneyTextField.keyboardType = UIKeyboardTypeDecimalPad;
     moneyTextField.placeholder = @"请输入充值金额";
     [moneyCell addSubview:moneyTextField];
+    moneyTextField.delegate=self;
     
     UILabel *yuELabel = [[UILabel alloc] initWithFrame:CGRectMake(RM_Padding, RM_Padding + moneyCell.bottom, RM_VWidth - 2*RM_Padding, 20*self.scale)];
     
@@ -83,7 +83,7 @@
         approveWithDraw=(_yuE-minYuE)/Intergral * Intergral;
     }
 
-    yuELabel.attributedText = [[NSString stringWithFormat:@"<main15>•</main15><black11>  账户余额%ld元，可提现金额</black11><blue13>%@</blue13><black11>元</black11>",(long)_yuE,@(approveWithDraw)] attributedStringWithStyleBook:[self Style]];
+    yuELabel.attributedText = [[NSString stringWithFormat:@"<main15>•</main15><black11>  账户余额%.2f元，可提现金额</black11><blue13>%@</blue13><black11>元</black11>",_yuE,@(approveWithDraw)] attributedStringWithStyleBook:[self Style]];
     [bottomBgView addSubview:yuELabel];
     
     UILabel *minMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(yuELabel.left, yuELabel.bottom, yuELabel.width, yuELabel.height)];
@@ -114,10 +114,12 @@
     }else{
         //银行卡所属银行
         UILabel *bankNameLable = (UILabel *)[bankView viewWithTag:30];
-        bankNameLable.text = _bankName;
+        bankNameLable.text = [NSString stringWithFormat:@"%@",_bankInfo[@"BankType"]];
         //银行卡号
         UILabel *bankCardNumLable = (UILabel *)[bankView viewWithTag:40];
-        NSString *bankCardNum = [_bankCardNum substringFromIndex:_bankCardNum.length - 4];
+        
+        NSString * bankNum=[NSString stringWithFormat:@"%@",_bankInfo[@"BankNum"]];
+        NSString *bankCardNum = [bankNum substringFromIndex:bankNum.length - 4];
         bankCardNumLable.text = [NSString stringWithFormat:@"尾号：%@",bankCardNum];
         bottomBgView.frame = CGRectMake(0, bankView.bottom, RM_VWidth, RM_VHeight - self.NavImg.bottom - bankView.height);
     }
@@ -143,9 +145,27 @@
 
 -(void)tiXianButtonEvent:(UIButton *)button{
     [self closeKeyboard];
+    
+    UITextField *moneyTextField = (UITextField *)[self.view viewWithTag:10];
+    NSString *money = [moneyTextField.text trimString];
+    
+    NSInteger approveWithDraw=0;
+    if (minYuE < _yuE) {
+        approveWithDraw=(_yuE-minYuE)/Intergral * Intergral;
+    }
+    if ([money floatValue]>approveWithDraw) {
+        [CoreSVP showMessageInCenterWithMessage:@"账户余额至少200（含200）元以上！"];
+        return;
+    }
+    
+    
 
     
-    NSDictionary * dic = @{@"PeiSongId":[Stockpile sharedStockpile].userID};
+    NSDictionary * dic = @{@"PeiSongId":[Stockpile sharedStockpile].userID,
+                           @"Money":money,
+                           @"BankNum":_bankInfo[@"BankNum"],
+                           @"BankType":_bankInfo[@"BankType"],
+                           @"BankKaiHu":_bankInfo[@"Name"]};
     [self startDownloadDataWithMessage:nil];
     [AnalyzeObject withdrawWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
         [self stopDownloadData];
@@ -202,6 +222,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark --  textField delegate
 
 /*
 #pragma mark - Navigation

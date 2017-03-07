@@ -64,6 +64,14 @@
 -(void)reshView{
     NSString * status = [NSString stringWithFormat:@"%@",_dataDic[@"Status"]];
     
+    if ([status  isEqualToString:@"8"]) {
+        [self ShowAlertTitle:@"提示" Message:@"该订单已被取消" Delegate:self OKText:@"继续查看" CancelText:@"返回主页" Block:^(NSInteger index) {
+            if (index==0) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }
+    
     
     UIButton * bottomLeft = [self.view viewWithTag:200];
     bottomLeft.enabled=NO;
@@ -110,6 +118,7 @@
     _mapView.showsUserLocation = YES;
     _mapView.delegate = self;
     [self.view addSubview:_mapView];
+    _mapView.zoomLevel=17;
     
     //地图定位按钮
     UIButton *mapLocationBtn = [[UIButton alloc] initWithFrame:CGRectMake(RM_Padding,_mapView.height - RM_Padding*2 - 82/2.25*self.scale, 82/2.25*self.scale, 82/2.25*self.scale)];
@@ -228,11 +237,11 @@
     [self StratLuJingGuiHua];
 }
 -(void)topViewBtn:(UIButton *)sender{
-    [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"%ld",(long)sender.tag]];
+//    [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"%ld",(long)sender.tag]];
     
     if (sender.tag==100) {
-        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",_dataDic[@"QITel"]];
-        if ([_dataDic[@"QITel"] isEmptyString]) {
+        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",_dataDic[@"UserTel"]];
+        if ([_dataDic[@"UserTel"] isEmptyString]) {
             [CoreSVP showMessageInCenterWithMessage:@"手机号不存在"];
             return;
         }
@@ -294,14 +303,20 @@
                 [self stopDownloadData];
                 if (CODE(ret)) {
                     [self reshData];
-                    KuaiCheSuccess * success = [KuaiCheSuccess new];
-                    success.shouRu=[[NSString stringWithFormat:@"%@",model[@"OrderModel"]] getValiedString];
-                    success.block=^(){
-                        if (_block) {
-                            _block();
-                        }
-                    };
-                    [self.navigationController pushViewController:success animated:YES];
+                    [CoreSVP showMessageInCenterWithMessage:@"完成订单"];
+                    [self PopVC:nil];
+                    if (_block) {
+                        _block();
+                    }
+                        
+//                    KuaiCheSuccess * success = [KuaiCheSuccess new];
+//                    success.shouRu=[[NSString stringWithFormat:@"%@",model[@"OrderModel"]] getValiedString];
+//                    success.block=^(){
+//                        if (_block) {
+//                            _block();
+//                        }
+//                    };
+//                    [self.navigationController pushViewController:success animated:YES];
                 }else{
                     [CoreSVP showMessageInCenterWithMessage:msg];
 

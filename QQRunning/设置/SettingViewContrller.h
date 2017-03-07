@@ -9,5 +9,5 @@
 #import "SuperViewController.h"
 
 @interface SettingViewContrller : SuperViewController
-@property (nonatomic,strong) NSString *keFuPhone;
+
 @end

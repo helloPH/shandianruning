@@ -31,6 +31,23 @@
     bgImageView.userInteractionEnabled = YES;
     [self.view addSubview:bgImageView];
     
+    UILabel * guiZe =[[UILabel alloc]initWithFrame:CGRectMake(0, 0, RM_VWidth/2+30, 200)];
+    guiZe.textColor=[UIColor blackColor];
+    guiZe.font=Big15Font(self.scale);
+    guiZe.numberOfLines=0;
+    [bgImageView addSubview:guiZe];
+    
+    
+    NSMutableParagraphStyle *paraStyle02 = [[NSMutableParagraphStyle alloc] init];
+    paraStyle02.lineHeightMultiple = 1.5;
+    NSDictionary *attrDict02 = @{ NSParagraphStyleAttributeName: paraStyle02,
+                                   };
+    guiZe.attributedText=[[NSAttributedString alloc]initWithString:@"向好友分享好用的app\n邀请感兴趣的小伙伴们，不妨来这里看看吧！" attributes:attrDict02];
+//    guiZe.text=;
+    [guiZe sizeToFit];
+    guiZe.center=CGPointMake(bgImageView.width/2-10, bgImageView.height/2+20);
+    
+    
     float buttonWidth = 282/2.25*self.scale;
     float blankWidth = (RM_VWidth - 2*buttonWidth)/3;
     float setX = blankWidth;

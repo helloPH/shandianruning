@@ -75,8 +75,6 @@ typedef void(^cancleAlertBlock)();
 @property (nonatomic,strong) UIImageView *Navline;
 @property (nonatomic,strong) AppDelegate *appdelegate;
 @property (nonatomic,strong) MBProgressHUD *HUD;
-
-
 @property (nonatomic,assign) OrderType  orderType;
 @property (nonatomic,strong) NSArray <NSString *> * orderTitles;
 /**

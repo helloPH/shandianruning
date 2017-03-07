@@ -22,6 +22,8 @@
 #import "UILabel+Helper.h"
 
 @interface ShouYeViewController()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,OrderTableViewCellDelegate,TongSongShiShiOrderViewControllerDelegate>
+
+
 //视图
 @property (nonatomic,strong) UIScrollView *mainScrollView;
 @property (nonatomic,strong) UITableView *qiangDanTableView;
@@ -30,6 +32,7 @@
 //@property (nonatomic,strong) NSMutableDictionary * userInfo;
 
 @property (nonatomic,strong) NSMutableArray * qiangDanDatas;
+@property (nonatomic,assign) NSInteger        qiangTypeIndex;
 @property (nonatomic,assign) NSInteger        qiangDanYe;
 
 
@@ -102,7 +105,12 @@
     
     [self upLoadLocationTimerStart];
     //通知
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(panDuanRotation) name:@"judgeStartRotation" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationResh) name:@"judgeStartRotation" object:nil];
+ 
+}
+-(void)notificationResh{
+    [self reshRealOrderView];
+    [self refreshAddressInfomation];
 }
 -(void)upLoadLocationTimerStart{
     _upLoadLocationTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(reshLocationData) userInfo:nil repeats:YES];
@@ -130,18 +138,7 @@
 
 }
 -(void)reshRealOrderView{
-//    if ([Stockpile sharedStockpile].userStatus!=3) {
-//        if (!_unApproView) {
-//            _unApproView = [[UIButton alloc]initWithFrame:CGRectMake(0, self.NavImg.bottom, RM_VWidth, RM_VHeight - self.NavImg.height)];
-//        }
-//        _unApproView.backgroundColor=clearColor;
-//        [self.navigationController.view addSubview:_unApproView];
-//        [_unApproView addTarget:self action:@selector(jumpToRenZheng) forControlEvents:UIControlEventTouchUpInside];
-//    }else{
-//        if (_unApproView) {
-//            [_unApproView removeFromSuperview];
-//        }
-//    }
+
     UIImageView * tiShiImg = [self.NavImg viewWithTag:777];
     tiShiImg.hidden=[Stockpile sharedStockpile].isRead;
     
@@ -192,8 +189,9 @@
 }
 -(void)initData{
 //    _userInfo = [NSMutableDictionary dictionary];
-    
+
     _qiangDanYe=1;
+    _qiangTypeIndex=6;
     _qiangDanDatas=[NSMutableArray array];
     
     _unFinishYe=1;
@@ -319,6 +317,7 @@
     refreshButton.titleLabel.font = SmallFont(self.scale);
     [refreshButton setTitleColor:whiteLineColore forState:UIControlStateNormal];
     [refreshButton setBackgroundImage:[UIImage imageNamed:@"bg_shauxin"] forState:UIControlStateNormal];
+    [refreshButton setImage:[UIImage imageNamed:@"shuaxin"] forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshAddressButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     [refreshButton TiaoZhengButtonWithOffsit:5*self.scale TextImageSite:0];
     [addressView addSubview:refreshButton];
@@ -398,7 +397,22 @@
 
 #pragma mark -- 未抢单列表视图
 -(void)weiQiangDanListView{
-    _qiangDanTableView = [[UITableView alloc] initWithFrame:CGRectMake(RM_VWidth, 0, RM_VWidth, _mainScrollView.height) style:UITableViewStyleGrouped];
+    CellView *topView = [[CellView alloc] initWithFrame:CGRectMake(RM_VWidth, 0, RM_VWidth, 40*self.scale)];
+    topView.bottomline.hidden = NO;
+    [_mainScrollView addSubview:topView];
+    
+    UIButton *chooseButton = [[UIButton alloc] initWithFrame:CGRectMake(RM_VWidth - 70*self.scale, topView.height/2 - 15*self.scale, 60*self.scale, 30*self.scale)];
+    [chooseButton setImage:[UIImage imageNamed:@"shuaixuan@2x"] forState:UIControlStateNormal];
+    [chooseButton setTitle:@"筛选" forState:UIControlStateNormal];
+    chooseButton.titleLabel.font = Big14Font(self.scale);
+    [chooseButton TiaoZhengButtonWithOffsit:7*self.scale TextImageSite:0];
+    [chooseButton addTarget:self action:@selector(chooseButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [chooseButton setTitleColor:blackTextColor forState:UIControlStateNormal];
+    [topView addSubview:chooseButton];
+    
+    
+    
+    _qiangDanTableView = [[UITableView alloc] initWithFrame:CGRectMake(RM_VWidth, topView.bottom, RM_VWidth, _mainScrollView.height-topView.height) style:UITableViewStyleGrouped];
     _qiangDanTableView.tag = 2000;
     _qiangDanTableView.delegate = self;
     _qiangDanTableView.dataSource = self;
@@ -495,10 +509,18 @@
         UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, cellView.width, cellView.height)];
         button.backgroundColor = clearColor;
         button.tag = 10 + i;
-      
-        if (i == [self serverToViewType:_unFinishTypeIndex]) {
-            cellView.titleLabel.textColor=mainColor;
+        if (_scrollViewIndex==1) {// 未抢订单
+            if (i == [self serverToViewType:_qiangTypeIndex]) {
+                cellView.titleLabel.textColor=mainColor;
+            }
         }
+        if (_scrollViewIndex==2) {// 待完成订单
+            if (i == [self serverToViewType:_unFinishTypeIndex]) {
+                cellView.titleLabel.textColor=mainColor;
+            }
+        }
+        
+       
         [button addTarget:self action:@selector(chooseOrderTypeEvent:) forControlEvents:UIControlEventTouchUpInside];
         [cellView addSubview:button];
         setY = cellView.bottom;
@@ -528,8 +550,17 @@
     [self dismissViewEvent];
 //    UILabel *orderLabel = (UILabel *)[self.view viewWithTag:300];
 //    orderLabel.text = self.titleArray[button.tag - 10];
-    _unFinishTypeIndex=[self viewToServerType:button.tag - 10];
-    [self reshDataIsQianged:YES];
+  
+    if (_scrollViewIndex==1) {// 未抢订单
+        _qiangTypeIndex=[self viewToServerType:button.tag - 10];
+        [self reshDataIsQianged:NO];
+    }
+    if (_scrollViewIndex==2) {// 待完成订单
+        _unFinishTypeIndex=[self viewToServerType:button.tag - 10];
+        [self reshDataIsQianged:YES];
+    }
+    
+    
 
 }
 -(NSInteger)serverToViewType:(NSInteger)typeIndex{
@@ -683,7 +714,7 @@
         
         
         
-        cell.orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray12>路程大约%@公里，费用</gray12><orang14>%@</orang14><gray12>元，加价</gray12><orang14>%@</orang14><gray12>元</gray12>",xingCheng,price,addPrice] attributedStringWithStyleBook:[self Style]];
+        cell.orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray12>路程大约%.2f公里，费用</gray12><orang14>%.2f</orang14><gray12>元，加价</gray12><orang14>%.2f</orang14><gray12>元</gray12>",[xingCheng floatValue],[price floatValue],[addPrice floatValue]] attributedStringWithStyleBook:[self Style]];
         cell.goodsLabel.attributedText = [[NSString stringWithFormat:@"<gray12>购买商品：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"GoodsName"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
         cell.beiZhuLabel.text = [[NSString stringWithFormat:@"备注:%@",dic[@"Desc"]] getValiedString];
         cell.isQiangDan = YES;
@@ -731,10 +762,10 @@
             
         }
         
-        cell.orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>路程大约</gray13><orang14>%@</orang14><gray13>公里，费用</gray13><orang14>%@</orang14><gray13>元，加价</gray13><orang14>%@</orang14><gray13>元</gray13>",
-                                         xingCheng,
-                                         price,
-                                         addPrice]
+        cell.orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>路程大约</gray13><orang14>%.2f</orang14><gray13>公里，费用</gray13><orang14>%.2f</orang14><gray13>元，加价</gray13><orang14>%.2f</orang14><gray13>元</gray13>",
+                                         [xingCheng floatValue],
+                                         [price floatValue],
+                                         [addPrice floatValue]]
                                         attributedStringWithStyleBook:[self Style]];
         
         cell.goodsLabel.attributedText = [[NSString stringWithFormat:@"<gray12>购买商品：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"GoodsName"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
@@ -826,11 +857,26 @@
 //    [CoreSVP showMessageInCenterWithMessage:str];
 }
 #pragma mark -- 滚动视图的代理事件
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    if (scrollView.tag == 1000) {
+      
+        PHTabbar * tabbar=[self.NavImg viewWithTag:1010];
+        // 前翻 还是 后翻
+        CGFloat currentOfset = scrollView.width*_scrollViewIndex;
+        float percent = (scrollView.contentOffset.x-currentOfset)/scrollView.width;
+        NSLog(@"%.2f",percent);
+        [tabbar changeUnderLineOffSet:percent];
+    }
+
+}
+
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     //判断是否是滚动视图 排除tableView的滚动
     if (scrollView.tag == 1000) {
+ 
         _selectButton.selected = NO;
-        
+
         int num = scrollView.contentOffset.x/RM_VWidth;
         UIButton *menuButton = (UIButton *)[self.view viewWithTag:10+num];
         if (_selectButton != menuButton) {
@@ -850,9 +896,10 @@
             if (num == 0) {
                 [self reshRealData];
             }
-            PHTabbar * tabbar=[self.NavImg viewWithTag:1000];
+            PHTabbar * tabbar=[self.NavImg viewWithTag:1010];
             _scrollViewIndex = num;
             tabbar.index=_scrollViewIndex;
+            
         }
         
     }
@@ -918,13 +965,6 @@
     
     
 }
-
-
-
-
-
-
-
 -(void)reshDataIsQianged:(BOOL)isQianged{
     if (isQianged) {
         /// 加载待完成数据
@@ -958,7 +998,7 @@
         ///// 加载未抢  数据
         
         NSDictionary * dic = @{@"index":@(_qiangDanYe),
-                               @"Type":@(6),
+                               @"Type":@(_qiangTypeIndex),
                                @"Flag":@"0"
                                };
 
@@ -1042,8 +1082,6 @@
         }];
     }else{  /// 开工
          [self changIsWork:sender];
-      
-
     }
     
     
@@ -1060,11 +1098,13 @@
             if (CODE(ret)) {
                 if ([Stockpile sharedStockpile].isWork) {// 收工成功
                     [[Stockpile sharedStockpile] setIsWork:NO];
+                    [self.appdelegate turnOffNotification];// 关闭 推送
                     [self endQiangDan];
                     //  界面
                 }else{                                   //开工成功
                     // 界面
                     [[Stockpile sharedStockpile] setIsWork:YES];
+                    [self.appdelegate turnOnNotification];// 打开 推送
                     [self startQiangDan];
                 }
             }else{
@@ -1295,6 +1335,7 @@
     
     
     bar.block=^(NSInteger index){
+        
         _mainScrollView.contentOffset=CGPointMake(RM_VWidth*index, 0);
         if (index==1) {
             [self reshDataIsQianged:NO];
@@ -1305,12 +1346,15 @@
         }
         if (index==0) {
             [self reshRealData];
+            
         }
-        if (index != 2) { //  如果点击的不是 待完成
-        [self dismissViewEvent];
+        if (index != _scrollViewIndex) {
+            [self dismissViewEvent];
         }
+        _scrollViewIndex=index;
+       
     };
-    bar.tag=1000;
+    bar.tag=1010;
     [self.NavImg addSubview:bar];
 }
 -(void)dealloc{
@@ -1325,13 +1369,13 @@
         return NO;
     };
     if([Stockpile sharedStockpile].userStatus==1){
-        [self ShowOKAlertWithTitle:@"提示" Message:@"资料审核通过（请前往闪电培训课堂）！" WithButtonTitle:@"确定" Blcok:^{
+        [self ShowOKAlertWithTitle:nil Message:@"资料审核通过（请前往闪电培训课堂）！" WithButtonTitle:@"确定" Blcok:^{
         }];
         return NO;
     }
     
     if ([Stockpile sharedStockpile].userStatus==2) {//资料申请失败
-        [self ShowAlertTitle:@"提示" Message:@"资料审核失败，是否重新申请" Delegate:self Block:^(NSInteger index) {
+        [self ShowAlertTitle:nil Message:@"资料审核失败，是否重新申请" Delegate:self Block:^(NSInteger index) {
             if (index==1) {
                 ShenFenRenZhengViewController * renZheng = [[ShenFenRenZhengViewController alloc]init];
                 renZheng.ID=[Stockpile sharedStockpile].userID;
@@ -1344,7 +1388,7 @@
         return NO;
     }
     if ([Stockpile sharedStockpile].userStatus==4) {//注册成功，未申请
-        [self ShowAlertTitle:@"提示" Message:@"还未提交资料，是否申请？" Delegate:self Block:^(NSInteger index) {
+        [self ShowAlertTitle:nil Message:@"还未提交资料，是否申请？" Delegate:self Block:^(NSInteger index) {
             if (index==1) {
                 ShenFenRenZhengViewController * renZheng = [[ShenFenRenZhengViewController alloc]init];
                 renZheng.ID=[Stockpile sharedStockpile].userID;
@@ -1357,7 +1401,7 @@
         return NO;
     }
     if ([[Stockpile sharedStockpile].userJiFen integerValue]<=0) {
-        [self ShowOKAlertWithTitle:@"提示" Message:@"你的积分不够,不能进行此操作！" WithButtonTitle:@"确定" Blcok:^{
+        [self ShowOKAlertWithTitle:nil Message:@"你的积分不够,不能进行此操作！" WithButtonTitle:@"确定" Blcok:^{
         }];
         return NO;
     }

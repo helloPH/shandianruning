@@ -9,7 +9,9 @@
 #import "SuperViewController.h"
 
 @interface TiXianViewController : SuperViewController
-@property (nonatomic,assign)NSInteger yuE;
+@property (nonatomic,assign)float yuE;
 @property (nonatomic,strong)NSString * bankName;
 @property (nonatomic,strong)NSString * bankCardNum;
+
+@property (nonatomic,strong)NSDictionary * bankInfo;
 @end

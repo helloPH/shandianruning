@@ -414,7 +414,7 @@
         
         UIImageView *erWeiMaImageView = [[UIImageView alloc] initWithFrame:CGRectMake(_bgView.width/2 - erWeiMaWidth/2, topImageView.bottom + RM_Padding, erWeiMaWidth, erWeiMaWidth)];
         [erWeiMaImageView setImageWithURL:[NSURL URLWithString:message] placeholderImage:[UIImage imageNamed:@""]];
-        erWeiMaImageView.backgroundColor = mainColor;
+//        erWeiMaImageView.backgroundColor = mainColor;
         [_bgView addSubview:erWeiMaImageView];
         
         UILabel *erWeiMalabel = [[UILabel alloc] initWithFrame:CGRectMake(0, erWeiMaImageView.bottom+RM_Padding, _bgView.width, 30*self.scale)];
@@ -536,7 +536,7 @@
         [btn addTarget:self action:@selector(commitKnock:) forControlEvents:UIControlEventTouchUpInside];
         btn.titleLabel.font=DefaultFont(self.scale);
         [btn setTitleColor:i==0?blackTextColor:mainColor forState:UIControlStateNormal];
-        [btn setTitle:i==0?@"再转一会":@"确定收工" forState:UIControlStateNormal];
+        [btn setTitle:i==0?@"再赚一会":@"确定收工" forState:UIControlStateNormal];
         if (i==1) {
             UIImageView * sepLine=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, bottomView.topline.height, btn.height)];
             [btn addSubview:sepLine];

@@ -164,12 +164,15 @@
     
     ShouYiAndLiChengTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.timeLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QiangTime"]] getValiedString];
-    NSString * orderNum=[NSString stringWithFormat:@"%@",dic[@"OrderId"]];
+    NSString * orderNum=[NSString stringWithFormat:@"%@",dic[@"OrderNum"]];
     cell.orderNumLabel.text = [NSString stringWithFormat:@"订单号：%@",orderNum];
     
     NSString * liCheng=[NSString stringWithFormat:@"%@",dic[@"QuJuLi"]];
     liCheng = [liCheng stringByReplacingOccurrencesOfString:@"km" withString:@""];
-    cell.orderDistanceLabel.attributedText = [[NSString stringWithFormat:@"<black13>订单里程</black13><orang15>%@</orang15><black13>公里</black13>",[NSString stringWithFormat:@"%@",liCheng]] attributedStringWithStyleBook:[self Style]];
+    
+    
+
+    cell.orderDistanceLabel.attributedText = [[NSString stringWithFormat:@"<black13>订单里程</black13><orang15>%@</orang15><black13>公里</black13>",[NSString stringWithFormat:@"%.2f",[liCheng floatValue]]] attributedStringWithStyleBook:[self Style]];
     
     
     

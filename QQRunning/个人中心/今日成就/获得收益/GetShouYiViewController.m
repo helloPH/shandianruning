@@ -165,12 +165,12 @@
     
     ShouYiAndLiChengTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.timeLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QiangTime"]] getValiedString];
-    NSString * orderNum=[NSString stringWithFormat:@"%@",dic[@"OrderId"]];
+    NSString * orderNum=[NSString stringWithFormat:@"%@",dic[@"OrderNum"]];
     cell.orderNumLabel.text = [NSString stringWithFormat:@"订单号：%@",orderNum];
     
     NSString * liCheng=[NSString stringWithFormat:@"%@",dic[@"Money"]];
     liCheng = [liCheng stringByReplacingOccurrencesOfString:@" " withString:@""];
-    cell.orderDistanceLabel.attributedText = [[NSString stringWithFormat:@"<black13>订单金额</black13><orang15>%@</orang15><black13>元</black13>",[NSString stringWithFormat:@"%@",liCheng]] attributedStringWithStyleBook:[self Style]];
+    cell.orderDistanceLabel.attributedText = [[NSString stringWithFormat:@"<black13>订单金额</black13><orang15>%@</orang15><black13>元</black13>",[NSString stringWithFormat:@"%.2f",[liCheng floatValue]]] attributedStringWithStyleBook:[self Style]];
     
     
     
@@ -269,7 +269,7 @@
 #pragma mark -- 导航
 -(void)setupNewNavi
 {
-    self.TitleLabel.text = @"奔跑里程";
+    self.TitleLabel.text = @"获得收益";
     UIButton *popButton=[[UIButton alloc]initWithFrame:CGRectMake(0, self.TitleLabel.top, self.TitleLabel.height, self.TitleLabel.height)];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateNormal];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateHighlighted];

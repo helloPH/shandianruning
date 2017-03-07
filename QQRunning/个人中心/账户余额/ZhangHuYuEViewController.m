@@ -55,7 +55,7 @@
 #pragma mark -- 界面
 -(void)setupTopView
 {
-    NSString * yuE=[[NSString stringWithFormat:@"%@",_dataDic[@"Money"]] isEmptyString]?@"0":[NSString stringWithFormat:@"%@",_dataDic[@"Money"]];
+    NSString * yuE=[[Stockpile sharedStockpile].userYuE isEmptyString]?@"0":[NSString stringWithFormat:@"%@",[Stockpile sharedStockpile].userYuE];
     
     
     /// 顶部的view
@@ -101,8 +101,8 @@
             cell.contentLabel.textAlignment=NSTextAlignmentRight;
             cell.contentLabel.textColor=mainColor;
             NSInteger approveWithDraw=0;
-            if (minYuE < [yuE integerValue]) {
-                approveWithDraw=([yuE integerValue]-minYuE)/Intergral * Intergral;
+            if (minYuE < [[Stockpile sharedStockpile].userYuE floatValue]) {
+                approveWithDraw=([[Stockpile sharedStockpile].userYuE floatValue]-minYuE)/Intergral * Intergral;
             }
             cell.contentLabel.text=[NSString stringWithFormat:@"可提现￥%ld",(long)approveWithDraw];
             cell.shotLine=YES;
@@ -138,10 +138,23 @@
         }];
         return;
     }
+    NSInteger approveWithDraw=0;
+    if (minYuE < [[Stockpile sharedStockpile].userYuE floatValue]) {
+        approveWithDraw=([[Stockpile sharedStockpile].userYuE floatValue]-minYuE)/Intergral * Intergral;
+    }
+//    if (appMoney <= 0) {
+//        [self ShowOKAlertWithTitle:@"提示" Message:@"未达到提现标准(账户余额至少50元(含50)以上)!" WithButtonTitle:@"确定" Blcok:^{
+//            
+//        }];
+//        return;
+//    }
+    
+    
     TiXianViewController *tixianVC = [TiXianViewController new];
-    NSString * yuE=[[NSString stringWithFormat:@"%@",_dataDic[@"Money"]]isEmptyString]?@"0":[NSString stringWithFormat:@"%@",_dataDic[@"Money"]];
-    tixianVC.yuE=[yuE integerValue];
-    tixianVC.bankName=[[NSString stringWithFormat:@"%@",_dataDic[@"Name"]] getValiedString];
+    NSString * yuE=[Stockpile sharedStockpile].userYuE?[Stockpile sharedStockpile].userYuE:@"0";
+    tixianVC.bankInfo=_dataDic;
+    tixianVC.yuE=[yuE floatValue];
+    tixianVC.bankName=[[NSString stringWithFormat:@"%@",_dataDic[@"BankType"]] getValiedString];
     tixianVC.bankCardNum=[[NSString stringWithFormat:@"%@",_dataDic[@"BankNum"]] getValiedString];
     [self.navigationController pushViewController:tixianVC animated:YES];
     

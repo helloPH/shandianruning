@@ -61,7 +61,7 @@
 -(void)reshView{
        [_headImg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ImgDuanKou,_dataDic[@"Image"]]] placeholderImage:[UIImage imageNamed:@"sy_touxiang"]];
     _labelName.text=[Stockpile sharedStockpile].userPhone;
-        _labelContent.attributedText = [[NSString stringWithFormat:@"<white12>当前排名：</white12><white14>%@</white14><white12>名</white12>      <white12>累计好评：</white12><white14>%@</white14><white12>个</white12>",[NSString stringWithFormat:@"%@",_dataDic[@"PaiMing"]],[NSString stringWithFormat:@"%@",_dataDic[@"AllOrder"]]] attributedStringWithStyleBook:[self Style]];
+        _labelContent.attributedText = [[NSString stringWithFormat:@"<white12>当前排名：</white12><white14>%@</white14><white12>名</white12>      <white12>累计订单：</white12><white14>%@</white14><white12>个</white12>",[NSString stringWithFormat:@"%@",_dataDic[@"PaiMing"]],[NSString stringWithFormat:@"%@",_dataDic[@"AllOrder"]]] attributedStringWithStyleBook:[self Style]];
        [_tableView reloadData];
 }
 #pragma mark -- 界面

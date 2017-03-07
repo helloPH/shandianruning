@@ -56,7 +56,7 @@
     _mapView.showsUserLocation = YES;
     _mapView.delegate = self;
     [self.view addSubview:_mapView];
-
+    _mapView.zoomLevel=17;
     
     //地图定位按钮
     UIButton *mapLocationBtn = [[UIButton alloc] initWithFrame:CGRectMake(RM_Padding,_mapView.height - RM_Padding*2 - 82/2.25*self.scale, 82/2.25*self.scale, 82/2.25*self.scale)];
