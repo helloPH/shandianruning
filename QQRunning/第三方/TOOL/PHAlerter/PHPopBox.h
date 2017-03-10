@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger,BoxType) {
 };
 typedef void(^AlertBlock)(NSInteger index);
 @interface PHPopBox : UIControl
++(void)showAlertWithTitle:(NSString *)title message:(NSString *)message boxType:(BoxType)boxType;
 +(void)showAlertWithTitle:(NSString *)title message:(NSString *)message boxType:(BoxType)boxType buttons:(NSArray<ControlStyle *> *)buttons block:(AlertBlock)block;
 +(void)showSheetWithButtonStyles:(NSArray<ControlStyle*>*)styles block:(AlertBlock)block;
 

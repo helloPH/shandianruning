@@ -55,9 +55,7 @@
 #pragma mark -- 界面
 -(void)setupTopView
 {
-    NSString * yuE=[[Stockpile sharedStockpile].userYuE isEmptyString]?@"0":[NSString stringWithFormat:@"%@",[Stockpile sharedStockpile].userYuE];
-    
-    
+    NSString * yuE=([[Stockpile sharedStockpile].userYuE isEmptyString] || [Stockpile sharedStockpile].userYuE == nil) ?@"0":[NSString stringWithFormat:@"%@",[Stockpile sharedStockpile].userYuE];
     /// 顶部的view
     UIImageView * topImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, self.NavImg.bottom, RM_VWidth, RM_VWidth*0.3)];
     topImg.image=[UIImage imageNamed:@"zhanghu_bg"];
@@ -65,11 +63,10 @@
     
     
     UILabel * label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, RM_VWidth, 40)];
-    label.attributedText = [[NSString stringWithFormat:@"<white12>当前账户余额（元）</white12>\n\n<white20>%@</white20>", yuE] attributedStringWithStyleBook:[self Style]];
+    label.attributedText = [[NSString stringWithFormat:@"<white12>当前账户余额（元）</white12>\n<white20>%@</white20>", yuE] attributedStringWithStyleBook:[self Style]];
     label.numberOfLines=2;
     label.centerY=topImg.height/2-10*self.scale;
     label.textAlignment=NSTextAlignmentCenter;
-    
     [topImg addSubview:label];
     
     
@@ -100,11 +97,12 @@
             cell.contentLabel.right=cell.RightImg.left;
             cell.contentLabel.textAlignment=NSTextAlignmentRight;
             cell.contentLabel.textColor=mainColor;
-            NSInteger approveWithDraw=0;
-            if (minYuE < [[Stockpile sharedStockpile].userYuE floatValue]) {
-                approveWithDraw=([[Stockpile sharedStockpile].userYuE floatValue]-minYuE)/Intergral * Intergral;
-            }
-            cell.contentLabel.text=[NSString stringWithFormat:@"可提现￥%ld",(long)approveWithDraw];
+//            NSInteger approveWithDraw=0;
+//            if (minYuE < [[Stockpile sharedStockpile].userYuE floatValue]) {
+//                approveWithDraw=([[Stockpile sharedStockpile].userYuE floatValue]-minYuE)/Intergral * Intergral;
+//            }
+            
+            cell.contentLabel.text=[NSString stringWithFormat:@"可提现￥%@",[Stockpile sharedStockpile].userYuE];
             cell.shotLine=YES;
             [cell.btn addTarget:self action:@selector(tiXianButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
         } else {

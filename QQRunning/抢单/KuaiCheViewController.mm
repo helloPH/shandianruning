@@ -65,11 +65,7 @@
     NSString * status = [NSString stringWithFormat:@"%@",_dataDic[@"Status"]];
     
     if ([status  isEqualToString:@"8"]) {
-        [self ShowAlertTitle:@"提示" Message:@"该订单已被取消" Delegate:self OKText:@"继续查看" CancelText:@"返回主页" Block:^(NSInteger index) {
-            if (index==0) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }];
+            [CoreSVP showMessageInCenterWithMessage:@"用户已取消该订单!"];
     }
     
     
@@ -78,10 +74,14 @@
     
     UIButton * bottomRight = [self.view viewWithTag:201];
     bottomRight.enabled=NO;
+    bottomRight.userInteractionEnabled=YES;
     
     if ([status isEqualToString:@"1"]) { //  订单未完成
         self.TitleLabel.text=@"去接乘客";
         _isShangChe=NO;
+        bottomRight.enabled=YES;
+        bottomRight.userInteractionEnabled=NO;
+        
         bottomLeft.enabled=YES;
     }else if ([status isEqualToString:@"4"]){ // 乘客已上车
          self.TitleLabel.text=@"乘客已上车";
@@ -91,7 +91,7 @@
         
         self.TitleLabel.text=@"完成行程";
         _isShangChe=YES;
-         self.TitleLabel.text=[NSString stringWithFormat:@"本行程入账%@元确定到达目的地",[[NSString stringWithFormat:@"%@",_dataDic[@""]] getValiedString]];
+//         self.TitleLabel.text=[NSString stringWithFormat:@"本行程入账%@元确定到达目的地",[[NSString stringWithFormat:@"%@",_dataDic[@""]] getValiedString]];
     }
     
     
@@ -210,7 +210,7 @@
         [btn setBackgroundImage:[UIImage ImageForColor:i==0?mainColor:matchColor] forState:UIControlStateNormal];
 //        btn.userInteractionEnabled=NO;
         btn.enabled=NO;
-        [btn setTitle:i==0?@"去接乘客":@"到达目的地" forState:UIControlStateNormal];
+        [btn setTitle:i==0?@"乘客已上车":@"乘客已到达目的地" forState:UIControlStateNormal];
         btn.tag=200+i;
         [btn addTarget:self action:@selector(bottomAction:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -303,8 +303,9 @@
                 [self stopDownloadData];
                 if (CODE(ret)) {
                     [self reshData];
-                    [CoreSVP showMessageInCenterWithMessage:@"完成订单"];
-                    [self PopVC:nil];
+                    [CoreSVP showMessageInCenterWithMessage:@"乘客已到达目的地"];
+                  
+//                    [self PopVC:nil];
                     if (_block) {
                         _block();
                     }

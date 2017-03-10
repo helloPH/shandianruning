@@ -37,7 +37,7 @@
     _endPointImageView.image=[UIImage imageNamed:@"zhongdian"];
     _startLabel.text=@"起";
     _endLabel.text=@"终";
-    _timeLabel.textColor= _orderType==OrderTypeBring?matchColor:blackTextColor;
+    _timeLabel.textColor= _orderType==OrderTypeBring?matchColor:grayTextColor;
     _timeLabel.text=_orderType==OrderTypeBring?@"立即送货":[self transFromDate:_timeLabel.text];
     
     
@@ -52,8 +52,6 @@
         _startLabel.text=@"购";
         _endLabel.text=@"收";
     }
-  
-    
 }
 -(NSString *)transFromDate:(NSString *)dateString{
     
@@ -172,7 +170,7 @@
         _beginPointLabel.height = 40*self.scale;
     }
 
-    
+
     
     _endPointImageView.frame = CGRectMake(RM_Padding, _startPointImageView.bottom, _startPointImageView.width, _startPointImageView.height);
     _endLabel.frame = CGRectMake(0, _endPointImageView.height - _startLabel.height - 2*self.scale, _endPointImageView.width, _startLabel.height);
@@ -184,17 +182,36 @@
     
     _orderDecLabel.frame = CGRectMake(RM_Padding, _cellView.bottom + RM_Padding/2, _bgView.width - RM_Padding*2, 20*self.scale);
     _goodsLabel.frame = CGRectMake(_orderDecLabel.left, _orderDecLabel.bottom, _orderDecLabel.width ,_orderDecLabel.height);
-    if (_goodsLabel.hidden) {
-        _beiZhuLabel.frame = CGRectMake(_orderDecLabel.left, _orderDecLabel.bottom, _orderDecLabel.width ,_orderDecLabel.height);
-    }else{
-        _beiZhuLabel.frame = CGRectMake(_goodsLabel.left, _goodsLabel.bottom, _goodsLabel.width ,_goodsLabel.height);
-    }
+    _beiZhuLabel.frame = _goodsLabel.frame;
+    
+    
     if (_isQiangDan) {
         _qiangDanButton.frame = CGRectMake(_beiZhuLabel.left, _beiZhuLabel.bottom+RM_Padding/2, _beiZhuLabel.width , RM_ButtonHeight);
     }else{
         _qiangDanButton.frame = CGRectZero;
     }
     
+    CGFloat setY=_orderDecLabel.bottom;
+    _goodsLabel.hidden=NO;
+    _beiZhuLabel.hidden=NO;
+    
+    if (_orderType==OrderTypeMotocycleTaxi) {
+//        _qiangDanButton.top=_orderDecLabel.bottom+5*self.scale;
+        _goodsLabel.hidden=YES;
+        _beiZhuLabel.hidden=YES;
+    }
+    
+    if (_orderType==OrderTypeBuy || _orderType==OrderTypeHelp || _orderType==OrderTypeQueueUp) {
+        _goodsLabel.top=_orderDecLabel.bottom+RM_Padding/2;
+        _beiZhuLabel.top=_goodsLabel.bottom+RM_Padding/2;
+        setY=_beiZhuLabel.bottom;
+    }
+    if (_orderType==OrderTypeBring||_orderType==OrderTypeTake) {
+        _goodsLabel.hidden=YES;
+        _beiZhuLabel.top=_orderDecLabel.bottom+RM_Padding/2;
+        setY=_beiZhuLabel.bottom;
+    }
+    _qiangDanButton.top=setY+RM_Padding;
 }
 -(void)qiangDanButtonEvent:(UIButton *)button{
     if (_delegate && [_delegate respondsToSelector:@selector(OrderTableViewCellQiangDanWithIndex:)]) {

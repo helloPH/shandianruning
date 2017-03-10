@@ -9,5 +9,6 @@
 #import "SuperViewController.h"
 
 @interface FinishOrderViewController : SuperViewController
+@property (nonatomic,assign)ChengJiuType  chengJiutype;
 
 @end

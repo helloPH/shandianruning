@@ -50,6 +50,8 @@
     [_statusButton setTitleColor:grayTextColor forState:UIControlStateNormal];
     _statusButton.titleLabel.font = DefaultFont(self.scale);
     [_statusButton addTarget:self action:@selector(statusButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    _statusButton.layer.cornerRadius=RM_CornerRadius;
+    _statusButton.layer.masksToBounds=YES;
     [self addSubview:_statusButton];
     
     _bottomLine = [[UIImageView alloc] init];
@@ -97,7 +99,7 @@
     else{
         _statusButton.userInteractionEnabled = NO;
         [_statusButton setTitleColor:grayTextColor forState:UIControlStateNormal];
-        [_statusButton setBackgroundImage:[UIImage setImgNameBianShen:@"peisong_xianshi_btn02"] forState:UIControlStateNormal];
+        [_statusButton setBackgroundImage:[UIImage setImgNameBianShen:@"btn_jindu"] forState:UIControlStateNormal];
         _titleLabel.textColor = grayTextColor;
         _stepLabel.textColor = grayTextColor;
         _contentLabel.textColor = grayTextColor;

@@ -177,8 +177,18 @@
         if (CODE(ret)) {
             [[Stockpile sharedStockpile] setUserAccount:tel];
             [[Stockpile sharedStockpile] setUserPassword:Pwd];
+            
+            [self showTiShi:[NSString stringWithFormat:@"%@",model[@"Status"]]];
+            
+            if ([[NSString stringWithFormat:@"%@",model[@"Status"]] isEqualToString:@"0"]) {
+                [[Stockpile sharedStockpile]setIsLogin:NO];
+                return;
+            }
             [self TapNextViewWith:model];
         }else{
+            if (msg==nil || [msg isEmptyString]) {
+              msg=[NSString stringWithFormat:@"登录失败,错误代码%@",model[@"Status"]];
+            };
              [CoreSVP showMessageInCenterWithMessage:msg];
         }
        
@@ -187,7 +197,33 @@
     
     
 }
-
+-(void)showTiShi:(NSString *)status{
+  
+    
+    
+    switch ([status integerValue]) {
+        case 0:
+            [CoreSVP showMessageInCenterWithMessage:@"资料正在审核中，请耐心等待！"];
+            break;
+        case 1:
+                [CoreSVP showMessageInCenterWithMessage:@"登录成功,请等待工作人员与你联系,前往闪电培训课堂"];
+            break;
+        case 2:
+                [CoreSVP showMessageInCenterWithMessage:@"申请失败"];
+            break;
+        case 3:
+                [CoreSVP showMessageInCenterWithMessage:@"登录成功"];
+            break;
+        case 4:
+                [CoreSVP showMessageInCenterWithMessage:@"注册已成功，请前往完善个人资料"];
+            break;
+        default:
+               [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"位置状态%@",status]];
+         
+            break;
+    }
+    
+}
 -(void)TapNextViewWith:(id)models
 {
 

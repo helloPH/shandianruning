@@ -76,21 +76,21 @@
     [moneyCell addSubview:moneyTextField];
     moneyTextField.delegate=self;
     
-    UILabel *yuELabel = [[UILabel alloc] initWithFrame:CGRectMake(RM_Padding, RM_Padding + moneyCell.bottom, RM_VWidth - 2*RM_Padding, 20*self.scale)];
+//    UILabel *yuELabel = [[UILabel alloc] initWithFrame:CGRectMake(RM_Padding, RM_Padding + moneyCell.bottom, RM_VWidth - 2*RM_Padding, 20*self.scale)];
     
-    NSInteger approveWithDraw=0;
-    if (minYuE < _yuE) {
-        approveWithDraw=(_yuE-minYuE)/Intergral * Intergral;
-    }
+//    NSInteger approveWithDraw=0;
+//    if (minYuE < _yuE) {
+//        approveWithDraw=(_yuE-minYuE)/Intergral * Intergral;
+//    }
 
-    yuELabel.attributedText = [[NSString stringWithFormat:@"<main15>•</main15><black11>  账户余额%.2f元，可提现金额</black11><blue13>%@</blue13><black11>元</black11>",_yuE,@(approveWithDraw)] attributedStringWithStyleBook:[self Style]];
-    [bottomBgView addSubview:yuELabel];
-    
-    UILabel *minMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(yuELabel.left, yuELabel.bottom, yuELabel.width, yuELabel.height)];
-    minMoneyLabel.attributedText = [[NSString stringWithFormat:@"<main15>•</main15><black11>  账户余额不低于%@元，可提现金额为%@的整数倍</black11>",@(minYuE),@(Intergral)] attributedStringWithStyleBook:[self Style]];
-    [bottomBgView addSubview:minMoneyLabel];
+//    yuELabel.attributedText = [[NSString stringWithFormat:@"<main15>•</main15><black11>  账户余额%.2f元，可提现金额</black11><blue13>%@</blue13><black11>元</black11>",_yuE,@(approveWithDraw)] attributedStringWithStyleBook:[self Style]];
+//    [bottomBgView addSubview:yuELabel];
+//    
+//    UILabel *minMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(yuELabel.left, yuELabel.bottom, yuELabel.width, yuELabel.height)];
+//    minMoneyLabel.attributedText = [[NSString stringWithFormat:@"<main15>•</main15><black11>  账户余额不低于%@元，可提现金额为%@的整数倍</black11>",@(minYuE),@(Intergral)] attributedStringWithStyleBook:[self Style]];
+//    [bottomBgView addSubview:minMoneyLabel];
    
-    UIButton *tiXianButton = [[UIButton alloc] initWithFrame:CGRectMake(RM_ButtonPadding, minMoneyLabel.bottom + RM_Padding, RM_VWidth - RM_ButtonPadding*2, RM_ButtonHeight)];
+    UIButton *tiXianButton = [[UIButton alloc] initWithFrame:CGRectMake(RM_ButtonPadding, moneyCell.bottom + RM_Padding, RM_VWidth - RM_ButtonPadding*2, RM_ButtonHeight)];
     [tiXianButton setTitle:@"确认提现" forState:UIControlStateNormal];
     [tiXianButton setTitleColor:whiteLineColore forState:UIControlStateNormal];
     tiXianButton.titleLabel.font = Big15Font(self.scale);
@@ -141,6 +141,23 @@
         tiXianButton.userInteractionEnabled = NO;
     }
     
+    
+    
+}
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSString * currentText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if ([currentText floatValue]>[[Stockpile sharedStockpile].userYuE floatValue]) {
+        [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"最多只能提取%@元",[Stockpile sharedStockpile].userYuE]];
+        return NO;
+    }
+    if (![currentText isValidateMoneying]) {
+        [CoreSVP showMessageInCenterWithMessage:@"请输入正确的金额，且小数点后最多有两位"];
+//        [self ShowAlertWithMessage:@"请输入正确的金额，且小数点后最多有两位"];
+        return NO;
+    }
+    
+    
+    return YES;
 }
 
 -(void)tiXianButtonEvent:(UIButton *)button{
@@ -149,23 +166,24 @@
     UITextField *moneyTextField = (UITextField *)[self.view viewWithTag:10];
     NSString *money = [moneyTextField.text trimString];
     
-    NSInteger approveWithDraw=0;
-    if (minYuE < _yuE) {
-        approveWithDraw=(_yuE-minYuE)/Intergral * Intergral;
-    }
-    if ([money floatValue]>approveWithDraw) {
-        [CoreSVP showMessageInCenterWithMessage:@"账户余额至少200（含200）元以上！"];
-        return;
-    }
+//    NSInteger approveWithDraw=0;
+//    if (minYuE < _yuE) {
+//        approveWithDraw=(_yuE-minYuE)/Intergral * Intergral;
+//    }
+//    if ([money floatValue]>approveWithDraw) {
+//        [CoreSVP showMessageInCenterWithMessage:@"账户余额至少200（含200）元以上！"];
+//        return;
+//    }
     
     
 
     
     NSDictionary * dic = @{@"PeiSongId":[Stockpile sharedStockpile].userID,
+                           @"Name":[NSString stringWithFormat:@"%@",_bankInfo[@"Name"]],
                            @"Money":money,
-                           @"BankNum":_bankInfo[@"BankNum"],
-                           @"BankType":_bankInfo[@"BankType"],
-                           @"BankKaiHu":_bankInfo[@"Name"]};
+                           @"BankNum":[NSString stringWithFormat:@"%@",_bankInfo[@"BankNum"]],
+                           @"BankType":[NSString stringWithFormat:@"%@",_bankInfo[@"BankType"]],
+                           @"BankKaiHu":[NSString stringWithFormat:@"%@",_bankInfo[@"BankKaiHu"]]};
     [self startDownloadDataWithMessage:nil];
     [AnalyzeObject withdrawWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
         [self stopDownloadData];

@@ -47,9 +47,9 @@
     [tiJiaoButton setTitle:@"提交" forState:UIControlStateNormal];
     [tiJiaoButton setTitleColor:whiteLineColore forState:UIControlStateNormal];
     tiJiaoButton.titleLabel.font = Big15Font(self.scale);
-    [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:blackLineColore] forState:UIControlStateNormal];
-    [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:blackLineColore] forState:UIControlStateHighlighted];
-    tiJiaoButton.userInteractionEnabled = NO;
+    [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:mainColor] forState:UIControlStateNormal];
+    [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:mainColor] forState:UIControlStateHighlighted];
+    tiJiaoButton.userInteractionEnabled = YES;
     tiJiaoButton.layer.cornerRadius = RM_CornerRadius;
     tiJiaoButton.clipsToBounds = YES;
     tiJiaoButton.tag = 1;
@@ -59,6 +59,11 @@
 #pragma mark -- 点击事件
 -(void)tiJiaoButtonEvent:(UIButton *)button{
      [self closeKeyboard];
+    if ([_textView.text isEmptyString]) {
+        [CoreSVP showMessageInCenterWithMessage:@"您还未填写任何内容！"];
+        return;
+    }
+    
     
     NSDictionary * dic = @{@"UserId":[Stockpile sharedStockpile].userID,
                            @"Flag":@"1",
@@ -77,16 +82,16 @@
 }
 -(void)textViewDidChange:(UITextView *)textView{
     UILabel *textLabel = (UILabel *)[self.view viewWithTag:10];
-    UIButton *tiJiaoButton = (UIButton *)[self.view viewWithTag:1];
-    if ([textView.text trimString].length > 0) {
-        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:mainColor] forState:UIControlStateNormal];
-        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:mainColor] forState:UIControlStateHighlighted];
-        tiJiaoButton.userInteractionEnabled=YES;
-    }else{
-        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:blackLineColore] forState:UIControlStateNormal];
-        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:blackLineColore] forState:UIControlStateHighlighted];
-        tiJiaoButton.userInteractionEnabled=NO;
-    }
+//    UIButton *tiJiaoButton = (UIButton *)[self.view viewWithTag:1];
+//    if ([textView.text trimString].length > 0) {
+//        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:mainColor] forState:UIControlStateNormal];
+//        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:mainColor] forState:UIControlStateHighlighted];
+//        tiJiaoButton.userInteractionEnabled=YES;
+//    }else{
+//        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:blackLineColore] forState:UIControlStateNormal];
+//        [tiJiaoButton setBackgroundImage:[UIImage ImageForColor:blackLineColore] forState:UIControlStateHighlighted];
+//        tiJiaoButton.userInteractionEnabled=NO;
+//    }
     NSInteger textLength = [textView.text trimString].length;
     if (textLength > RM_LeaveMessageLength) {
         textLength = RM_LeaveMessageLength;

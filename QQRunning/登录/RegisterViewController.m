@@ -290,6 +290,7 @@
             
             ShenFenRenZhengViewController *VC = [ShenFenRenZhengViewController new];
             VC.ID=[NSString stringWithFormat:@"%@",[Stockpile sharedStockpile].userID];
+            VC.biaoJi=0;
             [self.navigationController pushViewController:VC animated:YES];
             
             

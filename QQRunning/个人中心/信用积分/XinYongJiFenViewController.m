@@ -13,9 +13,10 @@
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIButton *selectButton;
 @property (nonatomic,strong) UIImageView *selectLine;
-
+@property (nonatomic,strong) UILabel    * xinLabel;
 
 @property (nonatomic,strong) NSMutableArray * datas;
+@property (nonatomic,strong) NSMutableDictionary * dataDic;
 @property (nonatomic,assign) NSInteger        yeIndex;
 
 @end
@@ -34,6 +35,7 @@
 }
 -(void)initData{
     _yeIndex=1;
+    _dataDic=[NSMutableDictionary dictionary];
     _datas=[NSMutableArray array];
 }
 -(void)reshData{
@@ -51,11 +53,13 @@
                 [_tableView.mj_footer endRefreshing];
             }
 
+            [_dataDic removeAllObjects];
             if (_yeIndex==1) {
                 [_datas  removeAllObjects];
             }
             if (CODE(ret)) {
-                [_datas addObject:model];
+                [_dataDic addEntriesFromDictionary:model];
+                [_datas addObjectsFromArray:model[@"JiFenList"]];
             }else{
                 [CoreSVP showMessageInBottomWithMessage:msg];
             }
@@ -124,6 +128,7 @@
     
     
     UILabel *xinYongZhiLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, bgImageView.width, bgImageView.height)];
+    _xinLabel=xinYongZhiLabel;
     xinYongZhiLabel.numberOfLines = 5;
     xinYongZhiLabel.attributedText = [[NSString stringWithFormat:@"<white18>信用值</white18>\n\n\n\n<main20>10</main20>"] attributedStringWithStyleBook:[self Style]];
     xinYongZhiLabel.textAlignment = 1;
@@ -174,8 +179,6 @@
     
     [_tableView addHeardTarget:self Action:@selector(xiala)];
     [_tableView addFooterTarget:self Action:@selector(shangla)];
-
-    
 }
 -(void)xiala{
     _yeIndex=1;
@@ -186,6 +189,9 @@
     [self reshData];
 }
 -(void)reshView{
+    
+    _xinLabel.attributedText = [[NSString stringWithFormat:@"<white18>信用值</white18>\n\n\n\n<main20>%@</main20>",_dataDic[@"XiYong"]] attributedStringWithStyleBook:[self Style]];
+    
     [_tableView reloadData];
     
 }

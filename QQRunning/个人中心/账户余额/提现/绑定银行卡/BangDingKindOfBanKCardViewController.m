@@ -40,6 +40,7 @@
     [super viewDidLoad];
     [self setupNewNavi];
     [self setupNewView];
+    [self TextFieldChange];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TextFieldChange) name:UITextFieldTextDidChangeNotification object:nil];
 }
 #pragma mark -- 界面
@@ -71,6 +72,7 @@
         [tiXianCell addSubview:textField];
         setY = tiXianCell.bottom;
         
+        
         if (i == 0) {
 //            [textField setEnabled:NO];
             textField.userInteractionEnabled=NO;
@@ -79,11 +81,17 @@
             tap.numberOfTapsRequired = 1;
             [tiXianCell addGestureRecognizer:tap];
             [tiXianCell.btn removeFromSuperview];
-            
+            if (!_isAdd) {
+                textField.text=[[NSString stringWithFormat:@"%@",_bankInfo[@"BankType"]] getValiedString];
+            }
+        }else{
+            if (!_isAdd) {
+                textField.text=[[NSString stringWithFormat:@"%@",_bankInfo[@"BankKaiHu"]] getValiedString];
+            }
         }
     }
     UIButton *nextStepButton = [[UIButton alloc] initWithFrame:CGRectMake(RM_ButtonPadding, setY + RM_Padding*2, RM_VWidth - RM_ButtonPadding*2, RM_ButtonHeight)];
-    [nextStepButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextStepButton setTitle:@"提交" forState:UIControlStateNormal];
     [nextStepButton setTitleColor:whiteLineColore forState:UIControlStateNormal];
     nextStepButton.titleLabel.font = Big15Font(self.scale);
     [nextStepButton setBackgroundImage:[UIImage ImageForColor:blackLineColore] forState:UIControlStateNormal];

@@ -217,6 +217,11 @@
         [UIView animateWithDuration:0.2 animations:^{
             self.view.left=-RM_VWidth;
             _ceView.alpha=0.0;
+        }completion:^(BOOL finished) {
+            //判断是否开始旋转
+            NSNotification *notification =[NSNotification notificationWithName:@"judgeStartRotation" object:nil userInfo:nil];
+            //通过通知中心发送通知
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
         }];
     }else{
         [UIView animateWithDuration:0.2 animations:^{

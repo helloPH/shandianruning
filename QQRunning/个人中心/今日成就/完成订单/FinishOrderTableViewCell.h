@@ -17,8 +17,10 @@
 @property (nonatomic,strong) UILabel *beginPointLabel;
 @property (nonatomic,strong) UILabel *endPointLabel;
 @property (nonatomic,strong) UILabel *orderDecLabel;
-@property (nonatomic,strong) UILabel *shouYiLabel;
+@property (nonatomic,strong) UILabel *goodsLabel;
+@property (nonatomic,strong) UILabel *beiZhuLabel;
+//@property (nonatomic,strong) UIButton *qiangDanButton;
+@property (nonatomic,strong) NSIndexPath *indexPath;
 
-
-
+@property (nonatomic,assign) BOOL isQiangDan;
 @end

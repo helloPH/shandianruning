@@ -121,14 +121,17 @@
     // 保温箱
     NSString * baoWenXiang = [[NSString stringWithFormat:@"%@",_dataDic[@"BaoWenBox"]] getValiedString];
     // 保价
-    NSString * baojia = [[NSString stringWithFormat:@"%@",_dataDic[@"BaoJia"]] getValiedString];
+//    NSString * baojia = [[NSString stringWithFormat:@"%@",_dataDic[@"BaoJia"]] getValiedString];
     // 备注留言
     NSString * liuYan = [[NSString stringWithFormat:@"%@",_dataDic[@"Desc"]] getValiedString];
     
 
     /*                             帮忙                                 */
+    
     //帮时长
-   NSString * bangShiChang = [[NSString stringWithFormat:@"%@",_dataDic[@"BangShiChang"]] getValiedString];
+    NSString * bangType = [[NSString stringWithFormat:@"%@",_dataDic[@"BPType"]] getValiedString];
+    //帮时长
+   NSString * bangShiChang = [[NSString stringWithFormat:@"%@分钟",_dataDic[@"BangShiChang"]] getValiedString];
     //帮信息
     NSString * bangXinXi = [[NSString stringWithFormat:@"%@",_dataDic[@"BangXinxi"]] getValiedString];
     
@@ -166,7 +169,6 @@
             @{@"title":@"订单金额",@"value":orderMoney},
             @{@"title":@"商品金额",@"value":goodsMoney},
             @{@"title":@"订单里程",@"value":songJuLi},
-            @{@"title":@"保价",@"value":baojia},
             @{@"title":@"备注留言",@"value":liuYan}];
     }
     
@@ -177,7 +179,7 @@
                       @{@"title":@"帮忙地点",@"value":qiDiZhi},
                       @{@"title":@"联 系 人",@"value":qiPerson},
                       @{@"title":@"联系电话",@"value":qiTel},
-                      @{@"title":@"帮忙类型",@"value":bangXinXi},
+                      @{@"title":@"帮忙类型",@"value":bangType},
                       @{@"title":@"帮忙时间",@"value":bangShiChang},
                       @{@"title":@"订单金额",@"value":orderMoney},
                       @{@"title":@"订单里程",@"value":quJuLi},
@@ -202,7 +204,8 @@
                       @{@"title":@"下车地址",@"value":zhongDiZhi},
                       @{@"title":@"订单金额",@"value":orderMoney},
                       @{@"title":@"订单里程",@"value":quJuLi},
-                      @{@"title":@"备注留言",@"value":liuYan}];
+//                      @{@"title":@"备注留言",@"value":liuYan}
+                      ];
     }
     
     

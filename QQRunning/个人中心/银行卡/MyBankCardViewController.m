@@ -58,18 +58,18 @@
     [self.view addSubview:_bankCardBgView];
 
     
-    
-    
-    
-    
-    
-    
-    UIView *bankCardView = [[UIView alloc] initWithFrame:CGRectMake(RM_Padding, RM_Padding, _bankCardBgView.width - 2*RM_Padding, 80*self.scale)];
+    UIImageView  *bankCardView = [[UIImageView alloc] initWithFrame:CGRectMake(RM_Padding, RM_Padding, _bankCardBgView.width - 2*RM_Padding, 80*self.scale)];
     bankCardView.backgroundColor = mainColor;
+    bankCardView.image=[UIImage imageNamed:@"bg_yhk"];
     bankCardView.layer.cornerRadius = RM_CornerRadius;
     bankCardView.clipsToBounds = YES;
     [_bankCardBgView addSubview:bankCardView];
     
+    UIImageView * kuijie = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20*self.scale, 45, 10)];
+    kuijie.image=[UIImage imageNamed:@"biaoqian"];
+    kuijie.contentMode=UIViewContentModeCenter;
+    [bankCardView addSubview:kuijie];
+    kuijie.right=bankCardView.width-10*self.scale;
     
     UIImageView * cardLogo=[[UIImageView alloc]initWithFrame:CGRectMake(RM_Padding, RM_Padding, 36*self.scale, 36*self.scale)];
     [bankCardView addSubview:cardLogo];
@@ -77,26 +77,28 @@
     cardLogo.layer.cornerRadius=cardLogo.height/2;
     cardLogo.layer.masksToBounds=YES;
     [cardLogo setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@""]];
-    cardLogo.width=0;
+    cardLogo.width=30*self.scale;
+    cardLogo.hidden=YES;
     
     
-    UILabel *cardNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardLogo.right+RM_Padding, RM_Padding, bankCardView.width - RM_Padding*3-cardLogo.right, 20*self.scale)];
+    UILabel *cardNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardLogo.right+RM_Padding, RM_Padding*2, bankCardView.width - RM_Padding*3-cardLogo.right, 20*self.scale)];
     cardNameLabel.tag = 10;
-    cardNameLabel.font = DefaultFont(self.scale);
+    cardNameLabel.font = Big17Font(self.scale);
     cardNameLabel.textColor = whiteLineColore;
     [bankCardView addSubview:cardNameLabel];
     
     UILabel *cardKindLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardNameLabel.left, cardNameLabel.bottom, cardNameLabel.width, cardNameLabel.height)];
     cardKindLabel.tag = 20;
-    cardKindLabel.font = SmallFont(self.scale);
+    cardKindLabel.font = DefaultFont(self.scale);
     cardKindLabel.textColor = whiteLineColore;
     [bankCardView addSubview:cardKindLabel];
     
-    UILabel *cardNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardKindLabel.left, cardKindLabel.bottom, cardKindLabel.width, cardKindLabel.height)];
+    UILabel *cardNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardKindLabel.left, cardKindLabel.bottom+20*self.scale, cardKindLabel.width, cardKindLabel.height)];
     cardNumLabel.tag = 30;
     cardNumLabel.font = Big17Font(self.scale);
     cardNumLabel.textColor = whiteLineColore;
     [bankCardView addSubview:cardNumLabel];
+    bankCardView.height=cardNumLabel.bottom+20*self.scale;
     
     //默认视图
     _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, self.NavImg.bottom, RM_VWidth, RM_VHeight - self.NavImg.bottom)];
@@ -135,13 +137,18 @@
     if (!_bankCardBgView.hidden) {
         //银行卡名字
         UILabel *cardNameLabel = (UILabel *)[self.view viewWithTag:10];
-        cardNameLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"Name"]] getValiedString];
+        cardNameLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"BankType"]] getValiedString];
         //银行卡类型
         UILabel *cardKindLabel = (UILabel *)[self.view viewWithTag:20];
-        cardKindLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"BankType"]] getValiedString];
+        cardKindLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"BankKaiHu"]] getValiedString];
         //银行卡号
         UILabel *cardNumLabel = (UILabel *)[self.view viewWithTag:30];
-        cardNumLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"BankNum"]] getValiedString];
+        
+        
+        NSString * bankNum=[NSString stringWithFormat:@"%@",_dataDic[@"BankNum"]];
+        NSString *bankCardNum = [bankNum substringFromIndex:bankNum.length - 4];
+        
+        cardNumLabel.text = [NSString stringWithFormat:@"**** **** **** %@",bankCardNum];
     }
     //修改button的title
 //    UIButton *changeButton = (UIButton *)[self.NavImg viewWithTag:40];
@@ -168,6 +175,7 @@
                                               }
                                               if (index==1) {//更换银行卡
                                                   BangDingCardViewController *bangDingCardVC = [BangDingCardViewController new];
+                                                  bangDingCardVC.bankInfo=_dataDic;
                                                   bangDingCardVC.isAdd=NO;
                                                   [self.navigationController pushViewController:bangDingCardVC animated:YES];
                                               }

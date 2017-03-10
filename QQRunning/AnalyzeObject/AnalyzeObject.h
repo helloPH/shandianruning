@@ -53,6 +53,10 @@ typedef void(^Blocks)(id model, NSString *ret, NSString *msg);
  */
 +(void)getFinishOrderListWithDic:(NSDictionary *)dic WithBlock:(Blocks)block;
 /*
+ *今日完成订单
+ */
++(void)getTodayFinishOrderListWithDic:(NSDictionary *)dic WithBlock:(Blocks)block;
+/*
  *未抢订单
  */
 +(void)getunQiangOrderListWithDic:(NSDictionary *)dic WithBlock:(Blocks)block;

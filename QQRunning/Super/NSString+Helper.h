@@ -65,6 +65,12 @@
  *判断是否是邮箱
  */
 -(BOOL)isValidateEmail;
+
+/**
+ *
+ *判断是否是正在输入的金额
+ */
+-(BOOL)isValidateMoneying;
 /**
  *
  *判断是否是手机号

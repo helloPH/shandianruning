@@ -17,7 +17,7 @@
 //#import "FuWuTiaoKuanViewController.h"
 //#import "ShiYongXuZhiViewController.h"
 #import "AboutUsViewController.h"
-
+#import "TextContentViewController.h"
 //#import "JPUSHService.h"
 
 @interface SettingViewContrller ()<UITableViewDelegate,UITableViewDataSource,SettingTableViewCellDelegate>
@@ -25,7 +25,7 @@
 @property (nonatomic,strong) NSArray *contentArray;
 
 @property (nonatomic,strong) NSString *keFuPhone;
-@property (nonatomic,strong) NSMutableDictionary * verSionDic;
+//@property (nonatomic,strong) NSMutableDictionary * verSionDic;
 @end
 
 @implementation SettingViewContrller
@@ -53,17 +53,20 @@
         
     }];
     
-    dic =@{@"type":@"1"};
-    [AnalyzeObject getVersionWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
-        _verSionDic=[NSMutableDictionary dictionary];
-        
-        if (CODE(ret)) {
-            [_verSionDic addEntriesFromDictionary:model];
-        }else{
-            [CoreSVP showMessageInCenterWithMessage:msg];
-        }
-        [_tableView reloadData];
-    }];
+    
+
+    
+//    dic =@{@"type":@"1"};
+//    [AnalyzeObject getVersionWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+//        _verSionDic=[NSMutableDictionary dictionary];
+//        
+//        if (CODE(ret)) {
+//            [_verSionDic addEntriesFromDictionary:model];
+//        }else{
+//            [CoreSVP showMessageInCenterWithMessage:msg];
+//        }
+//        [_tableView reloadData];
+//    }];
 }
 -(void)setupTableView
 {
@@ -122,7 +125,16 @@
     }
     if (indexPath.row == 6) {
         cell.RigthImage.hidden = YES;
-        cell.ValueLabel.text=[NSString stringWithFormat:@"V%@",_verSionDic[@"verNum"]];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        CFShow((__bridge CFTypeRef)(infoDictionary));
+        //    // app名称
+        //    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+        // app版本
+        NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+        //    // app build版本
+        //    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+        
+        cell.ValueLabel.text=[NSString stringWithFormat:@"V%@",app_Version];
         
     }
     cell.topLine.hidden = indexPath.row != 0;
@@ -188,6 +200,7 @@
         case 4:
             
         {
+            [self.navigationController pushViewController:[TextContentViewController insWithTitle:@"保险说明" parameter:@"9"] animated:YES];
 //          [PHPopBox showAlertWithTitle:@"提示" message:@"保险说明" boxType:boxType1 buttons:@[[ControlStyle insWithTitle:@"确定" andColor:mainColor],[ControlStyle insWithTitle:@"取消" andColor:matchColor]] block:^(NSInteger index) {
 //              
 //          }];
@@ -210,6 +223,7 @@
                         }];
                     }
                 }];
+                
                 break;
                 
             }

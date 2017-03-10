@@ -90,6 +90,41 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:self];
 }
+#pragma mark - 判断是否为金额输入格式
+-(BOOL)isValidateMoneying{
+    //正在输入的金额必须以数字开头
+    
+    //没有小数点
+    NSString * money1=@"^[0-9]{1}";
+    NSPredicate *regextestmoney1=[NSPredicate predicateWithFormat:@"SELF MATCHES %@", money1];
+    
+    NSString * money11=@"^[1-9][0-9]+$";
+    NSPredicate *regextestmoney11=[NSPredicate predicateWithFormat:@"SELF MATCHES %@", money11];
+    
+    //有小数点
+    NSString * money2=@"^[0-9]{1}\\.{0,1}";
+    NSPredicate *regextestmoney2=[NSPredicate predicateWithFormat:@"SELF MATCHES %@", money2];
+    
+    NSString * money21=@"^[0-9]{1}\\.{1}[0-9]{1,2}";
+    NSPredicate *regextestmoney21=[NSPredicate predicateWithFormat:@"SELF MATCHES %@", money21];
+    
+    
+    NSString * money3=@"^[1-9]{1}[0-9]+\\.{1}[0-9]{1,2}";
+    NSPredicate *regextestmoney3=[NSPredicate predicateWithFormat:@"SELF MATCHES %@", money3];
+    
+    NSString * money31=@"^[1-9]{1}[0-9]+\\.{0,1}";
+    NSPredicate *regextestmoney31=[NSPredicate predicateWithFormat:@"SELF MATCHES %@", money31];
+    
+    
+    if ([self isEmptyString]||[regextestmoney1 evaluateWithObject:self]||[regextestmoney2 evaluateWithObject:self] ||[regextestmoney21 evaluateWithObject:self]||[regextestmoney3 evaluateWithObject:self]||[regextestmoney11 evaluateWithObject:self]||[regextestmoney31 evaluateWithObject:self])
+    {
+        return YES;
+    }else{
+        return NO;
+    }
+    
+}
+
 #pragma mark  银行账号判断
 -(BOOL)isValidateBank
 {

@@ -9,6 +9,8 @@
 #import "SuperViewController.h"
 
 @interface BangDingKindOfBanKCardViewController : SuperViewController
+@property (nonatomic,strong)NSDictionary * bankInfo;
+
 @property (nonatomic,strong)NSString * userName;
 @property (nonatomic,strong)NSString * bankCardNum;
 @property (nonatomic,assign)BOOL isAdd;

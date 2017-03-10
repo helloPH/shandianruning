@@ -72,11 +72,11 @@
                               @"为了避免货物纠纷\n请在取货的时候拍照存证",
                               @"取货后点击\n“我已取货”",
                               @"请先致电收货人确定收货地址和时间",
-                              @"到达收货地址后点击\n@“我已送达”",
+                              @"到达收货地址后点击\n“我已送达”",
                               @"请向收货人要取短信验证码"];
         }
         if (self.orderType == OrderTypeHelp || self.orderType == OrderTypeQueueUp) {
-            _contentArray = @[@"请先致电发货人确定地址和时间",@"到达取货地点后点击\n“我已到达”",@"为了避免货物纠纷\n请在取货的时候拍照存证",@"取货后点击\n“我已取货”"];
+            _contentArray = @[@"请先致电联系人确定地址和时间",@"到达帮忙地点后点击\n“我已到达”",@"为了避免货物纠纷\n请在到达地点后拍照存证",@"请向收货人要取短信验证码\n我已完成"];
         }
         if (self.orderType == OrderTypeMotocycleTaxi) {
             _contentArray = @[@"请确定确定出发地址和时间",@"到达后点击\n“我已到达”"];
@@ -223,11 +223,11 @@
     timerLabel.textAlignment = NSTextAlignmentCenter;
     timerLabel.font = SmallFont(self.scale);
     timerLabel.textColor = blackTextColor;
-    timerLabel.attributedText =[[NSString stringWithFormat:@"剩余时间<orang14>%@</orang14>",@"00:00:00"] attributedStringWithStyleBook:[self Style]];
+    timerLabel.attributedText =[[NSString stringWithFormat:@"剩余时间<orang14>%@</orang14>",@"00:00:00 "] attributedStringWithStyleBook:[self Style]];
     [timerLabel sizeToFit];
     timerLabel.centerY=timerImageView.height/2;
     [timerImageView addSubview:timerLabel];
-    timerImageView.width=timerLabel.width+10;
+    timerImageView.width=timerLabel.width+15;
     _timerLabel=timerLabel;
 //    timerLabel.tag=1002;
     [self timerEvent];
@@ -308,7 +308,7 @@
     NSString * daojishi = [self getTimeTextWithDaoJiShi:dao];
     _timerLabel.attributedText =[[NSString stringWithFormat:@"剩余时间<orang14>%@</orang14>",daojishi] attributedStringWithStyleBook:[self Style]];
     [_timerLabel sizeToFit];
-    _timerLabel.width=_timerLabel.width+10*self.scale;
+    _timerLabel.width=_timerLabel.width+15*self.scale;
 }
 
 -(NSString *)getTimeTextWithDaoJiShi:(NSInteger)daoJiShi{
@@ -319,9 +319,25 @@
     NSInteger second = daoJiShi % 60 ; // 整秒
     NSInteger minute = daoJiShi / 60 % 60 ;  /// 整分钟
     NSInteger hour   = daoJiShi / 60 / 60 % 24 ; // 整小时
-    NSInteger day    = daoJiShi / 60 / 60 / 24 % 30 ;// 整天
+//    NSInteger day    = daoJiShi / 60 / 60 / 24 % 30 ;// 整天
     NSMutableArray * dateArray  = [NSMutableArray array];
-    [dateArray addObjectsFromArray:@[@(hour),@(minute),@(second)]];
+//    [dateArray addObjectsFromArray:@[@(hour),@(minute),@(second)]];
+    
+    NSString * hourS =  [NSString stringWithFormat:@"%ld",(long)hour];
+    NSString * minuteS = [NSString stringWithFormat:@"%ld",(long)minute];
+    NSString * secondS = [NSString stringWithFormat:@"%ld",(long)second];
+    if (hourS.length==1) {
+        hourS = [@"0" stringByAppendingString:hourS];
+    }
+    if (minuteS.length==1) {
+        minuteS = [@"0" stringByAppendingString:minuteS];
+    }
+    if (secondS.length==1) {
+        secondS = [@"0" stringByAppendingString:secondS];
+    }
+    
+    [dateArray addObjectsFromArray:@[hourS,minuteS,secondS]];
+    
 //    if (day==0) {
 //        [dateArray removeObjectAtIndex:0];
 //        if (hour==0) {
@@ -460,14 +476,20 @@
             [topBtn setAttributedTitle:[[NSString stringWithFormat:@"<white14> 待完成  </white14>\n<white10> 立即前往%@</white10>",@""]attributedStringWithStyleBook:[self Style]] forState:UIControlStateNormal];
     }
     [topBtn sizeToFit];
+    if (self.orderType ==  OrderTypeHelp || self.orderType == OrderTypeQueueUp) {
+        self.TitleLabel.text=@"帮忙中";
+    }else{
+        self.TitleLabel.text=@"配送中";
+    }
     
     
     if (_step==8) {
-        [self ShowAlertTitle:@"提示" Message:@"该订单已被取消" Delegate:self OKText:@"继续查看" CancelText:@"返回主页" Block:^(NSInteger index) {
-            if (index==0) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }];
+        [CoreSVP showMessageInCenterWithMessage:@"用户已取消该订单!"];
+//        [self ShowAlertTitle:@"提示" Message:@"该订单已被取消" Delegate:self OKText:@"继续查看" CancelText:@"返回主页" Block:^(NSInteger index) {
+//            if (index==0) {
+//                [self.navigationController popViewControllerAnimated:YES];
+//            }
+//        }];
     }
     
     NSInteger topStep =  0;
@@ -795,10 +817,7 @@
         switch (indexpath.row) {
             case 0:
             {
-                NSString * tel = [NSString stringWithFormat:@"%@",_dataDic[@"UserTel"]];
-                
-
-                
+                NSString * tel = [NSString stringWithFormat:@"%@",_dataDic[@"QITel"]];
                 NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
                BOOL isSuccess = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
                 if (isSuccess) {

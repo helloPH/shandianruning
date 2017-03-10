@@ -10,6 +10,8 @@
 #import "CellView.h"
 //#import "HelpTableViewCell.h"
 //#import "QianDanLieBiaoViewController.h"
+#import "LoginViewController.h"
+
 
 #define headCellHeight 70*self.scale
 #define photoCellHeight 120*self.scale
@@ -293,11 +295,24 @@
     [AnalyzeObject commitPeiSongDataWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
         [self stopDownloadData];
         if (CODE(ret)) {
-            [self PopVC];
-//            [[Stockpile sharedStockpile] setIsApprove:YES];
+            if (_biaoJi == 0) { // 注册界面过来的
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
+            if (_biaoJi == 1) { // 首页过来的
+                LoginViewController * login = [LoginViewController new];
+                
+                UINavigationController * navi =[[UINavigationController alloc]initWithRootViewController:login];
+                [self presentViewController:navi animated:YES completion:^{
+                }];
+                //        [self dismissViewControllerAnimated:YES completion:nil];
+            }
+            [[Stockpile sharedStockpile]setIsLogin:NO];
+//            LoginViewController * login = [LoginViewController new];
+//            [self.navigationController pushViewController:login animated:YES];
         }else{
-            [CoreSVP showMessageInCenterWithMessage:msg];
+            
         }
+        [CoreSVP showMessageInCenterWithMessage:msg];
     }];
     
     
@@ -446,13 +461,6 @@
         _block();
     }
     [self.navigationController popViewControllerAnimated:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
-//    if (_biaoJi == 0) {
-//
-//    }
-//    if (_biaoJi == 1) {
-//
-//    }
 }
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

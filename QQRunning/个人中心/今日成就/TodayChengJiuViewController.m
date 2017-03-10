@@ -20,6 +20,8 @@
 //分享
 @property(nonatomic,strong)UIControl *maskControl;
 @property(nonatomic,strong)UIView *shareView;
+
+@property(nonatomic,assign)BOOL isPao;
 @end
 
 @implementation TodayChengJiuViewController
@@ -76,15 +78,21 @@
                 break;
             case 1:// 奔跑里程
             {
+                float todayLi = [[Stockpile sharedStockpile].userTodayLiCheng floatValue];
+                float allJuli = [[Stockpile sharedStockpile].userAllJuLi floatValue];
                 
-                count = _type==ChengJiuTypeToday?[Stockpile sharedStockpile].userTodayLiCheng:[Stockpile sharedStockpile].userAllJuLi;
                 
+                count = _type==ChengJiuTypeToday?[NSString stringWithFormat:@"%.2f",todayLi]:[NSString stringWithFormat:@"%.2f",allJuli];
+        
                 measure=@"公里";
             }
                 break;
             case 2://  获取收益
             {
-                count = _type==ChengJiuTypeToday?[Stockpile sharedStockpile].userTodayShouYi:[Stockpile sharedStockpile].userAllTiCheng;
+                float todayToShou =[[Stockpile sharedStockpile].userTodayShouYi floatValue];
+                float allTiCheng  =[[Stockpile sharedStockpile].userAllTiCheng floatValue];
+                
+                count = _type==ChengJiuTypeToday?[NSString stringWithFormat:@"%.2f",todayToShou]:[NSString stringWithFormat:@"%.2f",allTiCheng];
                 measure=@"元";
             }
                 break;
@@ -108,6 +116,7 @@
     if (button.tag == 10) {
         //完成订单
         FinishOrderViewController *finishVC = [FinishOrderViewController new];
+        finishVC.chengJiutype=_type;
         [self.navigationController pushViewController:finishVC animated:YES];
     }else if (button.tag == 11){
         //奔跑里程

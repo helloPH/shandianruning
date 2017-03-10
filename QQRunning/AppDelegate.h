@@ -28,5 +28,6 @@
 -(void)OutLogin;
 -(void)turnOnNotification;
 -(void)turnOffNotification;
+-(void)chongZhiBadge;
 @end
 

@@ -41,7 +41,27 @@
     return self;
 }
 
-
++(void)showAlertWithTitle:(NSString *)title message:(NSString *)message boxType:(BoxType)boxType{
+    PHPopBox * box = [[PHPopBox alloc]init];
+    [box showAlertWithTitle:title message:message boxType:boxType];
+}
+-(void)showAlertWithTitle:(NSString *)title message:(NSString *)message boxType:(BoxType)boxType{
+    UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width-100*self.scale, 100*self.scale)];
+    bgView.backgroundColor=[UIColor whiteColor];
+    bgView.center=CGPointMake(self.width/2, self.height/2);
+    [self addSubview:bgView];
+    bgView.layer.cornerRadius=3*self.scale;
+    bgView.layer.masksToBounds=YES;
+    [UIView animateWithDuration:2 animations:^{
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+    
+    
+    
+    
+    
+}
 +(void)showAlertWithTitle:(NSString *)title message:(NSString *)message boxType:(BoxType)boxType buttons:(NSArray<ControlStyle *> *)buttons block:(AlertBlock)block{
     PHPopBox * box =[[PHPopBox alloc]init];
    

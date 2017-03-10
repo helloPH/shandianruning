@@ -12,6 +12,8 @@
 @interface YouJiangTuiJianViewController ()
 @property(nonatomic,strong)UIControl *maskControl;
 @property(nonatomic,strong)UIView *shareView;
+@property(nonatomic,strong)NSString * erWeiMaUrl;
+@property(nonatomic,assign)BOOL isPao;
 @end
 
 @implementation YouJiangTuiJianViewController
@@ -55,6 +57,7 @@
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(setX, bgImageView.bottom - 100*self.scale, buttonWidth, 86/2.25*self.scale)];
         [button setBackgroundImage:[UIImage imageNamed:@"tuijian_btn"] forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"tuijian_btn"] forState:UIControlStateHighlighted];
+        button.tag=50+i;
         NSString *titleStr = i == 0?@"推荐跑男":@"推荐用户";
         [button setTitle:titleStr forState:UIControlStateNormal];
         button.titleLabel.font = Big14Font(self.scale);
@@ -67,10 +70,17 @@
 }
 #pragma mark -- 分享
 -(void)ShareEvent:(UIButton *)button{
+    
+    
     _maskControl = [[UIControl alloc]initWithFrame:self.view.bounds];
     _maskControl.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [_maskControl addTarget:self action:@selector(dismissViewEvent) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_maskControl];
+    if (button.tag==50) {
+        _isPao=YES;
+    }else{
+        _isPao=NO;
+    }
     
     _shareView = [self shareView];
     [_maskControl addSubview:_shareView];
@@ -140,7 +150,7 @@
         UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(setX, setY, buttonWidth, buttonWidth + 20*self.scale)];
         shareButton.tag = i;
         [shareButton setTitle:titls[i] forState:UIControlStateNormal];
-        [shareButton addTarget:self action:@selector(fen:) forControlEvents:UIControlEventTouchUpInside];
+        [shareButton addTarget:self action:@selector(getErWeiMa:) forControlEvents:UIControlEventTouchUpInside];
         [shareButton setTitleColor:clearColor forState:UIControlStateNormal];
         shareButton.backgroundColor = clearColor;
         [view addSubview:shareButton];
@@ -184,6 +194,24 @@
     [self dismissViewEvent];
     [self shareButtonEvent:button];
 }
+-(void)getErWeiMa:(UIButton *)sender{
+    NSDictionary * dic = @{@"PeiSongId":[Stockpile sharedStockpile].userID,
+                           @"Flag":_isPao?@"1":@"0"};
+    
+    [self startDownloadDataWithMessage:nil];
+    [AnalyzeObject  getErWeiMaWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+        [self stopDownloadData];
+        
+        if (CODE(ret)) {
+            _erWeiMaUrl=[NSString stringWithFormat:@"%@%@",ImgDuanKou,model[@"QRHref"]];
+            [self fen:sender];
+        }else{
+            [CoreSVP showMessageInCenterWithMessage:@"获取二维码失败"];
+        }
+    }];
+    
+    
+}
 -(void)shareButtonEvent:(UIButton *)sender{
     UMSocialPlatformType type;
 //
@@ -199,11 +227,12 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
+    
     //创建网页内容对象
-    NSString* thumbURL =  @"https://mobile.umeng.com/images/pic/home/social/img-1.png";
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"欢迎使用【友盟+】社会化组件U-Share" descr:@"欢迎使用【友盟+】社会化组件U-Share，SDK包最小，集成成本最低，助力您的产品开发、运营与推广！" thumImage:thumbURL];
+    NSString* thumbURL =  _erWeiMaUrl;
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"闪电飞侠" descr:@"轻松赚大钱，赶紧来加入；推荐内容：闪电买、闪电送、闪电取，闪电摩的，闪电帮忙，闪电排队，不用60分钟到全城，早用早方便，早用早省钱。" thumImage:thumbURL];
     //设置网页地址
-    shareObject.webpageUrl = @"http://mobile.umeng.com/social";
+    shareObject.webpageUrl = _erWeiMaUrl;
     
     //分享消息对象设置分享内容对象
     messageObject.shareObject = shareObject;
@@ -251,7 +280,6 @@
 #pragma mark -- 导航
 -(void)setupNewNavi
 {
-    self.TitleLabel.text = @"我要邀请";
     UIButton *popButton=[[UIButton alloc]initWithFrame:CGRectMake(0, self.TitleLabel.top, self.TitleLabel.height, self.TitleLabel.height)];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateNormal];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateHighlighted];

@@ -39,8 +39,8 @@
     [_mainScrollView addGestureRecognizer:tap];
     [self.view addSubview:_mainScrollView];
     float SetY=RM_Padding;
-    NSArray *nameArr = @[@"手机号",@"验证码",@"新密码",@"确认密码"];
-    NSArray *Arr=@[@"请输入注册时使用的手机号",@"请输入验证码",@"设置6-20位字母，数字或符号组合",@"请重复输入密码"];
+    NSArray *nameArr = @[@"手机号",@"新密码",@"确认密码",@"验证码"];
+    NSArray *Arr=@[@"请输入注册时使用的手机号",@"设置6-20位字母，数字或符号组合",@"请再次输入密码",@"请输入验证码"];
     for (int i=0; i<Arr.count; i++)
     {
         CellView *Cell=[[CellView alloc]initWithFrame:CGRectMake(0, SetY, self.view.width, 44*self.scale)];
@@ -50,7 +50,7 @@
         UITextField *textF=[[UITextField alloc]initWithFrame:CGRectMake( Cell.titleLabel.right, 5*self.scale, Cell.width- Cell.titleLabel.right-10*self.scale, Cell.height-10*self.scale)];
         textF.font=DefaultFont(self.scale);
         textF.placeholder=Arr[i];
-        textF.secureTextEntry=(i==2 || i==3);
+        textF.secureTextEntry=(i==1 || i==2);
         textF.tag = 10 + i;
         textF.delegate=self;
         Cell.topline.hidden = i!=0;
@@ -59,7 +59,7 @@
         if (i == 0) {
             [textF setMaxLength:RM_TelLength];
             textF.keyboardType = UIKeyboardTypeNumberPad;
-        }else if (i == 1){
+        }else if (i == 3){
             [textF setMaxLength:RM_CodeLength];
             textF.keyboardType = UIKeyboardTypeNumberPad;
             
@@ -68,7 +68,7 @@
             YanButton * MSMBtn=[YanButton insButtonWithFrame:CGRectMake(Cell.width-110*self.scale, Cell.height/2- 50/2.25*self.scale/2, 100*self.scale, 50/2.25*self.scale) title:@"获取验证码" time:120];
             MSMBtn.titleLabel.font=DefaultFont(self.scale);
             [MSMBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-            [MSMBtn setTitleColor:matchColor forState:UIControlStateNormal];
+            [MSMBtn setTitleColor:mainColor forState:UIControlStateNormal];
             MSMBtn.tag = 5;
 
             [MSMBtn addTarget:self action:@selector(getYZM:) forControlEvents:UIControlEventTouchUpInside];
@@ -101,8 +101,6 @@
 -(void)getYZM:(YanButton *)sender{
     [self.view endEditing:YES];
     UITextField *telText=(UITextField *)[self.view viewWithTag:10];
-    
-    UITextField *yanText=(UITextField *)[self.view viewWithTag:11];
     NSString *tel=[telText.text trimString];
     if (![tel isValidateMobile])
     {
@@ -117,7 +115,6 @@
        if (CODE(ret)) {
            _code=model[@"vilidCode"];
            [sender startTimer];
-            yanText.text=model[@"vilidCode"];
        }else{
            [CoreSVP showMessageInCenterWithMessage:msg];
        }
@@ -137,18 +134,22 @@
         [CoreSVP showMessageInCenterWithMessage:@"请输入有效的手机号"];
         return;
     }
+
+    //新密码
+    UITextField *NPwdText=(UITextField *)[self.view viewWithTag:11];
+    UITextField *RPwdText=(UITextField *)[self.view viewWithTag:12];
+    NSString *nPwd=[NPwdText.text trimString];
+    NSString *rPwd = [RPwdText.text trimString];
+    
     //验证码
-    UITextField *codeText=(UITextField *)[self.view viewWithTag:11];
+    UITextField *codeText=(UITextField *)[self.view viewWithTag:13];
     NSString *telcode=[codeText.text trimString];
     if (![telcode isEqualToString:_code] || telcode.length<1) {
         [CoreSVP showMessageInCenterWithMessage:@"输入验证码有误"];
         return;
     }
-    //新密码
-    UITextField *NPwdText=(UITextField *)[self.view viewWithTag:12];
-    UITextField *RPwdText=(UITextField *)[self.view viewWithTag:13];
-    NSString *nPwd=[NPwdText.text trimString];
-    NSString *rPwd = [RPwdText.text trimString];
+    
+    
     if (nPwd.length < RM_PwdMinLength || rPwd.length < RM_PwdMinLength) {
         [CoreSVP showMessageInCenterWithMessage:@"密码格式错误"];
         return;
@@ -201,15 +202,17 @@
     //手机号
     UITextField *TextFf=(UITextField *)[self.view viewWithTag:10];
     NSString *tel=[TextFf.text trimString];
-    //验证码
-    UITextField *TextCode=(UITextField *)[self.view viewWithTag:11];
-    NSString *code = [TextCode.text trimString];
+
     //密码
-    UITextField *TextPwd=(UITextField *)[self.view viewWithTag:12];
+    UITextField *TextPwd=(UITextField *)[self.view viewWithTag:11];
     NSString *nPwd = [TextPwd.text trimString];
     //新密码
-    UITextField *TextRPwd=(UITextField *)[self.view viewWithTag:13];
+    UITextField *TextRPwd=(UITextField *)[self.view viewWithTag:12];
     NSString *rPwd = [TextRPwd.text trimString];
+    
+    //验证码
+    UITextField *TextCode=(UITextField *)[self.view viewWithTag:13];
+    NSString *code = [TextCode.text trimString];
     
     UIButton *LoginBtn=(UIButton *)[self.view viewWithTag:7];
     if (tel.length == RM_TelLength && code.length == RM_CodeLength && nPwd.length>=RM_PwdMinLength && rPwd.length>=RM_PwdMinLength) {
@@ -225,7 +228,7 @@
 #pragma mark -- 导航
 -(void)setupNewNavi
 {
-    self.TitleLabel.text = @"设置";
+    self.TitleLabel.text = @"找回密码";
     UIButton *popButton=[[UIButton alloc]initWithFrame:CGRectMake(0, self.TitleLabel.top, self.TitleLabel.height, self.TitleLabel.height)];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateNormal];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateHighlighted];

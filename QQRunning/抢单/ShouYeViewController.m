@@ -82,6 +82,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self notificationResh];
+    
 //    [self panDuanRotation];
 }
 -(void)viewDidLoad{
@@ -104,9 +106,11 @@
     [self reshRealOrderView];
     
     [self upLoadLocationTimerStart];
+    
+    
+     [self.appdelegate chongZhiBadge];
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationResh) name:@"judgeStartRotation" object:nil];
- 
 }
 -(void)notificationResh{
     [self reshRealOrderView];
@@ -137,6 +141,132 @@
     }];
 
 }
+#pragma mark --  刷新数据
+-(void)reshRealData{
+    NSDictionary * dic=@{@"Phone":[Stockpile sharedStockpile].userAccount,@"Pwd":[Stockpile sharedStockpile].userPassword};
+    
+    [self startDownloadDataWithMessage:nil];
+    [AnalyzeObject loginWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+        [self stopDownloadData];
+        
+        if (CODE(ret)) {
+            [self TapNextViewWith:model];
+        }else{
+            
+        }
+        [self reshRealOrderView];
+        
+    }];
+}
+-(void)TapNextViewWith:(id)models{
+#pragma mark -------------------------------------- 账号信息
+    //  用户 资料 和 地理资料
+    
+    
+    [[Stockpile sharedStockpile] setIsRead:[[NSString stringWithFormat:@"%@",[models objectForKey:@"IsRead"]] isEqualToString:@"0"]];
+    
+    [[Stockpile sharedStockpile] setDefaultAddressId:[NSString stringWithFormat:@"%@",[models objectForKey:@"CityId"]]];
+    [[Stockpile sharedStockpile] setUserID:[NSString stringWithFormat:@"%@",[models objectForKey:@"PeiSongId"]]];
+    [[Stockpile sharedStockpile] setUserRealName:[NSString stringWithFormat:@"%@",[models objectForKey:@"Name"]]];
+    [[Stockpile sharedStockpile] setUserLogo:[NSString stringWithFormat:@"%@",[models objectForKey:@"Image"]]];
+    [[Stockpile sharedStockpile] setUserPhone:[NSString stringWithFormat:@"%@",[models objectForKey:@"Phone"]]];
+    
+    
+    //   账户 情况
+    [[Stockpile sharedStockpile] setUserYuE:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllMoney"]]];
+    [[Stockpile sharedStockpile] setUserRank:[NSString stringWithFormat:@"%@",[models objectForKey:@"XingJi"]]];
+    [[Stockpile sharedStockpile] setUserJiFen:[NSString stringWithFormat:@"%@",[models objectForKey:@"Jifen"]]];
+    
+    
+    
+    [[Stockpile sharedStockpile] setUserStatus:[[NSString stringWithFormat:@"%@",[models objectForKey:@"Status"]] integerValue]];
+    [[Stockpile sharedStockpile] setIsWork:[[NSString stringWithFormat:@"%@",[models objectForKey:@"OnOff"]] boolValue]];
+    
+    //银行信息
+    [[Stockpile sharedStockpile] setDefaultBankName:@""];
+    [[Stockpile sharedStockpile] setDefaultBankCardNum:@""];
+    [[Stockpile sharedStockpile] setDefaultBankCardKind:@""];
+    
+    // 订单情况
+    // 总的
+    [[Stockpile sharedStockpile] setUserAllOrderNum:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllOrder"]]];
+    [[Stockpile sharedStockpile] setUserAllTiCheng:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllTiCheng"]]];
+    [[Stockpile sharedStockpile] setUserAllJieDanJinE:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllMoney"]]];
+    [[Stockpile sharedStockpile] setUserAllJuLi:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllJuLi"]]];
+    
+    // 今日
+    [[Stockpile sharedStockpile] setUserTodayOrderNum:[NSString stringWithFormat:@"%@",[models objectForKey:@"DayOrderNum"]]];
+    [[Stockpile sharedStockpile] setUserTodayShouYi:[NSString stringWithFormat:@"%@",[models objectForKey:@"DayOrderShouYi"]]];
+    [[Stockpile sharedStockpile] setUserTodayLiCheng:[NSString stringWithFormat:@"%@",[models objectForKey:@"DayOrderLiCheng"]]];
+    
+    
+}
+-(void)reshDataIsQianged:(BOOL)isQianged{
+    if (isQianged) {
+        /// 加载待完成数据
+        NSDictionary * dic = @{@"index":@(_unFinishYe),
+                               @"Type":@(_unFinishTypeIndex),
+                               @"PeiSongId":[Stockpile sharedStockpile].userID};
+        [self startDownloadDataWithMessage:nil];
+        [AnalyzeObject getunFinishOrderListWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+            [self stopDownloadData];
+            
+            [_unFinishTableView.mj_header endRefreshing];
+            if ([model count]==0) {
+                [_unFinishTableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [_unFinishTableView.mj_footer endRefreshing];
+            }
+            
+            
+            if (_unFinishYe==1) {
+                [_unFinishDatas removeAllObjects];
+            }
+            if (CODE(ret)) {
+                [_unFinishDatas addObjectsFromArray:model];
+            }else{
+                [CoreSVP showMessageInCenterWithMessage:msg];
+            }
+            [self kongShuJuWithSuperView:_unFinishTableView datas:_unFinishDatas];
+            [_unFinishTableView reloadData];
+        }];
+    }else{
+        ///// 加载未抢  数据
+        
+        NSDictionary * dic = @{@"index":@(_qiangDanYe),
+                               @"Type":@(_qiangTypeIndex),
+                               @"Flag":@"0"
+                               };
+        
+        [self startDownloadDataWithMessage:nil];
+        [AnalyzeObject getunQiangOrderListWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+            [self stopDownloadData];
+            
+            
+            [_qiangDanTableView.mj_header endRefreshing];
+            if ([model count]==0) {
+                [_qiangDanTableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [_qiangDanTableView.mj_footer endRefreshing];
+            }
+            
+            
+            if (_qiangDanYe==1) {
+                [_qiangDanDatas removeAllObjects];
+            }
+            if (CODE(ret)) {
+                [_qiangDanDatas addObjectsFromArray:model];
+                NSLog(@"%@",_qiangDanDatas);
+            }else{
+                [CoreSVP showMessageInCenterWithMessage:msg];
+            }
+            [self kongShuJuWithSuperView:_qiangDanTableView datas:_qiangDanDatas];
+            [_qiangDanTableView reloadData];
+        }];
+        
+    }
+}
+
 -(void)reshRealOrderView{
 
     UIImageView * tiShiImg = [self.NavImg viewWithTag:777];
@@ -155,7 +285,7 @@
     labelTodayNum.attributedText = [[NSString stringWithFormat:@"<main20>%@</main20>\n\n<black15>今日完成</black15>",[Stockpile sharedStockpile].userTodayOrderNum] attributedStringWithStyleBook:[self Style]];
     
     UILabel * labelTodayShouYi = [self.view viewWithTag:204];
-    labelTodayShouYi.attributedText = [[NSString stringWithFormat:@"<main20>%@</main20>\n\n<black14>今日收益</black14>",[Stockpile sharedStockpile].userTodayShouYi] attributedStringWithStyleBook:[self Style]];
+    labelTodayShouYi.attributedText = [[NSString stringWithFormat:@"<main20>%.2f</main20>\n\n<black14>今日收益</black14>",[[Stockpile sharedStockpile].userTodayShouYi floatValue]] attributedStringWithStyleBook:[self Style]];
     
     NSDictionary * dic = @{@"Flag":@"7"};
     [AnalyzeObject getAppSetParamterWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
@@ -176,9 +306,12 @@
         }
     }];
     
-    if (![self judgeStatus]) {
+    if ([Stockpile sharedStockpile].userStatus!=3) {
         return;
     }
+//    if (![self judgeStatus]) {
+//        return;
+//    }
     if ([Stockpile sharedStockpile].isWork) {
         [self startQiangDan];
        
@@ -679,7 +812,7 @@
 //        NSLog(@"orderID；    %@",dic[@"OrderId"]);
         OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"qiangDanCell"];
         cell.orderType=[[NSString stringWithFormat:@"%@",dic[@"Type"]] integerValue];
-        cell.timeLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QiangTime"]] getValiedString];
+        cell.timeLabel.text = [[NSString stringWithFormat:@"%@",dic[@"DownOrderTime"]] getValiedString];
         cell.beginPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QIAddress"]] getValiedString];
         cell.endPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"ZhongAddress"]] getValiedString];
         
@@ -693,12 +826,7 @@
         }else{
             xingCheng = [[NSString stringWithFormat:@"%@",dic[@"QuJuLi"]] getValiedString];
         }
-        
-        if (orderTypeIndex==1 || orderTypeIndex==2) { //  易碎 以及 保温箱
-            
-        }
-        
-        
+
         if (orderTypeIndex==5 || orderTypeIndex==4) {
             cell.beginPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"BangXinxi"]] getValiedString];
             cell.endPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QIAddress"]] getValiedString];
@@ -706,16 +834,20 @@
         
 
         
-        if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2) {
-              cell.goodsLabel.hidden=YES;
-        }else{
-              cell.goodsLabel.hidden=YES;
-        }
+//        if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2) {
+//              cell.goodsLabel.hidden=YES;
+//        }else{
+//              cell.goodsLabel.hidden=YES;
+//        }
         
         
         
         cell.orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray12>路程大约%.2f公里，费用</gray12><orang14>%.2f</orang14><gray12>元，加价</gray12><orang14>%.2f</orang14><gray12>元</gray12>",[xingCheng floatValue],[price floatValue],[addPrice floatValue]] attributedStringWithStyleBook:[self Style]];
         cell.goodsLabel.attributedText = [[NSString stringWithFormat:@"<gray12>购买商品：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"GoodsName"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
+        if (orderTypeIndex==OrderTypeHelp || orderTypeIndex==OrderTypeQueueUp) {
+            cell.goodsLabel.attributedText =  [[NSString stringWithFormat:@"<gray12>预约时间：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"YuYueTime"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
+        }
+        
         cell.beiZhuLabel.text = [[NSString stringWithFormat:@"备注:%@",dic[@"Desc"]] getValiedString];
         cell.isQiangDan = YES;
         cell.delegate = self;
@@ -747,20 +879,23 @@
             cell.beginPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"BangXinxi"]] getValiedString];
             cell.endPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QIAddress"]] getValiedString];
         }
+        cell.orderType=[[NSString stringWithFormat:@"%@",dic[@"Type"]] integerValue];
         
-        if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2) {  /// 买送取
-            cell.goodsLabel.hidden=YES;
-        }else{
-            cell.goodsLabel.hidden=YES;
-        }
-        if (orderTypeIndex==3) {
-            cell.beiZhuLabel.hidden=YES;
-        }else{
-            cell.beiZhuLabel.hidden=NO;
-        }
-        if (orderTypeIndex==1 || orderTypeIndex==2) { //  易碎 以及 保温箱
-            
-        }
+//        if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2) {  /// 买送取
+//            cell.goodsLabel.hidden=YES;
+//        }else{
+//            cell.goodsLabel.hidden=YES;
+//        }
+//        if (orderTypeIndex==3) {
+//            cell.beiZhuLabel.hidden=YES;
+//        }else{
+//            cell.beiZhuLabel.hidden=NO;
+//        }
+//        if (orderTypeIndex==1 || orderTypeIndex==2) { //  易碎 以及 保温箱
+//            
+//        }
+  
+        
         
         cell.orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>路程大约</gray13><orang14>%.2f</orang14><gray13>公里，费用</gray13><orang14>%.2f</orang14><gray13>元，加价</gray13><orang14>%.2f</orang14><gray13>元</gray13>",
                                          [xingCheng floatValue],
@@ -768,16 +903,21 @@
                                          [addPrice floatValue]]
                                         attributedStringWithStyleBook:[self Style]];
         
+        
         cell.goodsLabel.attributedText = [[NSString stringWithFormat:@"<gray12>购买商品：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"GoodsName"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
+        if (orderTypeIndex==OrderTypeHelp || orderTypeIndex==OrderTypeQueueUp) {
+         cell.goodsLabel.attributedText =  [[NSString stringWithFormat:@"<gray12>预约时间：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"YuYueTime"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
+        }
+        
         
         cell.beiZhuLabel.text =[[NSString stringWithFormat:@"%@",dic[@"Desc"]] getValiedString];
         cell.beiZhuLabel.text=[NSString stringWithFormat:@"备注：%@",cell.beiZhuLabel.text];
+        
+        
         cell.isQiangDan = NO;
         cell.backgroundColor = superBackgroundColor;
         cell.selectionStyle = 0;
-        
-        
-        cell.orderType=[[NSString stringWithFormat:@"%@",dic[@"Type"]] integerValue];
+
         return cell;
 
     }
@@ -812,10 +952,45 @@
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary * dic;
+    float baseH = 190*self.scale;
+    NSInteger typeIndex;
+    
     if (tableView.tag == 2000) {
-        return 190*self.scale + RM_ButtonHeight;
+        dic = _qiangDanDatas[indexPath.section];
     }else{
-        return 185*self.scale;
+        dic = _unFinishDatas[indexPath.section];
+    }
+    typeIndex = [[NSString stringWithFormat:@"%@",dic[@"Type"]] integerValue];
+    switch (typeIndex) {
+        case 0:// 买
+            baseH = 190*self.scale;
+            break;
+        case 1:// 送
+            baseH = 165*self.scale;
+            break;
+        case 2:// 取
+            baseH = 165*self.scale;
+            break;
+        case 3:// 车
+            baseH = 140*self.scale;
+            break;
+        case 4:// 帮
+             baseH = 190*self.scale;
+            break;
+        case 5:// 排
+             baseH = 190*self.scale;
+            break;
+        default:
+            break;
+    }
+
+    
+    
+    if (tableView.tag == 2000) {
+        return baseH + RM_ButtonHeight+15*self.scale;
+    }else{
+        return baseH;
     }
     
 }
@@ -835,6 +1010,11 @@
     if (![self judgeStatus]) {
         return;
     };
+    if (![Stockpile sharedStockpile].isWork) {
+        [self ShowOKAlertWithTitle:@"您还未开工" Message:nil WithButtonTitle:@"确定" Blcok:^{
+        }];
+        return;
+    }
 
     
     NSString * orderId = [NSString stringWithFormat:@"%@",_qiangDanDatas[indexPath.section][@"OrderId"]];
@@ -905,131 +1085,6 @@
     }
     
 }
-#pragma mark --  刷新数据
--(void)reshRealData{
-    NSDictionary * dic=@{@"Phone":[Stockpile sharedStockpile].userAccount,@"Pwd":[Stockpile sharedStockpile].userPassword};
-    
-    [self startDownloadDataWithMessage:nil];
-    [AnalyzeObject loginWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
-        [self stopDownloadData];
-        
-        if (CODE(ret)) {
-            [self TapNextViewWith:model];
-        }else{
-            
-        }
-        [self reshRealOrderView];
-
-    }];
-}
--(void)TapNextViewWith:(id)models{
-#pragma mark -------------------------------------- 账号信息
-    //  用户 资料 和 地理资料
-    
-    
-    [[Stockpile sharedStockpile] setIsRead:[[NSString stringWithFormat:@"%@",[models objectForKey:@"IsRead"]] isEqualToString:@"0"]];
-    
-    [[Stockpile sharedStockpile] setDefaultAddressId:[NSString stringWithFormat:@"%@",[models objectForKey:@"CityId"]]];
-    [[Stockpile sharedStockpile] setUserID:[NSString stringWithFormat:@"%@",[models objectForKey:@"PeiSongId"]]];
-    [[Stockpile sharedStockpile] setUserRealName:[NSString stringWithFormat:@"%@",[models objectForKey:@"Name"]]];
-    [[Stockpile sharedStockpile] setUserLogo:[NSString stringWithFormat:@"%@",[models objectForKey:@"Image"]]];
-    [[Stockpile sharedStockpile] setUserPhone:[NSString stringWithFormat:@"%@",[models objectForKey:@"Phone"]]];
-    
-    
-    //   账户 情况
-    [[Stockpile sharedStockpile] setUserYuE:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllMoney"]]];
-    [[Stockpile sharedStockpile] setUserRank:[NSString stringWithFormat:@"%@",[models objectForKey:@"XingJi"]]];
-    [[Stockpile sharedStockpile] setUserJiFen:[NSString stringWithFormat:@"%@",[models objectForKey:@"Jifen"]]];
-    
-    
-    
-    [[Stockpile sharedStockpile] setUserStatus:[[NSString stringWithFormat:@"%@",[models objectForKey:@"Status"]] integerValue]];
-    [[Stockpile sharedStockpile] setIsWork:[[NSString stringWithFormat:@"%@",[models objectForKey:@"OnOff"]] boolValue]];
-    
-    //银行信息
-    [[Stockpile sharedStockpile] setDefaultBankName:@""];
-    [[Stockpile sharedStockpile] setDefaultBankCardNum:@""];
-    [[Stockpile sharedStockpile] setDefaultBankCardKind:@""];
-    
-    // 订单情况
-    // 总的
-    [[Stockpile sharedStockpile] setUserAllOrderNum:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllOrder"]]];
-    [[Stockpile sharedStockpile] setUserAllTiCheng:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllTiCheng"]]];
-    [[Stockpile sharedStockpile] setUserAllJieDanJinE:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllMoney"]]];
-    [[Stockpile sharedStockpile] setUserAllJuLi:[NSString stringWithFormat:@"%@",[models objectForKey:@"AllJuLi"]]];
-    
-    // 今日
-    [[Stockpile sharedStockpile] setUserTodayOrderNum:[NSString stringWithFormat:@"%@",[models objectForKey:@"DayOrderNum"]]];
-    [[Stockpile sharedStockpile] setUserTodayShouYi:[NSString stringWithFormat:@"%@",[models objectForKey:@"DayOrderShouYi"]]];
-    [[Stockpile sharedStockpile] setUserTodayLiCheng:[NSString stringWithFormat:@"%@",[models objectForKey:@"DayOrderLiCheng"]]];
-    
-    
-}
--(void)reshDataIsQianged:(BOOL)isQianged{
-    if (isQianged) {
-        /// 加载待完成数据
-        NSDictionary * dic = @{@"index":@(_unFinishYe),
-                               @"Type":@(_unFinishTypeIndex),
-                               @"PeiSongId":[Stockpile sharedStockpile].userID};
-        [self startDownloadDataWithMessage:nil];
-        [AnalyzeObject getunFinishOrderListWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
-            [self stopDownloadData];
-   
-            [_unFinishTableView.mj_header endRefreshing];
-            if ([model count]==0) {
-                [_unFinishTableView.mj_footer endRefreshingWithNoMoreData];
-            }else{
-                [_unFinishTableView.mj_footer endRefreshing];
-            }
-            
-            
-            if (_unFinishYe==1) {
-                [_unFinishDatas removeAllObjects];
-            }
-            if (CODE(ret)) {
-                [_unFinishDatas addObjectsFromArray:model];
-            }else{
-                [CoreSVP showMessageInCenterWithMessage:msg];
-            }
-            [self kongShuJuWithSuperView:_unFinishTableView datas:_unFinishDatas];
-            [_unFinishTableView reloadData];
-        }];
-    }else{
-        ///// 加载未抢  数据
-        
-        NSDictionary * dic = @{@"index":@(_qiangDanYe),
-                               @"Type":@(_qiangTypeIndex),
-                               @"Flag":@"0"
-                               };
-
-        [self startDownloadDataWithMessage:nil];
-        [AnalyzeObject getunQiangOrderListWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
-            [self stopDownloadData];
- 
-            
-            [_qiangDanTableView.mj_header endRefreshing];
-            if ([model count]==0) {
-                [_qiangDanTableView.mj_footer endRefreshingWithNoMoreData];
-            }else{
-                [_qiangDanTableView.mj_footer endRefreshing];
-            }
-            
-            
-            if (_qiangDanYe==1) {
-                [_qiangDanDatas removeAllObjects];
-            }
-            if (CODE(ret)) {
-                [_qiangDanDatas addObjectsFromArray:model];
-                NSLog(@"%@",_qiangDanDatas);
-            }else{
-                [CoreSVP showMessageInCenterWithMessage:msg];
-            }
-            [self kongShuJuWithSuperView:_qiangDanTableView datas:_qiangDanDatas];
-            [_qiangDanTableView reloadData];
-        }];
-
-    }
-}
 
 #pragma mark -- 实时订单弹出界面的代理事件
 //删除事件
@@ -1048,10 +1103,17 @@
             if (isTexi) {
                 KuaiCheViewController * kuaiChe = [KuaiCheViewController new];
                 kuaiChe.orderId = orderId;
+                kuaiChe.block=^(){
+                    [self reshDataIsQianged:NO];
+                };
                 [self.navigationController pushViewController:kuaiChe animated:YES];
             }else{
                 UnFinishOrderDetailsViewController *unFinishVC = [UnFinishOrderDetailsViewController new];
                 unFinishVC.orderId=orderId;
+                unFinishVC.block=^(){
+                    [self reshDataIsQianged:NO];
+                };
+                
                 [self.navigationController pushViewController:unFinishVC animated:YES];
             }
         }];
@@ -1409,6 +1471,7 @@
     if ([Stockpile sharedStockpile].userStatus==3) {
         return YES;
     }
-    return NO;}
+    return NO;
+}
 
 @end

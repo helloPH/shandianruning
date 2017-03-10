@@ -334,8 +334,8 @@
     [_tanChuView addSubview:deleImg];
     [deleImg addTarget:self action:@selector(removeTan) forControlEvents:UIControlEventTouchUpInside];
     [deleImg setBackgroundImage:[UIImage imageNamed:@"sy_delete"] forState:UIControlStateNormal];
-    deleImg.right=_bgView.right-RM_Padding*2;
-    deleImg.bottom=_bgView.top-RM_Padding*2;
+    deleImg.right=_bgView.right;
+    deleImg.bottom=_bgView.top-RM_Padding;
     
 
     

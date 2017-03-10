@@ -12,7 +12,7 @@
 //#import "CCLocation.h"
 #ifndef DefaultPageSource
 
-#define ImgDuanKou        @"http://122.114.98.248:1186"
+#define ImgDuanKou        @"http://www.sdjs.top:1180/"
 
 #pragma mark - 下线通知
 #define orderLineKey  @"orderLine"
@@ -141,7 +141,7 @@ typedef NS_ENUM(NSInteger,OrderType) {
 /** 手机号码长度*/
 #define RM_TelLength 11
 /** 密码最大长度*/
-#define RM_PwdMaxLength 12
+#define RM_PwdMaxLength 20
 /** 密码最小长度*/
 #define RM_PwdMinLength 6
 /** 验证码长度*/

@@ -19,6 +19,7 @@
     [super viewDidLoad];
     [self setupNewNavi];
     [self setupNewView];
+    [self TextFieldChange];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TextFieldChange) name:UITextFieldTextDidChangeNotification object:nil];
 }
 #pragma mark -- 界面
@@ -49,11 +50,17 @@
         textField.tag = 10 + i;
         if (i == 0) {
             [textField setMaxLength:RM_NameLength];
+            if (!_isAdd) {
+                textField.text=[[NSString stringWithFormat:@"%@",_bankInfo[@"Name"]] getValiedString];
+            }
         }else{
             
             textField.ry_inputType = RYIntInputType;
             textField.ry_interval = 4;
             [textField setMaxLength:RM_BankCardLength];
+            if (!_isAdd) {
+                textField.text=[[NSString stringWithFormat:@"%@",_bankInfo[@"BankNum"]] getValiedString];
+            }
         }
         [tiXianCell addSubview:textField];
         setY = tiXianCell.bottom;
@@ -113,6 +120,7 @@
     BangDingKindOfBanKCardViewController *bangDingCardKindVC = [BangDingKindOfBanKCardViewController new];
     bangDingCardKindVC.userName=name;
     bangDingCardKindVC.bankCardNum=bankCardNum;
+    bangDingCardKindVC.bankInfo=_bankInfo;
     bangDingCardKindVC.isAdd=_isAdd;
     [self.navigationController pushViewController:bangDingCardKindVC animated:YES];
 }

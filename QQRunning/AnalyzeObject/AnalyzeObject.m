@@ -151,6 +151,17 @@
         block(model,ret,msg);
     }];
 }
+/*
+ *今日完成订单
+ */
++(void)getTodayFinishOrderListWithDic:(NSDictionary *)dic WithBlock:(Blocks)block{
+    NSMutableDictionary * dicM=[NSMutableDictionary dictionaryWithDictionary:@{@"action":@"Get_FishOrderByNow_List"}];
+    [dicM addEntriesFromDictionary:dic];
+    AnalyzeObject * ana=[AnalyzeObject new];
+    [ana loadData:dicM withUrl:@"interfaceDOC/firstProject/PerSongs.ashx?" WithBlock:^(id model, NSString *ret, NSString *msg) {
+        block(model,ret,msg);
+    }];
+}
 
 /*
  *未抢订单

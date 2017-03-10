@@ -303,7 +303,7 @@
     NSString * xingCheng = @"";
     NSString * price = [[NSString stringWithFormat:@"%@",_dataDic[@"Money"]] getValiedString];
     NSString * addPrice = [[NSString stringWithFormat:@"%@",_dataDic[@"AddMoney"]] getValiedString];
-    if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2 || orderTypeIndex==5) {  /// 买送取
+    if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2 || orderTypeIndex==3) {  /// 买送取
        xingCheng = [[NSString stringWithFormat:@"%@",_dataDic[@"SongJuLi"]] getValiedString];
     }else{
        xingCheng = [[NSString stringWithFormat:@"%@",_dataDic[@"QuJuLi"]] getValiedString];
@@ -312,13 +312,13 @@
         startImageView.image=[UIImage imageNamed:@"sy_paiduixinxi"];
         endImageView.image=[UIImage imageNamed:@"sy_paiduishichang"];
         NSString * bangShi = [[NSString stringWithFormat:@"%@",_dataDic[@"BangShiChang"]]getValiedString];
+        NSString * bangXinXi = [[NSString stringWithFormat:@"%@",_dataDic[@"BangXinxi"]] getValiedString];
         
-        
-        startAddressLabel.text=[[NSString stringWithFormat:@"帮忙信息:%@",_dataDic[@"BangXinxi"]] getValiedString];
+        startAddressLabel.text=[NSString stringWithFormat:@"帮忙信息:%@",bangXinXi];
         endAddressLabel.text=[NSString stringWithFormat:@"帮忙时长:%@分钟",bangShi];
         if(orderTypeIndex==OrderTypeQueueUp){
             
-            startAddressLabel.text=[[NSString stringWithFormat:@"排队信息:%@",_dataDic[@"BangXinxi"]] getValiedString];
+            startAddressLabel.text=[NSString stringWithFormat:@"排队信息:%@",bangXinXi];
             
             
             endAddressLabel.text=[NSString stringWithFormat:@"排队时长:%@分钟",bangShi];

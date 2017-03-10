@@ -224,7 +224,6 @@
     [self receive:userInfo];
 }
 -(void)receive:(NSDictionary *)userInfo{
-    [self chongZhiBadge];
 // Required, iOS 7 Support
 //    [JPUSHService handleRemoteNotification:userInfo];
     NSString * type    = [NSString stringWithFormat:@"%@",userInfo[@"type"]];
@@ -256,8 +255,6 @@
             success.shouRu=orderId;
             [_shouYe.navigationController pushViewController:success animated:YES];
         }
-        
-        
         [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"%@",@"订单支付成功"]];
     }else{
         [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"未知类型的通知：\n%@",userInfo]];
@@ -301,6 +298,8 @@
     }
     self.window.rootViewController = _navi;
     
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"GuideKey"];
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"GuideKey"] ) {
         GuiderViewController *guideVC = [[GuiderViewController alloc] initWithBlock:^(BOOL success) {
             dispatch_async(dispatch_get_main_queue(), ^{

@@ -10,5 +10,5 @@
 
 @interface BangDingCardViewController : SuperViewController
 @property (nonatomic,assign)BOOL isAdd;
-
+@property (nonatomic,strong)NSDictionary * bankInfo;
 @end

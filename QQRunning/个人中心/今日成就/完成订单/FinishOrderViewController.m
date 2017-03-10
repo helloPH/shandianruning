@@ -7,9 +7,9 @@
 //
 
 #import "FinishOrderViewController.h"
-//#import "FinishOrderTableViewCell.h"
+#import "FinishOrderTableViewCell.h"
 #import "CellView.h"
-#import "OrderTableViewCell.h"
+//#import "OrderTableViewCell.h"
 #import "OrderDetailsViewController.h"
 
 @interface FinishOrderViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -49,63 +49,72 @@
 -(void)reshData{
     NSDictionary * dic = @{@"PeiSongId":[Stockpile sharedStockpile].userID,
                            @"index":@(_yeIndex),
-                           @"Type":@(_typeIndex)};
-    [self startDownloadDataWithMessage:nil];
-    [AnalyzeObject getFinishOrderListWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
-        
-        [self stopDownloadData];
-        [_tableView.mj_header endRefreshing];
-        if ([model count]==0) {
-            [_tableView.mj_footer endRefreshingWithNoMoreData];
-        }else{
-            [_tableView.mj_footer endRefreshing];
-        }
-        
-        
-        if (_yeIndex==1) {
-            [_datas removeAllObjects];
-        }
-        if (CODE(ret)) {
-            [_datas addObjectsFromArray:model];
-        }else{
-            [CoreSVP showMessageInCenterWithMessage:msg];
-        }
-        [self kongShuJuWithSuperView:_tableView datas:_datas];
-        [_tableView reloadData];
-    }];
+                           @"Type":@(_typeIndex),
+                           };
+    if (_chengJiutype==ChengJiuTypeToday) {
+        [self startDownloadDataWithMessage:nil];
+        [AnalyzeObject getTodayFinishOrderListWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+            
+            [self stopDownloadData];
+            [_tableView.mj_header endRefreshing];
+            if ([model count]==0) {
+                [_tableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [_tableView.mj_footer endRefreshing];
+            }
+            
+            
+            if (_yeIndex==1) {
+                [_datas removeAllObjects];
+            }
+            if (CODE(ret)) {
+                [_datas addObjectsFromArray:model];
+            }else{
+                [CoreSVP showMessageInCenterWithMessage:msg];
+            }
+            [self kongShuJuWithSuperView:_tableView datas:_datas];
+            [_tableView reloadData];
+        }];
+
+    }else{
+        [self startDownloadDataWithMessage:nil];
+        [AnalyzeObject getFinishOrderListWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
+            
+            [self stopDownloadData];
+            [_tableView.mj_header endRefreshing];
+            if ([model count]==0) {
+                [_tableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [_tableView.mj_footer endRefreshing];
+            }
+            
+            
+            if (_yeIndex==1) {
+                [_datas removeAllObjects];
+            }
+            if (CODE(ret)) {
+                [_datas addObjectsFromArray:model];
+            }else{
+                [CoreSVP showMessageInCenterWithMessage:msg];
+            }
+            [self kongShuJuWithSuperView:_tableView datas:_datas];
+            [_tableView reloadData];
+        }];
+
+    }
+    
+    
+   
+    
 }
 -(void)newView{
-//    CellView *topView = [[CellView alloc] initWithFrame:CGRectMake(0, self.NavImg.bottom, RM_VWidth, 40*self.scale)];
-//    topView.bottomline.hidden = NO;
-//    [self.view addSubview:topView];
-//    //全部订单
-//    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(RM_Padding, topView.height/2 - 31/2.25/2*self.scale, 27/2.25*self.scale, 31/2.25*self.scale)];
-//    leftImageView.image = [UIImage imageNamed:@"personal_dingdan_icon01"];
-//    leftImageView.contentMode = UIViewContentModeScaleAspectFit;
-//    [topView addSubview:leftImageView];
-//    
-//    UILabel *allOrderLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftImageView.right+RM_Padding, 0, 100*self.scale, topView.height)];
-//    allOrderLabel.text = @"全部订单";
-//    allOrderLabel.tag = 20;
-//    allOrderLabel.font = Big14Font(self.scale);
-//    [topView addSubview:allOrderLabel];
-//    
-//    UIButton *chooseButton = [[UIButton alloc] initWithFrame:CGRectMake(RM_VWidth - 70*self.scale, topView.height/2 - 15*self.scale, 60*self.scale, 30*self.scale)];
-//    [chooseButton setImage:[UIImage imageNamed:@"personal_dingdan_icon02"] forState:UIControlStateNormal];
-//    [chooseButton setImage:[UIImage imageNamed:@"personal_dingdan_icon02"] forState:UIControlStateHighlighted];
-//    [chooseButton setTitle:@"筛选" forState:UIControlStateNormal];
-//    chooseButton.titleLabel.font = Big14Font(self.scale);
-//    [chooseButton TiaoZhengButtonWithOffsit:7*self.scale TextImageSite:0];
-//    [chooseButton addTarget:self action:@selector(chooseButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-//    [chooseButton setTitleColor:blackTextColor forState:UIControlStateNormal];
-//    [topView addSubview:chooseButton];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.NavImg.bottom , RM_VWidth, RM_VHeight-self.NavImg.height) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = 0;
     _tableView.backgroundColor = superBackgroundColor;
-    [_tableView registerClass:[OrderTableViewCell class] forCellReuseIdentifier:@"cell"];
+    [_tableView registerClass:[FinishOrderTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:_tableView];
     [_tableView addHeardTarget:self Action:@selector(xiala)];
     [_tableView addFooterTarget:self Action:@selector(shangla)];
@@ -128,15 +137,12 @@
     return 1;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSDictionary * dic = _datas[indexPath.section];
+    NSDictionary * dic=_datas[indexPath.section];
     
-    OrderTableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.backgroundColor = superBackgroundColor;
-//    cell.orderTypeLabel.text = @"代我送";
+    FinishOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.timeLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QiangTime"]] getValiedString];
     cell.beginPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QIAddress"]] getValiedString];
     cell.endPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"ZhongAddress"]] getValiedString];
-    
     
     
     NSInteger  orderTypeIndex = [[[NSString stringWithFormat:@"%@",dic[@"Type"]] getValiedString] integerValue];
@@ -152,21 +158,63 @@
         cell.beginPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"BangXinxi"]] getValiedString];
         cell.endPointLabel.text = [[NSString stringWithFormat:@"%@",dic[@"QIAddress"]] getValiedString];
     }
-    
-    cell.orderDecLabel.attributedText =[[NSString stringWithFormat:@"<gray12>路程大约%@公里，费用</gray12><orang14>%@</orang14><gray12>元，加价</gray12><orang14>%@</orang14><gray12>元</gray12>",xingCheng,price,addPrice] attributedStringWithStyleBook:[self Style]];
-    cell.goodsLabel.attributedText = [[NSString stringWithFormat:@"<gray12>获得收益：</gray12><orang14>%@</orang14><gray12>元</gray12>",[[NSString stringWithFormat:@"%@",dic[@"Money"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
-    
-//    cell.beiZhuLabel.text = @"备注：";
-    
     cell.orderType=[[NSString stringWithFormat:@"%@",dic[@"Type"]] integerValue];
+
+    
+    
+    cell.orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>路程大约</gray13><orang14>%.2f</orang14><gray13>公里，费用</gray13><orang14>%.2f</orang14><gray13>元，加价</gray13><orang14>%.2f</orang14><gray13>元</gray13>",
+                                          [xingCheng floatValue],
+                                          [price floatValue],
+                                          [addPrice floatValue]]
+                                         attributedStringWithStyleBook:[self Style]];
+    
+    
+    cell.goodsLabel.attributedText = [[NSString stringWithFormat:@"<gray12>购买商品：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"GoodsName"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
+    if (orderTypeIndex==OrderTypeHelp || orderTypeIndex==OrderTypeQueueUp) {
+        cell.goodsLabel.attributedText =  [[NSString stringWithFormat:@"<gray12>预约时间：</gray12><blue12>%@</blue12>",[[NSString stringWithFormat:@"%@",dic[@"YuYueTime"]] getValiedString]] attributedStringWithStyleBook:[self Style]];
+    }
+    
+    
+    cell.beiZhuLabel.text =[[NSString stringWithFormat:@"%@",dic[@"Desc"]] getValiedString];
+    cell.beiZhuLabel.text=[NSString stringWithFormat:@"备注：%@",cell.beiZhuLabel.text];
+    
+    cell.backgroundColor = superBackgroundColor;
     cell.selectionStyle = 0;
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.001;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 170*self.scale;
+    NSDictionary * dic = _datas[indexPath.section];
+    float baseH = 190*self.scale;
+    NSInteger typeIndex;
+    typeIndex = [[NSString stringWithFormat:@"%@",dic[@"Type"]] integerValue];
+    switch (typeIndex) {
+        case 0:// 买
+            baseH = 190*self.scale;
+            break;
+        case 1:// 送
+            baseH = 165*self.scale;
+            break;
+        case 2:// 取
+            baseH = 165*self.scale;
+            break;
+        case 3:// 车
+            baseH = 140*self.scale;
+            break;
+        case 4:// 帮
+            baseH = 190*self.scale;
+            break;
+        case 5:// 排
+            baseH = 190*self.scale;
+            break;
+        default:
+            break;
+    }
+    
+    return baseH;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return RM_Padding;
