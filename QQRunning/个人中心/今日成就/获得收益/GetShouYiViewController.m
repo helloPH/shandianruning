@@ -116,8 +116,8 @@
         }
         if (CODE(ret)) {
             [_datas addObjectsFromArray:model];
-            
         }else{
+            msg=@"没有更多数据!";
             [CoreSVP showMessageInCenterWithMessage:msg];
         }
         

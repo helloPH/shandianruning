@@ -95,15 +95,22 @@
     }
     
     
+//    [self StratLuJingGuiHua];
     
+    UIImageView * beginImg = [self.view viewWithTag:40];
     
     UILabel * begin = [self.view viewWithTag:50];
     begin.text = [NSString stringWithFormat:@"%@",_dataDic[@"QIAddress"]];
+//    [begin sizeToFit];
+    begin.centerY=beginImg.centerY;
+    
+    
+    UIImageView * endImg = [self.view viewWithTag:41];
     
     UILabel * end   = [self.view viewWithTag:51];
     end.text = [NSString stringWithFormat:@"%@",_dataDic[@"ZhongAddress"]];
-    
-
+//    [end sizeToFit];
+    end.centerY=endImg.centerY;
     
 }
 #pragma mark -- 地图界面
@@ -139,17 +146,22 @@
         startPointImageView.image = [UIImage imageNamed:@"qidian"];
         startPointImageView.contentMode = UIViewContentModeScaleAspectFit;
         [topView addSubview:startPointImageView];
+        startPointImageView.tag=40;
+    
         UILabel * startLabel = [UILabel new];
         startLabel.text = @"起";
         startLabel.textAlignment = NSTextAlignmentCenter;
         startLabel.textColor = whiteLineColore;
         startLabel.font = DefaultFont(self.scale);
         [startPointImageView addSubview:startLabel];
+
         
         UIImageView * endPointImageView = [UIImageView new];
         endPointImageView.image = [UIImage imageNamed:@"zhongdian"];
         endPointImageView.contentMode = UIViewContentModeScaleAspectFit;
         [topView addSubview:endPointImageView];
+        endPointImageView.tag=41;
+    
         UILabel * endLabel = [UILabel new];
         endLabel.text = @"终";
         endLabel.textAlignment = NSTextAlignmentCenter;
@@ -174,13 +186,13 @@
         
         startPointImageView.frame = CGRectMake(RM_Padding, RM_Padding, 23*self.scale, 26.5*self.scale);
         startLabel.frame = CGRectMake(0, 2*self.scale, startPointImageView.width, 15*self.scale);
-        beginPointLabel.frame = CGRectMake(startPointImageView.right+RM_Padding, 0, topView.width - startPointImageView.right - 2*RM_Padding, 30*self.scale);
+        beginPointLabel.frame = CGRectMake(startPointImageView.right+RM_Padding, 0, topView.width - startPointImageView.right - 2*RM_Padding-110*self.scale, 30*self.scale);
         if (beginPointLabel.height != 40*self.scale) {
             beginPointLabel.height = 40*self.scale;
         }
         endPointImageView.frame = CGRectMake(RM_Padding, startPointImageView.bottom, startPointImageView.width, startPointImageView.height);
         endLabel.frame = CGRectMake(0, endPointImageView.height - startLabel.height - 2*self.scale, endPointImageView.width, startLabel.height);
-        endPointLabel.frame = CGRectMake(beginPointLabel.left, beginPointLabel.bottom, topView.width - endPointImageView.right - 2*RM_Padding, beginPointLabel.height);
+        endPointLabel.frame = CGRectMake(beginPointLabel.left, beginPointLabel.bottom, topView.width - endPointImageView.right - 2*RM_Padding-110*self.scale, beginPointLabel.height);
         if (endPointLabel.height != 40*self.scale) {
             endPointLabel.height = 40*self.scale;
         }
@@ -271,7 +283,6 @@
             if (CODE(ret)) {
                     [self reshData];
                 [CoreSVP showMessageInCenterWithMessage:@"乘客以上车"];
-                
             }else{
                 [CoreSVP showMessageInCenterWithMessage:msg];
             }
@@ -304,20 +315,6 @@
                 if (CODE(ret)) {
                     [self reshData];
                     [CoreSVP showMessageInCenterWithMessage:@"乘客已到达目的地"];
-                  
-//                    [self PopVC:nil];
-                    if (_block) {
-                        _block();
-                    }
-                        
-//                    KuaiCheSuccess * success = [KuaiCheSuccess new];
-//                    success.shouRu=[[NSString stringWithFormat:@"%@",model[@"OrderModel"]] getValiedString];
-//                    success.block=^(){
-//                        if (_block) {
-//                            _block();
-//                        }
-//                    };
-//                    [self.navigationController pushViewController:success animated:YES];
                 }else{
                     [CoreSVP showMessageInCenterWithMessage:msg];
 
@@ -361,8 +358,8 @@
     start.pt = CLLocationCoordinate2DMake([[Stockpile sharedStockpile].latitude floatValue], [[Stockpile sharedStockpile].longitude floatValue]);
     
     BMKPlanNode* end = [[BMKPlanNode alloc]init];
-    end.pt = CLLocationCoordinate2DMake(34.776177, 113.671034);
-    
+    end.pt = CLLocationCoordinate2DMake([[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLat"]] floatValue], [[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLng"]] floatValue]);
+
 }
 
 /**
@@ -501,8 +498,6 @@
     [self.navigationController popViewControllerAnimated:YES];
     if (_block && [[NSString stringWithFormat:@"%@",_dataDic[@"Status"]]isEqualToString:@"7"]) {
         _block();
-        [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"%@",_dataDic[@"Status"]]];
-        
     }
     
 }

@@ -70,6 +70,7 @@
             if (CODE(ret)) {
                 [_datas addObjectsFromArray:model];
             }else{
+                msg=@"没有更多数据!";
                 [CoreSVP showMessageInCenterWithMessage:msg];
             }
             [self kongShuJuWithSuperView:_tableView datas:_datas];
@@ -95,6 +96,7 @@
             if (CODE(ret)) {
                 [_datas addObjectsFromArray:model];
             }else{
+                msg=@"没有更多数据!";
                 [CoreSVP showMessageInCenterWithMessage:msg];
             }
             [self kongShuJuWithSuperView:_tableView datas:_datas];
@@ -316,7 +318,7 @@
     orderLabel.text = self.titleArray[button.tag - 10];
     _typeIndex=[self viewToServerType:button.tag-10];
     _yeIndex=1;
-    [self reshData];
+    [self xiala];
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self dismissViewEvent];

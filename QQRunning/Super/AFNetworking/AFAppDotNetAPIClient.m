@@ -22,8 +22,9 @@
 
 #import "AFAppDotNetAPIClient.h"
 #import "DefaultPageSource.h"
-//static NSString * const AFAppDotNetAPIBaseURLString = @"http://116.62.48.137:1180/";
-static NSString * const AFAppDotNetAPIBaseURLString = @"http://www.sdjs.top:1180/";
+static NSString * const AFAppDotNetAPIBaseURLString = @"http://116.62.48.137:1180/";
+//static NSString * const AFAppDotNetAPIBaseURLString = @"http://www.sdjs.top:1180/";
+//ImgDuanKou
 
 @implementation AFAppDotNetAPIClient
 

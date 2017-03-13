@@ -44,6 +44,7 @@
         if (CODE(ret)) {
             [_dataDic addEntriesFromDictionary:model];
         }else{
+            msg = @"获取银行卡信息失败!";
             [CoreSVP showMessageInCenterWithMessage:msg];
         }
         [self refreshView];

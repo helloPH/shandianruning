@@ -54,7 +54,7 @@
 #pragma mark -- 导航
 -(void)setupNewNavi
 {
-    self.TitleLabel.text = @"订单地图";
+    self.TitleLabel.text = @"成功入账";
     UIButton *popButton=[[UIButton alloc]initWithFrame:CGRectMake(0, self.TitleLabel.top, self.TitleLabel.height, self.TitleLabel.height)];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateNormal];
     [popButton setImage:[UIImage imageNamed:@"personal_back"] forState:UIControlStateHighlighted];

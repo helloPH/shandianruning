@@ -12,7 +12,7 @@
 //#import "CCLocation.h"
 #ifndef DefaultPageSource
 
-#define ImgDuanKou        @"http://www.sdjs.top:1180/"
+#define ImgDuanKou        @"http://116.62.48.137:1180/"
 
 #pragma mark - 下线通知
 #define orderLineKey  @"orderLine"

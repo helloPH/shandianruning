@@ -225,6 +225,7 @@
             if (CODE(ret)) {
                 [_unFinishDatas addObjectsFromArray:model];
             }else{
+                msg=@"没有更多数据!";
                 [CoreSVP showMessageInCenterWithMessage:msg];
             }
             [self kongShuJuWithSuperView:_unFinishTableView datas:_unFinishDatas];
@@ -256,8 +257,8 @@
             }
             if (CODE(ret)) {
                 [_qiangDanDatas addObjectsFromArray:model];
-                NSLog(@"%@",_qiangDanDatas);
             }else{
+                msg=@"没有更多数据!";
                 [CoreSVP showMessageInCenterWithMessage:msg];
             }
             [self kongShuJuWithSuperView:_qiangDanTableView datas:_qiangDanDatas];
@@ -686,11 +687,13 @@
   
     if (_scrollViewIndex==1) {// 未抢订单
         _qiangTypeIndex=[self viewToServerType:button.tag - 10];
-        [self reshDataIsQianged:NO];
+        [self qiangXiala];
+//        [self reshDataIsQianged:NO];
     }
     if (_scrollViewIndex==2) {// 待完成订单
         _unFinishTypeIndex=[self viewToServerType:button.tag - 10];
-        [self reshDataIsQianged:YES];
+        [self unXiala];
+//        [self reshDataIsQianged:YES];
     }
     
     
@@ -1348,7 +1351,7 @@
     [imageView.layer removeAllAnimations];
     
     imageView.userInteractionEnabled=YES;
-    [imageView addTarget:self action:@selector(startQiangDan) forControlEvents:UIControlEventTouchUpInside];
+//    [imageView addTarget:self action:@selector(startQiangDan) forControlEvents:UIControlEventTouchUpInside];
 }
 #pragma mark -- 获取当前的日期和星期
 -(void)getCurrentDateAndWeek

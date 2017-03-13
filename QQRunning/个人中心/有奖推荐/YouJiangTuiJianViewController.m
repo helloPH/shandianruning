@@ -229,8 +229,8 @@
     
     
     //创建网页内容对象
-    NSString* thumbURL =  _erWeiMaUrl;
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"闪电飞侠" descr:@"轻松赚大钱，赶紧来加入；推荐内容：闪电买、闪电送、闪电取，闪电摩的，闪电帮忙，闪电排队，不用60分钟到全城，早用早方便，早用早省钱。" thumImage:thumbURL];
+//    NSString* thumbURL =  _erWeiMaUrl;
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"闪电飞侠" descr:@"轻松赚大钱，赶紧来加入；推荐内容：闪电买、闪电送、闪电取，闪电摩的，闪电帮忙，闪电排队，不用60分钟到全城，早用早方便，早用早省钱。" thumImage:_erWeiMaUrl];
     //设置网页地址
     shareObject.webpageUrl = _erWeiMaUrl;
     

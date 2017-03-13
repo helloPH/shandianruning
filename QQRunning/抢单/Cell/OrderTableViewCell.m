@@ -120,12 +120,12 @@
     
     _beginPointLabel = [UILabel new];
     _beginPointLabel.textColor = blackTextColor;
-    _beginPointLabel.numberOfLines = 0;
+    _beginPointLabel.numberOfLines = 1;
     _beginPointLabel.font = DefaultFont(self.scale);
     [_cellView addSubview:_beginPointLabel];
     _endPointLabel = [UILabel new];
     _endPointLabel.textColor = blackTextColor;
-    _endPointLabel.numberOfLines = 0;
+    _endPointLabel.numberOfLines = 1;
     _endPointLabel.font = DefaultFont(self.scale);
     [_cellView addSubview:_endPointLabel];
     
@@ -158,27 +158,28 @@
     _bgView.clipsToBounds = YES;
     
     _orderTypeLabel.frame = CGRectMake(RM_Padding, 0, (_bgView.width-2*RM_Padding)/3, 30*self.scale);
-    
     _timeLabel.frame = CGRectMake(_orderTypeLabel.right, _orderTypeLabel.top, _orderTypeLabel.width*2, _orderTypeLabel.height);
     
     _cellView.frame = CGRectMake(0, _orderTypeLabel.bottom, _bgView.width, 80*self.scale);
     _startPointImageView.frame = CGRectMake(RM_Padding, RM_Padding, 23*self.scale, 26.5*self.scale);
     _startLabel.frame = CGRectMake(0, 2*self.scale, _startPointImageView.width, 15*self.scale);
-    _beginPointLabel.frame = CGRectMake(_startPointImageView.right+RM_Padding, 0, _bgView.width - _startPointImageView.right - 2*RM_Padding, 30*self.scale);
+    _beginPointLabel.frame = CGRectMake(_startPointImageView.right+RM_Padding, 0, _bgView.width - _startPointImageView.right - 2*RM_Padding, 20*self.scale);
      [_beginPointLabel sizeToFit];
-    if (_beginPointLabel.height != 40*self.scale) {
-        _beginPointLabel.height = 40*self.scale;
-    }
-
+//    if (_beginPointLabel.height != 40*self.scale) {
+//        _beginPointLabel.height = 40*self.scale;
+//    }
+    _beginPointLabel.centerY=_startPointImageView.centerY;
 
     
     _endPointImageView.frame = CGRectMake(RM_Padding, _startPointImageView.bottom, _startPointImageView.width, _startPointImageView.height);
     _endLabel.frame = CGRectMake(0, _endPointImageView.height - _startLabel.height - 2*self.scale, _endPointImageView.width, _startLabel.height);
     _endPointLabel.frame = CGRectMake(_beginPointLabel.left, _beginPointLabel.bottom, _bgView.width - _endPointImageView.right - 2*RM_Padding, _beginPointLabel.height);
     [_endPointLabel sizeToFit];
-    if (_endPointLabel.height != 40*self.scale) {
-        _endPointLabel.height = 40*self.scale;
-    }
+//    if (_endPointLabel.height != 40*self.scale) {
+//        _endPointLabel.height = 40*self.scale;
+//    }
+    _endPointLabel.centerY=_endPointImageView.centerY;
+    
     
     _orderDecLabel.frame = CGRectMake(RM_Padding, _cellView.bottom + RM_Padding/2, _bgView.width - RM_Padding*2, 20*self.scale);
     _goodsLabel.frame = CGRectMake(_orderDecLabel.left, _orderDecLabel.bottom, _orderDecLabel.width ,_orderDecLabel.height);

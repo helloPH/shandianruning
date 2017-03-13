@@ -219,7 +219,7 @@
             [button startTimer];
             _code=[model[@"vilidCode"] getValiedString];
             button.code=[model[@"vilidCode"] getValiedString];
-            yanText.text=[model[@"vilidCode"] getValiedString];
+//            yanText.text=[model[@"vilidCode"] getValiedString];
         }else{
             [CoreSVP showMessageInCenterWithMessage:msg];
         }
@@ -279,9 +279,6 @@
                     [[Stockpile sharedStockpile] setUserAccount:tel];
                     [[Stockpile sharedStockpile] setUserPassword:pwd];
                     [[Stockpile sharedStockpile] setUserID:[NSString stringWithFormat:@"%@",[model objectForKey:@"PeiSongId"]]];
-                    
-                    
-                    [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"%@",[model objectForKey:@"Status"]]];
                 }else{
                     [CoreSVP showMessageInCenterWithMessage:msg];
                 }

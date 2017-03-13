@@ -53,6 +53,7 @@
             _dataDic = model;
             _datas = _dataDic[@"List"];
          }else{
+             msg = @"没有更多数据!";
              [CoreSVP showMessageInCenterWithMessage:msg];
         }
         [self reshView];

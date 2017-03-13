@@ -263,16 +263,19 @@
 //    startLabel.font = DefaultFont(self.scale);
 //    [startImageView addSubview:startLabel];
     //起点地址
-    UILabel *startAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(startImageView.right+RM_Padding, 2*self.scale, _orderView.width - startImageView.right - 2*RM_Padding, 40*self.scale)];
+    UILabel *startAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(startImageView.right+RM_Padding, 2*self.scale, _orderView.width - startImageView.right - 2*RM_Padding, 20*self.scale)];
     startAddressLabel.textColor = blackTextColor;
-    startAddressLabel.numberOfLines = 0;
-    startAddressLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"QIAddress"]] getValiedString];
-    [startAddressLabel sizeToFit];
-    if (startAddressLabel.height!=40*self.scale) {
-        startAddressLabel.height=40*self.scale;
-    }
+    startAddressLabel.numberOfLines = 1;
     startAddressLabel.font = DefaultFont(self.scale);
     [addressCellView addSubview:startAddressLabel];
+    
+    startAddressLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"QIAddress"]] getValiedString];
+    [startAddressLabel sizeToFit];
+    //    if (startAddressLabel.height!=40*self.scale) {
+    //        startAddressLabel.height=40*self.scale;
+    //    }
+    startAddressLabel.centerY=startImageView.centerY;
+    
     
     //终点图片
     UIImageView *endImageView = [[UIImageView alloc] initWithFrame:CGRectMake(RM_Padding, startImageView.bottom, startImageView.width, startImageView.height)];
@@ -287,16 +290,19 @@
 //    endLabel.font = DefaultFont(self.scale);
 //    [endImageView addSubview:endLabel];
     //终点地址
-    UILabel *endAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(startAddressLabel.left, startAddressLabel.bottom, _orderView.width - endImageView.right - 2*RM_Padding, 40*self.scale)];
+    UILabel *endAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(startAddressLabel.left, startAddressLabel.bottom, _orderView.width - endImageView.right - 2*RM_Padding, 20*self.scale)];
     endAddressLabel.textColor = blackTextColor;
-    endAddressLabel.numberOfLines = 0;
-    endAddressLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"ZhongAddress"]] getValiedString];
-    [endAddressLabel sizeToFit];
-    if (endAddressLabel.height!=40*self.scale) {
-        endAddressLabel.height=40*self.scale;
-    }
+    endAddressLabel.numberOfLines = 1;
     endAddressLabel.font = DefaultFont(self.scale);
     [addressCellView addSubview:endAddressLabel];
+    endAddressLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"ZhongAddress"]] getValiedString];
+    [endAddressLabel sizeToFit];
+//    if (endAddressLabel.height!=40*self.scale) {
+//        endAddressLabel.height=40*self.scale;
+//    }
+    endAddressLabel.centerY=endImageView.centerY;
+    
+    
     //订单价格信息
     UILabel *orderDecLabel = [[UILabel alloc] initWithFrame:CGRectMake(RM_Padding, addressCellView.bottom, _orderView.width - 2*RM_Padding, 25*self.scale)];
     

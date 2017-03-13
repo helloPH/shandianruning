@@ -223,6 +223,7 @@
 //    completionHandler(); // 系统要求执 这个 法
     [self receive:userInfo];
 }
+
 -(void)receive:(NSDictionary *)userInfo{
 // Required, iOS 7 Support
 //    [JPUSHService handleRemoteNotification:userInfo];
@@ -256,6 +257,24 @@
             [_shouYe.navigationController pushViewController:success animated:YES];
         }
         [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"%@",@"订单支付成功"]];
+    }else if ([type isEqualToString:@"4"]){// 审核通过
+        if (_shouYe) {
+           [_shouYe ShowOKAlertWithTitle:@"通知" Message:@"审核通过" WithButtonTitle:@"确定" Blcok:^{
+           }];
+            
+        }
+    }else if ([type isEqualToString:@"5"]){// 审核失败
+        if (_shouYe) {
+            [_shouYe ShowOKAlertWithTitle:@"通知" Message:@"审核失败" WithButtonTitle:@"确定" Blcok:^{
+                
+            }];
+        }
+    }else if ([type isEqualToString:@"6"]){// 培训签约成功
+        if (_shouYe) {
+            [_shouYe ShowOKAlertWithTitle:@"通知" Message:@"培训签约成功" WithButtonTitle:@"确定" Blcok:^{
+                
+            }];
+        }
     }else{
         [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"未知类型的通知：\n%@",userInfo]];
 
@@ -263,19 +282,23 @@
 
 }
 
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    completionHandler(UIBackgroundFetchResultNewData);
-    UIApplicationState  state = [UIApplication sharedApplication].applicationState;
-    if (state==UIApplicationStateBackground) {//后台
-
-          completionHandler(UIBackgroundFetchResultNewData);
-        
-
-    };
-    if (state==UIApplicationStateActive) {//前台
-        [JPUSHService handleRemoteNotification:userInfo];
+//    completionHandler(UIBackgroundFetchResultNewData);
+//    UIApplicationState  state = [UIApplication sharedApplication].applicationState;
+    
         [self receive:userInfo];
-    };
+//    if (state==UIApplicationStateBackground) {//后台
+//    
+////          completionHandler(UIBackgroundFetchResultNewData);
+//          [self receive:userInfo];
+//
+//    };
+//    
+//    if (state==UIApplicationStateActive) {//前台
+////        [JPUSHService handleRemoteNotification:userInfo];
+//    
+//    };
     
 }
 #pragma mark ------------------------------------------- 百度地图配置

@@ -26,7 +26,7 @@
     [super viewDidLoad];
     [self initData];
     [self setupNewNavi];
-    [self reshData];
+    [self setupTopView];
 }
 -(void)initData{
     _dataDic = [NSMutableDictionary dictionary];
@@ -40,8 +40,11 @@
         [_dataDic removeAllObjects];
         if (CODE(ret)) {
             [_dataDic addEntriesFromDictionary:model];
-            NSLog(@"%@",_dataDic);
+            
+            [self tiXianButtonEvent:nil];
+            
         }else{
+            msg = @"获取银行卡信息失败!";
             [CoreSVP showMessageInCenterWithMessage:msg];
         }
          [self setupTopView];
@@ -64,10 +67,12 @@
     
     UILabel * label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, RM_VWidth, 40)];
     label.attributedText = [[NSString stringWithFormat:@"<white12>当前账户余额（元）</white12>\n<white20>%@</white20>", yuE] attributedStringWithStyleBook:[self Style]];
-    label.numberOfLines=2;
+    label.numberOfLines=0;
     label.centerY=topImg.height/2-10*self.scale;
     label.textAlignment=NSTextAlignmentCenter;
     [topImg addSubview:label];
+    [label sizeToFit];
+    label.centerX=topImg.width/2;
     
     
     UIImageView * centerImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, label.bottom, 130, 17.5)];
@@ -104,7 +109,7 @@
             
             cell.contentLabel.text=[NSString stringWithFormat:@"可提现￥%@",[Stockpile sharedStockpile].userYuE];
             cell.shotLine=YES;
-            [cell.btn addTarget:self action:@selector(tiXianButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.btn addTarget:self action:@selector(reshData) forControlEvents:UIControlEventTouchUpInside];
         } else {
             [cell.btn addTarget:self action:@selector(tiXianGuiZeButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
         }
