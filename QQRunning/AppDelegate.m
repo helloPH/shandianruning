@@ -42,7 +42,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+
     [self setupNewViewController];
     //配置百度地图
     [self configBaiDuMap];
@@ -51,6 +51,8 @@
     
     // UMeng  设置
     [self setupUMeng];
+    
+    [self chongZhiBadge];
     return YES;
 }
 #pragma mark ------------------------------------------- 推送
@@ -284,21 +286,44 @@
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    completionHandler(UIBackgroundFetchResultNewData);
-//    UIApplicationState  state = [UIApplication sharedApplication].applicationState;
+    [JPUSHService handleRemoteNotification:userInfo];
     
+
+    // 取得 APNs 标准信息内容
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
+    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
+    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
+    // 取得Extras字段内容
+    NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
+    NSLog(@"content =[%@], badge=[%ld], sound=[%@], customize field  =[%@]",content,(long)badge,sound,customizeField1);
+    //判断程序是否在前台运行
+    if (application.applicationState ==UIApplicationStateActive) {
+        
+        
+        //如果应用在前台，在这里执行
         [self receive:userInfo];
-//    if (state==UIApplicationStateBackground) {//后台
-//    
-////          completionHandler(UIBackgroundFetchResultNewData);
-//          [self receive:userInfo];
-//
-//    };
-//    
-//    if (state==UIApplicationStateActive) {//前台
-////        [JPUSHService handleRemoteNotification:userInfo];
-//    
-//    };
+        
+        NSString *strSoundFile;
+        if ([[NSString stringWithFormat:@"%@",userInfo[@"type"]] isEqualToString:@"0"]) {
+            strSoundFile = [[NSBundle mainBundle] pathForResource:@"tuisong" ofType:@"wav"];
+            
+            SystemSoundID soundID;
+            AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:strSoundFile],&soundID);
+            AudioServicesPlaySystemSound(soundID);
+        }
+    
+
+    }
+   
+    // iOS 7 Support Required,处理收到的APNS信息
+    //如果应用在后台，在这里执行
+ 
+    completionHandler(UIBackgroundFetchResultNewData);
+    
+    [JPUSHService setBadge:0];//清空JPush服务器中存储的badge值
+    [application setApplicationIconBadgeNumber:0];//小红点清0操作
+    
     
 }
 #pragma mark ------------------------------------------- 百度地图配置

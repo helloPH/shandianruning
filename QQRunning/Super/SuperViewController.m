@@ -79,21 +79,6 @@
 
 
 -(void)startDownloadDataWithMessage:(NSString *)message{
-//    if (self.HUD) {
-//        [self.HUD removeFromSuperview ];
-//    }
-//    self.HUD = [MBProgressHUD showHUDAddedTo:self.appdelegate.window animated:YES];
-//    self.HUD.mode = MBProgressHUDModeIndeterminate;
-//    if ([[NSString stringWithFormat:@"%@",message] isEmptyString]) {
-//        message=@"正在加载...";
-//    }
-//    self.HUD.labelText = message;
-//    self.HUD.removeFromSuperViewOnHide = YES;
-//    
-//    self.HUD.hidden=YES;
-    
-    
-    
     if (_progressView) {
         _progressView=nil;
         [_progressView removeFromSuperview];
@@ -104,15 +89,10 @@
 
     _progressView.center=CGPointMake(self.appdelegate.window.width/2, self.appdelegate.window.height/2);
     
-//    UIView * bgView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, 120, 120)];
-//    bgView.backgroundColor=[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:.5];
-//    bgView.center=_progressView.center;
-//    [_progressView addSubview:bgView];
-    
-    
     
     UIImageView * img = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
     [_progressView addSubview:img];
+    [img setAnimationDuration:0.3];
     img.center=CGPointMake(_progressView.width/2, _progressView.height/2);
     [img setAnimationImages:@[[UIImage imageNamed:@"a111"],
                               [UIImage imageNamed:@"a222"],
@@ -137,9 +117,7 @@
 
 
 -(void)stopDownloadData{
-//    [self.HUD hide:NO];
     [_progressView removeFromSuperview];
-    
 }
 -(void)ShowOKAlertWithTitle:(NSString *)title Message:(NSString *)message WithButtonTitle:(NSString *)btnTitle Blcok:(OKAlertBlock)okBlock{
     

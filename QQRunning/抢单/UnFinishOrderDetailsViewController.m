@@ -270,9 +270,7 @@
     NSDate * startTime = [formoatter dateFromString:[NSString stringWithFormat:@"%@",_dataDic[@"StartTime"]]];
     NSDate * endTime   = [formoatter dateFromString:[NSString stringWithFormat:@"%@",_dataDic[@"EndTime"]]];
     
-    
-    
-    
+
 //    NSString * qiangOrderTimeString = [NSString stringWithFormat:@"%@",_dataDic[@"QiangDanTime"]];
 //    NSDate * qiangOrderTime = [formoatter dateFromString:qiangOrderTimeString];
 //    NSTimeInterval  qiangOrderTimeInterval = [qiangOrderTime timeIntervalSince1970];
@@ -288,22 +286,32 @@
     
     
     NSString * contentText=@"";
+    NSString * contentTextBefor =@"";
+    
     if (self.orderType == OrderTypeBuy || self.orderType == OrderTypeTake || self.orderType == OrderTypeBring) {
         if (_isQu) {/// 已经取过
+            contentTextBefor=@"请在";
             contentText=@"分钟内到达收货地点";
         }else{
+            contentTextBefor=@"请在";
             contentText=@"分钟内到达取货地点";
         }
         
     }
     if (self.orderType == OrderTypeHelp || self.orderType == OrderTypeQueueUp) {
-        _isQu=NO;
-        contentText=@"分钟内完成订单任务";
+        if (_isQu) {
+            contentTextBefor=@"你的任务时长为";
+            contentText=@"分钟";
+        }else{
+            contentTextBefor=@"请在";
+            contentText=@"分钟内到达目的地";
+        }
+        
     }
     
     
     
-    _allTimeLabel.attributedText =[[NSString stringWithFormat:@"请在<orang14>%@</orang14>%@",@(min),contentText] attributedStringWithStyleBook:[self Style]];
+    _allTimeLabel.attributedText =[[NSString stringWithFormat:@"%@<orang14>%@</orang14>%@",contentTextBefor,@(min),contentText] attributedStringWithStyleBook:[self Style]];
 
     NSString * daojishi = [self getTimeTextWithDaoJiShi:dao];
     _timerLabel.attributedText =[[NSString stringWithFormat:@"剩余时间<orang14>%@</orang14>",daojishi] attributedStringWithStyleBook:[self Style]];
@@ -383,12 +391,15 @@
             [_dataDic addEntriesFromDictionary:model];
        
             _step=[[NSString stringWithFormat:@"%@",_dataDic[@"Status"]] integerValue];
-            if (_step>=3) {
+            
+            self.orderType = [[NSString stringWithFormat:@"%@",_dataDic[@"Type"]] integerValue];
+            if ([self tranlate:_step]>=2 && (self.orderType==OrderTypeBuy || self.orderType==OrderTypeTake || self.orderType==OrderTypeBring)) {
+                _isQu=YES;
+            }
+            if ([self tranlate:_step]>=3 && (self.orderType==OrderTypeHelp || self.orderType==OrderTypeQueueUp)) {
                 _isQu=YES;
             }
             
-            
-            self.orderType = [[NSString stringWithFormat:@"%@",_dataDic[@"Type"]] integerValue];
             [self reshView];
         }else{
             [CoreSVP showMessageInBottomWithMessage:msg];

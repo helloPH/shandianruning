@@ -269,7 +269,9 @@
     startAddressLabel.font = DefaultFont(self.scale);
     [addressCellView addSubview:startAddressLabel];
     
-    startAddressLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"QIAddress"]] getValiedString];
+    NSString * qiAddress = [[NSString stringWithFormat:@"%@",_dataDic[@"QIAddress"]] getValiedString];
+    
+    startAddressLabel.text =qiAddress;
     [startAddressLabel sizeToFit];
     //    if (startAddressLabel.height!=40*self.scale) {
     //        startAddressLabel.height=40*self.scale;
@@ -295,7 +297,10 @@
     endAddressLabel.numberOfLines = 1;
     endAddressLabel.font = DefaultFont(self.scale);
     [addressCellView addSubview:endAddressLabel];
-    endAddressLabel.text = [[NSString stringWithFormat:@"%@",_dataDic[@"ZhongAddress"]] getValiedString];
+    
+    NSString * endAddress =[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongAddress"]] getValiedString];
+    
+    endAddressLabel.text = endAddress;
     [endAddressLabel sizeToFit];
 //    if (endAddressLabel.height!=40*self.scale) {
 //        endAddressLabel.height=40*self.scale;
@@ -305,9 +310,15 @@
     
     //订单价格信息
     UILabel *orderDecLabel = [[UILabel alloc] initWithFrame:CGRectMake(RM_Padding, addressCellView.bottom, _orderView.width - 2*RM_Padding, 25*self.scale)];
+    orderDecLabel.numberOfLines=2;
     
     NSString * xingCheng = @"";
-    NSString * price = [[NSString stringWithFormat:@"%@",_dataDic[@"Money"]] getValiedString];
+    NSString * originPrice = [[NSString stringWithFormat:@"%@",_dataDic[@"Money"]] isEmptyString]?@"0":[NSString stringWithFormat:@"%@",_dataDic[@"Money"]];
+    NSString * yhqPrice =    [[NSString stringWithFormat:@"%@",_dataDic[@"YouHuiMoney"]] isEmptyString]?@"0":[NSString stringWithFormat:@"%@",_dataDic[@"YouHuiMoney"]];
+    NSString * price = [NSString stringWithFormat:@"%.2f",[originPrice floatValue] + [yhqPrice floatValue]];
+    
+    
+    
     NSString * addPrice = [[NSString stringWithFormat:@"%@",_dataDic[@"AddMoney"]] getValiedString];
     if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2 || orderTypeIndex==3) {  /// 买送取
        xingCheng = [[NSString stringWithFormat:@"%@",_dataDic[@"SongJuLi"]] getValiedString];
@@ -333,15 +344,21 @@
         [endAddressLabel sizeToFit];
     }
 
-    
-    
-    orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>路程大约</gray13><orang20>%@</orang20><gray13>公里，费用</gray13><orang20>%@</orang20><gray13>元，加价</gray13><orang20>%@</orang20><gray13>元</gray13>",
-                                     xingCheng,
-                                     price,
-                                     addPrice]
-                                    attributedStringWithStyleBook:[self Style]];
+    if (self.orderType==OrderTypeBuy || self.orderType==OrderTypeBring || self.orderType==OrderTypeTake) {
+        orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>从</gray13><orang>20%@</orang20><gray13>到</gray13><orang20>%@</orang20><gray13>全程</gray13><orang20>%@</orang20><gray13>公里，费用</gray13><orang20>%@</orang20><gray13>元，加价</gray13><orang20>%@</orang20><gray13>元</gray13>",qiAddress,
+                                         endAddress,
+                                         xingCheng,
+                                         price,
+                                         addPrice]
+                                        attributedStringWithStyleBook:[self Style]];
+    }else{
+        orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>全程</gray13><orang20>%@</orang20><gray13>公里，费用</gray13><orang20>%@</orang20><gray13>元，加价</gray13><orang20>%@</orang20><gray13>元</gray13>",xingCheng,
+                                         price,
+                                         addPrice]
+                                        attributedStringWithStyleBook:[self Style]];
+    }
     [addressCellView addSubview:orderDecLabel];
-    
+    [orderDecLabel sizeToFit];
     
     //商品价格
     UILabel *goodsPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(RM_Padding, orderDecLabel.bottom, _orderView.width - 2*RM_Padding, 25*self.scale)];
