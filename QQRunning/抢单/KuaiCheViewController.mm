@@ -262,8 +262,14 @@
     }
     if (sender.tag==101) {
         orderDaoHangViewController * daoHang = [orderDaoHangViewController new];
-        daoHang.longitude=[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLng"]] floatValue];
-        daoHang.latitude =[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLat"]] floatValue];
+        
+        daoHang.startLatitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILat"]] doubleValue];
+        daoHang.startLongitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILng"]] doubleValue];
+        
+        
+        daoHang.endLatitude=[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLat"]] doubleValue];
+        daoHang.endLongitude=[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLng"]] doubleValue];
+        
         [self.navigationController pushViewController:daoHang animated:YES];
     }
     
@@ -299,8 +305,8 @@
             [[Stockpile sharedStockpile] setArea:area];
             [[Stockpile sharedStockpile] setRode:road];
             [[Stockpile sharedStockpile] setPlace:place];
-            [[Stockpile sharedStockpile] setLatitude:[NSString stringWithFormat:@"%f",locationCoordinate2D.latitude]];
-            [[Stockpile sharedStockpile] setLongitude:[NSString stringWithFormat:@"%f",locationCoordinate2D.longitude]];
+            [[Stockpile sharedStockpile] setLatitude:[NSString stringWithFormat:@"%@",@(locationCoordinate2D.latitude)]];
+            [[Stockpile sharedStockpile] setLongitude:[NSString stringWithFormat:@"%@",@(locationCoordinate2D.longitude)]];
             
             
             NSDictionary * dic = @{@"PeiSongId":[Stockpile sharedStockpile].userID,

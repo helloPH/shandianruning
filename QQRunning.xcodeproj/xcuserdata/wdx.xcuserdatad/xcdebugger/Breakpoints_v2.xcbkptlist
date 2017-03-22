@@ -19,54 +19,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/UnFinishOrderDetailsViewController.m"
-            timestampString = "511341139.923511"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "827"
-            endingLineNumber = "827"
-            landmarkName = "-peiSongZhongTableViewCellDelegateWithIndex:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/ShouYeViewController.m"
-            timestampString = "511082805.455692"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1165"
-            endingLineNumber = "1165"
-            landmarkName = "-changIsWork:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/&#x62a2;&#x5355;/ShouYeViewController.m"
-            timestampString = "511082806.247844"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1171"
-            endingLineNumber = "1171"
-            landmarkName = "-changIsWork:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "QQRunning/AppDelegate.m"
             timestampString = "511234385.664368"
             startingColumnNumber = "9223372036854775807"
@@ -99,13 +51,93 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QQRunning/AppDelegate.m"
-            timestampString = "511321512.729575"
+            filePath = "QQRunning/&#x62a2;&#x5355;/OrderDetailsViewController.m"
+            timestampString = "511752610.76529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
-            landmarkName = "-application:didReceiveRemoteNotification:fetchCompletionHandler:"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
+            landmarkName = "-orderMapButtonEvent:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QQRunning/&#x62a2;&#x5355;/ShouYeViewController.m"
+            timestampString = "511779358.243415"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1036"
+            endingLineNumber = "1036"
+            landmarkName = "-OrderTableViewCellQiangDanWithIndex:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__60-[ShouYeViewController OrderTableViewCellQiangDanWithIndex:]_block_invoke_2"
+                  moduleName = "QQRunning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/ShouYeViewController.m"
+                  timestampString = "511859034.530196"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1036"
+                  endingLineNumber = "1036"
+                  offsetFromSymbolStart = "384">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__60-[ShouYeViewController OrderTableViewCellQiangDanWithIndex:]_block_invoke_3"
+                  moduleName = "QQRunning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/ShouYeViewController.m"
+                  timestampString = "511859034.531618"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1038"
+                  endingLineNumber = "1038"
+                  offsetFromSymbolStart = "6">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QQRunning/AppDelegate.m"
+            timestampString = "511836711.886053"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "-receive:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QQRunning/AppDelegate.m"
+            timestampString = "511844949.383542"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "-receive:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

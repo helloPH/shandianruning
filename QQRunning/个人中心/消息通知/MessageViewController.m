@@ -9,6 +9,8 @@
 #import "MessageViewController.h"
 #import "MessageTableViewCell.h"
 #import "MessageDetailsViewController.h"
+#import "TextContentViewController.h"
+
 @interface MessageViewController()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
 
@@ -99,6 +101,8 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary * dic = _datas[indexPath.row];
+    
+    
     
     MessageDetailsViewController *detailsVC = [MessageDetailsViewController new];
     detailsVC.msgId=[NSString stringWithFormat:@"%@",dic[@"Id"]];

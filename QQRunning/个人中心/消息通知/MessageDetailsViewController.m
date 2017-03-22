@@ -46,7 +46,7 @@
     }];
 }
 -(void)reshView{
-    NSString * htmlString =[NSString stringWithFormat:@"<!DOCTYPE html><html><body>%@</body></html>",[[NSString stringWithFormat:@"%@",_dataDic[@"Text"]] getValiedString]];
+    NSString * htmlString =[NSString stringWithFormat:@"%@",[[NSString stringWithFormat:@"<!doctype html><html><body>%@</body></html>",_dataDic[@"Text"]] getValiedString]];
     [_webView loadHTMLString:htmlString baseURL:[NSURL URLWithString:htmlString]];
 }
 #pragma mark -- 导航

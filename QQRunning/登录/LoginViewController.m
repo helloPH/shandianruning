@@ -270,53 +270,7 @@
     // 打开推送
     [self.appdelegate turnOnNotification];
   //
-//    
-//    //友盟统计
-//    [MobClick profileSignInWithPUID:[Stockpile sharedStockpile].ID];
-//    
-//    
-//    
-//    NSString *alipayAccount = [[models objectForKey:@"alipayAccount"] EmptyStringByWhitespace];
-//    
-//    if ([alipayAccount isEqualToString:@""]) {
-//        [[Stockpile sharedStockpile] setIsBangDingZhiFuBao:NO];
-//    }
-//    else
-//    {
-//        [[Stockpile sharedStockpile] setIsBangDingZhiFuBao:YES];
-//    }
-//    [[Stockpile sharedStockpile] setAccount:[NSString stringWithFormat:@"%@",[models objectForKey:@"alipayAccount"]]];
-//    [[Stockpile sharedStockpile] setIsLogin:YES];
-//    [[Stockpile sharedStockpile] setUserState:[NSString stringWithFormat:@"%@",[models objectForKey:@"state"]]];
-//    switch ([[models objectForKey:@"state"] intValue]) {
-//        case 0:
-//        {
-//            ShenFenRenZhengViewController *renZhengVC = [ShenFenRenZhengViewController new];
-//            [self.navigationController pushViewController:renZhengVC animated:YES];
-//            break;
-//        }
-//            
-//        case 3:
-//        {
-//            [self ShowAlertWithMessage:@"此账号已被禁用"];
-//            break;
-//        }
-//        default:
-//        {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self.activityVC stopAnimating];
-//                QianDanLieBiaoViewController *qiangDanVC = [QianDanLieBiaoViewController new];
-//                [self.navigationController pushViewController:qiangDanVC animated:YES];
-//                
-//                if (_block) {
-//                    _block(_isMain && YES);
-//                }
-//            });
-//            break;
-//        }
-//            
-//            
-//    }
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [[Stockpile sharedStockpile] setIsLogin:YES];
         ShouYeViewController *shouYeVC = [ShouYeViewController new];

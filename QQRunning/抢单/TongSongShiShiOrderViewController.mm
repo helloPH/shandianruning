@@ -344,19 +344,19 @@
         [endAddressLabel sizeToFit];
     }
 
-    if (self.orderType==OrderTypeBuy || self.orderType==OrderTypeBring || self.orderType==OrderTypeTake) {
-        orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>从</gray13><orang>20%@</orang20><gray13>到</gray13><orang20>%@</orang20><gray13>全程</gray13><orang20>%@</orang20><gray13>公里，费用</gray13><orang20>%@</orang20><gray13>元，加价</gray13><orang20>%@</orang20><gray13>元</gray13>",qiAddress,
-                                         endAddress,
-                                         xingCheng,
-                                         price,
-                                         addPrice]
-                                        attributedStringWithStyleBook:[self Style]];
-    }else{
+//    if (self.orderType==OrderTypeBuy || self.orderType==OrderTypeBring || self.orderType==OrderTypeTake) {
+//        orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>从</gray13><orang20>%@</orang20><gray13>到</gray13><orang20>%@</orang20><gray13>全程</gray13><orang20>%@</orang20><gray13>公里，费用</gray13><orang20>%@</orang20><gray13>元，加价</gray13><orang20>%@</orang20><gray13>元</gray13>",qiAddress,
+//                                         endAddress,
+//                                         xingCheng,
+//                                         price,
+//                                         addPrice]
+//                                        attributedStringWithStyleBook:[self Style]];
+//    }else{
         orderDecLabel.attributedText = [[NSString stringWithFormat:@"<gray13>全程</gray13><orang20>%@</orang20><gray13>公里，费用</gray13><orang20>%@</orang20><gray13>元，加价</gray13><orang20>%@</orang20><gray13>元</gray13>",xingCheng,
                                          price,
                                          addPrice]
                                         attributedStringWithStyleBook:[self Style]];
-    }
+//    }
     [addressCellView addSubview:orderDecLabel];
     [orderDecLabel sizeToFit];
     
@@ -444,13 +444,19 @@
     [AnalyzeObject qingdanWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
         [self stopDownloadData];
         if (CODE(ret)) {
-            if (_delegate && [_delegate respondsToSelector:@selector(TongSongShiShiOrderViewControllerQiangDanResultWithOrderId:isTexi:)]) {
-                NSInteger type =[[NSString stringWithFormat:@"%@",_dataDic[@"Type"]] integerValue];
-                NSString * orderId = [NSString stringWithFormat:@"%@",_dataDic[@"OrderId"]];
-                [_delegate TongSongShiShiOrderViewControllerQiangDanResultWithOrderId:orderId isTexi:type==3];
+            if (![msg isEqualToString:@"请先完成现有的订单"]) {
+                if (_delegate && [_delegate respondsToSelector:@selector(TongSongShiShiOrderViewControllerQiangDanResultWithOrderId:isTexi:)]) {
+                    NSInteger type =[[NSString stringWithFormat:@"%@",_dataDic[@"Type"]] integerValue];
+                    NSString * orderId = [NSString stringWithFormat:@"%@",_dataDic[@"OrderId"]];
+                    [_delegate TongSongShiShiOrderViewControllerQiangDanResultWithOrderId:orderId isTexi:type==3];
+                }else{
+                    [CoreSVP showMessageInCenterWithMessage:@"代理设置失败"];
+                }
             }else{
-                [CoreSVP showMessageInCenterWithMessage:@"代理设置失败"];
+                [self ShowOKAlertWithTitle:nil Message:msg WithButtonTitle:@"确定" Blcok:^{
+                }];
             }
+            
         }else{
             [self ShowQiangDanResultMessage:@"抢单失败" WithCode:tanChuViewWithQiangDanFaile WithBlock:^{
                 

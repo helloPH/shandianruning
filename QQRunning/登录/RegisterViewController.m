@@ -174,7 +174,7 @@
     [self.view addSubview:_agreeXieYiBtn];
     
     UIButton *xieYiBtn = [[UIButton alloc] initWithFrame:CGRectMake(_agreeXieYiBtn.right+2*self.scale, _agreeXieYiBtn.top, 200*self.scale, _agreeXieYiBtn.height)];
-    [xieYiBtn setTitle:@"《闪电跑腿服务条款》" forState:UIControlStateNormal];
+    [xieYiBtn setTitle:@"《闪电飞侠服务条款》" forState:UIControlStateNormal];
     xieYiBtn.titleLabel.font = SmallFont(self.scale);
     [xieYiBtn setTitleColor:blueTextColor forState:UIControlStateNormal];
     [xieYiBtn addTarget:self action:@selector(xieYiButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -451,7 +451,7 @@
     
     
     UIButton *registBtn=(UIButton *)[self.view viewWithTag:7];
-    if ([label.text isEqualToString:@"请选择城市"]) {
+    if ([label.text isEqualToString:@"请选择省市"]) {
         registBtn.enabled = NO;
     }
     else

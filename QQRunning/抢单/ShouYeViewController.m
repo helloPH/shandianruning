@@ -112,7 +112,9 @@
     //通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationResh) name:@"judgeStartRotation" object:nil];
 }
+
 -(void)notificationResh{
+    
     [self reshRealOrderView];
     [self refreshAddressInfomation];
 }
@@ -743,8 +745,8 @@
         [[Stockpile sharedStockpile] setArea:area];
         [[Stockpile sharedStockpile] setRode:road];
         [[Stockpile sharedStockpile] setPlace:place];
-        [[Stockpile sharedStockpile] setLatitude:[NSString stringWithFormat:@"%f",locationCoordinate2D.latitude]];
-        [[Stockpile sharedStockpile] setLongitude:[NSString stringWithFormat:@"%f",locationCoordinate2D.longitude]];
+        [[Stockpile sharedStockpile] setLatitude:[NSString stringWithFormat:@"%@",@(locationCoordinate2D.latitude)]];
+        [[Stockpile sharedStockpile] setLongitude:[NSString stringWithFormat:@"%@",@(locationCoordinate2D.longitude)]];
         [self refreshAddressInfomation];
         
         [self uploadLocation];
@@ -1028,7 +1030,15 @@
     [AnalyzeObject qingdanWithDic:dic WithBlock:^(id model, NSString *ret, NSString *msg) {
         [self stopDownloadData];
         if (CODE(ret)) {
-          [self TongSongShiShiOrderViewControllerQiangDanResultWithOrderId:orderId isTexi:[orderType isEqualToString:@"3"]];
+            if (![msg isEqualToString:@"请先完成现有的订单"]) {
+                [self TongSongShiShiOrderViewControllerQiangDanResultWithOrderId:orderId isTexi:[orderType isEqualToString:@"3"]];
+            }else{
+                [self ShowOKAlertWithTitle:nil Message:msg WithButtonTitle:@"确定" Blcok:^{
+                    
+                }];
+            }
+            
+
         }else{
             [self ShowQiangDanResultMessage:@"抢单失败" WithCode:tanChuViewWithQiangDanFaile WithBlock:^{
             }];
@@ -1204,8 +1214,6 @@
     [self.appdelegate turnOnNotification];
 }
 -(void)receiveOrder:(NSString *)orderId{ ///
-
-    
     
     NSDictionary * dic = @{@"OrderId":orderId};
     [self startDownloadDataWithMessage:nil];

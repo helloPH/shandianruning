@@ -9,23 +9,27 @@
 #import "TextContentViewController.h"
 
 @interface TextContentViewController ()
+@property (nonatomic,assign)ContentType contentType;
 
 @property (nonatomic,strong)NSString * parameter;
 
 @property (nonatomic,strong)NSString * contentText;
 
 @property (nonatomic,strong)UIScrollView * scrollView;
+
+@property (nonatomic,strong)UIWebView * webView;
 @end
 
 @implementation TextContentViewController
-+(instancetype)insWithTitle:(NSString *)title parameter:(NSString *)parameter{
-    TextContentViewController * text = [[TextContentViewController alloc]initWithTitle:title parameter:parameter];
++(instancetype)insWithTitle:(NSString *)title parameter:(NSString *)parameter type:(ContentType)contentType{
+    TextContentViewController * text = [[TextContentViewController alloc]initWithTitle:title parameter:parameter type:contentType];
     return text;
 }
--(instancetype)initWithTitle:(NSString *)title parameter:(NSString *)parameter{
+-(instancetype)initWithTitle:(NSString *)title parameter:(NSString *)parameter type:(ContentType)contentType{
     if (self = [super init]) {
         self.title=title;
         self.parameter=parameter;
+        self.contentType=contentType;
     }
     return self;
 }
@@ -53,23 +57,42 @@
     
 }
 -(void)reshView{
- 
+    if (self.contentType==ContentTypeWeb) {
+        NSString * htmlString =[NSString stringWithFormat:@"<!doctype html><html><head><meta http-equiv='Content-Type' content='text/html:charset=utf-8'/></head><body>%@</body></html>",[[NSString stringWithFormat:@"%@",_contentText] getValiedString]];
+        [_webView loadHTMLString:htmlString baseURL:[NSURL URLWithString:htmlString]];
+    }else if (self.contentType==ContentTypeLabel){
+        UILabel * label =[_scrollView viewWithTag:100];
+        label.text=[NSString stringWithFormat:@"    %@",_contentText];
+        [label sizeToFit];
+        _scrollView.contentSize=CGSizeMake(_scrollView.width, label.bottom+RM_Padding);
+    }else{
+        
+    }
     
-    UILabel * label =[_scrollView viewWithTag:100];
-    label.text=[NSString stringWithFormat:@"    %@",_contentText];
-    [label sizeToFit];
-    _scrollView.contentSize=CGSizeMake(_scrollView.width, label.bottom+RM_Padding);
+
     
 }
 -(void)newView{
-  _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.NavImg.height, RM_VWidth, RM_VHeight-self.NavImg.height)];
-    [self.view addSubview:_scrollView];
     
-  UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(RM_Padding, RM_Padding, _scrollView.width-2*RM_Padding , _scrollView.height-2*RM_Padding)];
-    label.tag=100;
-    label.font=DefaultFont(self.scale);
-    label.textColor=blackTextColor;
-    [_scrollView addSubview:label];
+    if (self.contentType==ContentTypeWeb) {
+        _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, self.NavImg.bottom, RM_VWidth, RM_VHeight-self.NavImg.height)];
+        [self.view addSubview:_webView];
+    }else if (self.contentType==ContentTypeLabel){
+        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.NavImg.height, RM_VWidth, RM_VHeight-self.NavImg.height)];
+        [self.view addSubview:_scrollView];
+        
+        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(RM_Padding, RM_Padding, _scrollView.width-2*RM_Padding , _scrollView.height-2*RM_Padding)];
+        label.tag=100;
+        label.font=DefaultFont(self.scale);
+        label.textColor=blackTextColor;
+        [_scrollView addSubview:label];
+    }else{
+        
+    }
+
+    
+    
+
 }
 
 

@@ -175,8 +175,10 @@
             }
         case 1:
         {
-            AboutUsViewController * about=[AboutUsViewController new];
-            [self.navigationController pushViewController:about animated:YES];
+            [self.navigationController pushViewController:[TextContentViewController insWithTitle:@"关于我们" parameter:@"6" type:ContentTypeWeb] animated:YES];
+            
+//            AboutUsViewController * about=[AboutUsViewController new];
+//            [self.navigationController pushViewController:about animated:YES];
             break;
         }
         case 2:
@@ -200,7 +202,7 @@
         case 4:
             
         {
-            [self.navigationController pushViewController:[TextContentViewController insWithTitle:@"保险说明" parameter:@"9"] animated:YES];
+            [self.navigationController pushViewController:[TextContentViewController insWithTitle:@"保险说明" parameter:@"9" type:ContentTypeWeb] animated:YES];
 //          [PHPopBox showAlertWithTitle:@"提示" message:@"保险说明" boxType:boxType1 buttons:@[[ControlStyle insWithTitle:@"确定" andColor:mainColor],[ControlStyle insWithTitle:@"取消" andColor:matchColor]] block:^(NSInteger index) {
 //              
 //          }];

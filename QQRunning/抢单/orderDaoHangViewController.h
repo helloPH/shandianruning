@@ -9,8 +9,11 @@
 #import "SuperViewController.h"
 
 @interface orderDaoHangViewController : SuperViewController
-@property (nonatomic,assign)float longitude;
-@property (nonatomic,assign)float latitude;
 
 
+@property (nonatomic,assign)double startLongitude;
+@property (nonatomic,assign)double startLatitude;
+
+@property (nonatomic,assign)float endLongitude;
+@property (nonatomic,assign)float endLatitude;
 @end

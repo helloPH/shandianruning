@@ -228,8 +228,18 @@
 #pragma mark -- 点击事件
 -(void)orderMapButtonEvent:(UIButton *)button{
     orderDaoHangViewController *orderMapVC = [orderDaoHangViewController new];
-    orderMapVC.longitude=[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLng"]] floatValue];
-    orderMapVC.latitude = [[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLat"]] floatValue];
+    orderMapVC.orderType=self.orderType;
+    
+    orderMapVC.startLongitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILng"]] doubleValue];
+    orderMapVC.startLatitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILat"]] doubleValue];
+    
+//     [[NSString stringWithFormat:@"%.12f",[[NSString stringWithFormat:@"%@",_dataDic[@"QILng"]]  doubleValue]]doubleValue];
+    
+    
+    orderMapVC.endLongitude=[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLng"]] doubleValue];
+    orderMapVC.endLatitude = [[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLat"]] doubleValue];
+    
+   
     
     [self.navigationController pushViewController:orderMapVC animated:YES];
 }

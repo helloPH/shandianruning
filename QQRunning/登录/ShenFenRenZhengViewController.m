@@ -323,6 +323,8 @@
 }
 #pragma mark -- 选择照片
 -(void)takePhotoEvent:(UITapGestureRecognizer *)tap{
+    [self resignFirstResponder];
+    [self.view endEditing:YES];
     
     if (tap) {
         _isHeadImage = YES;

@@ -17,6 +17,7 @@
 #import <BaiduMapAPI_Search/BMKRouteSearch.h>
 #import "RouteAnnotation.h"
 #import <BaiduMapAPI_Location/BMKLocationService.h>
+#import "BaiDuMapLocationManager.h"
 
 @interface orderDaoHangViewController()<BMKLocationServiceDelegate,BMKMapViewDelegate,BMKRouteSearchDelegate>
 @property (nonatomic,strong) BMKMapView *mapView;
@@ -31,7 +32,6 @@
     [self setupNewNavi];
     [self setupMapView];
     [self startLocation];
-    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -104,10 +104,17 @@
     _routesearch = [[BMKRouteSearch alloc]init];
     _routesearch.delegate = self;
     BMKPlanNode* start = [[BMKPlanNode alloc]init];
-    start.pt = CLLocationCoordinate2DMake([[Stockpile sharedStockpile].latitude floatValue], [[Stockpile sharedStockpile].longitude floatValue]);
+    start.pt = CLLocationCoordinate2DMake(_startLatitude, _startLongitude);
+    
     
     BMKPlanNode* end = [[BMKPlanNode alloc]init];
-    end.pt = CLLocationCoordinate2DMake(_latitude, _longitude);
+    end.pt = CLLocationCoordinate2DMake(_endLatitude, _endLongitude);
+    
+    if (self.orderType==OrderTypeHelp || self.orderType==OrderTypeQueueUp) {
+        start.pt=CLLocationCoordinate2DMake([[Stockpile sharedStockpile].latitude doubleValue], [[Stockpile sharedStockpile].longitude doubleValue]);
+        end.pt=CLLocationCoordinate2DMake(_startLatitude, _startLongitude);
+    }
+    
     
     BMKRidingRoutePlanOption *option = [[BMKRidingRoutePlanOption alloc]init];
     option.from = start;
@@ -121,7 +128,6 @@
     {
         NSLog(@"骑行规划检索发送失败");
     }
-    
 }
 
 /**
@@ -144,30 +150,29 @@
         int planPointCounts = 0;
         for (int i = 0; i < size; i++) {
             BMKDrivingStep* transitStep = [plan.steps objectAtIndex:i];
+            
+            
             if(i==0){
                 RouteAnnotation* item = [[RouteAnnotation alloc]init];
                 item.coordinate = plan.starting.location;
-                item.title = @"招银大厦";
                 item.type = 0;
                 [_mapView addAnnotation:item]; // 添加起点标注
-                
-                
+                item.title=transitStep.instruction;
             }else if(i==size-1){
                 RouteAnnotation* item = [[RouteAnnotation alloc]init];
                 item.coordinate = plan.terminal.location;
-                item.title = @"不知道是哪里了";
                 item.type = 1;
                 [_mapView addAnnotation:item]; // 添加起点标注
-                
+                item.title=transitStep.instruction;
             }
             //添加annotation节点
             RouteAnnotation* item = [[RouteAnnotation alloc]init];
             item.coordinate = transitStep.entrace.location;
-            item.title = transitStep.entraceInstruction;
+            item.title = transitStep.instruction;
             item.degree = transitStep.direction * 30;
             item.type = 4;
             [_mapView addAnnotation:item];
-            
+            item.title=transitStep.entraceInstruction;
             //轨迹点总数累计
             planPointCounts += transitStep.pointsCount;
         }

@@ -10,4 +10,5 @@
 
 @interface ShouYeViewController : SuperViewController
 -(void)receiveOrder:(NSString *)orderId;
+-(void)reshDataIsQianged:(BOOL)isQiang;
 @end

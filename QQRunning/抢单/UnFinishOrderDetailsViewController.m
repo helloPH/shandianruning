@@ -897,12 +897,18 @@
 //导航或者返回首页
 -(void)daoHangButtonEvent:(UIButton *)button{
     //
-    orderDaoHangViewController * daohang = [orderDaoHangViewController new];
+    orderDaoHangViewController * daoHang = [orderDaoHangViewController new];
+    
+    daoHang.orderType=self.orderType;
+    
+    daoHang.startLatitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILat"]] doubleValue];
+    daoHang.startLongitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILng"]] doubleValue];
     
     
-    daohang.longitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILng"]] floatValue];
-    daohang.latitude=[[NSString stringWithFormat:@"%@",_dataDic[@"QILat"]] floatValue];
-    [self.navigationController pushViewController:daohang animated:YES];
+    daoHang.endLatitude=[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLat"]] doubleValue];
+    daoHang.endLongitude=[[NSString stringWithFormat:@"%@",_dataDic[@"ZhongLng"]] doubleValue];
+    
+    [self.navigationController pushViewController:daoHang animated:YES];
 
     
 }

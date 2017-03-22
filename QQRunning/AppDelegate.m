@@ -234,11 +234,14 @@
     
     
     NSLog(@"通知：：：%@",userInfo);
+    
+    if (!_shouYe) {
+        _shouYe = [ShouYeViewController new];
+    }
     if ([type isEqualToString:@"0"]) {// 抢订单
-        if (!_shouYe) {
-            _shouYe = [ShouYeViewController new];
+        if (_shouYe) {
+            [_shouYe  receiveOrder:orderId];
         }
-         [_shouYe  receiveOrder:orderId];
     }else if ([type isEqualToString:@"1"]){// 消息
         if (_shouYe) {
             MessageDetailsViewController * mess = [MessageDetailsViewController new];
@@ -274,11 +277,22 @@
     }else if ([type isEqualToString:@"6"]){// 培训签约成功
         if (_shouYe) {
             [_shouYe ShowOKAlertWithTitle:@"通知" Message:@"培训签约成功" WithButtonTitle:@"确定" Blcok:^{
-                
             }];
         }
+    }else if ([type isEqualToString:@"7"]){// 订单被取消
+        if (_shouYe) {
+            [_shouYe ShowOKAlertWithTitle:@"通知" Message:@"您的当前订单被取消！" WithButtonTitle:@"确定" Blcok:^{
+                [_shouYe reshDataIsQianged:YES];
+            }];
+        }
+    }else if ([type isEqualToString:@"10"]){// 全推  消息通知
+        if (_shouYe) {
+            MessageDetailsViewController * mess = [MessageDetailsViewController new];
+            mess.msgId=orderId;
+            [_shouYe.navigationController pushViewController:mess animated:YES];
+        }
     }else{
-        [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"未知类型的通知：\n%@",userInfo]];
+        [CoreSVP showMessageInCenterWithMessage:[NSString stringWithFormat:@"未知类型的通知%@",type]];
 
     }
 
@@ -287,7 +301,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [JPUSHService handleRemoteNotification:userInfo];
-    
+    [self receive:userInfo];
 
     // 取得 APNs 标准信息内容
     NSDictionary *aps = [userInfo valueForKey:@"aps"];
@@ -302,7 +316,7 @@
         
         
         //如果应用在前台，在这里执行
-        [self receive:userInfo];
+    
         
         NSString *strSoundFile;
         if ([[NSString stringWithFormat:@"%@",userInfo[@"type"]] isEqualToString:@"0"]) {
@@ -312,9 +326,9 @@
             AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:strSoundFile],&soundID);
             AudioServicesPlaySystemSound(soundID);
         }
-    
-
     }
+    
+   
    
     // iOS 7 Support Required,处理收到的APNS信息
     //如果应用在后台，在这里执行
@@ -419,7 +433,7 @@
     fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
         NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
     }];
-
+//    [self chongZhiBadge];
 }
 -(void)turnOffNotification{
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
