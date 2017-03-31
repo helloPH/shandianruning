@@ -84,7 +84,7 @@
                   moduleName = "QQRunning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/ShouYeViewController.m"
-                  timestampString = "511859034.530196"
+                  timestampString = "512273248.371856"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1036"
@@ -99,7 +99,7 @@
                   moduleName = "QQRunning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wdx/Desktop/%E9%A1%B9%E7%9B%AE/%E9%97%AA%E7%94%B5%E8%B7%91%E8%85%BF/shandianRun/QQRunning/%E6%8A%A2%E5%8D%95/ShouYeViewController.m"
-                  timestampString = "511859034.531618"
+                  timestampString = "512273248.374574"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1038"
@@ -107,22 +107,6 @@
                   offsetFromSymbolStart = "6">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRunning/AppDelegate.m"
-            timestampString = "511836711.886053"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
-            landmarkName = "-receive:"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -13,6 +13,8 @@
 #import "YanButton.h"
 #import "RegistXieYiViewController.h"
 #import "ShouYeViewController.h"
+#import "TextContentViewController.h"
+
 
 //#import "ZhuCeXieYiViewController.h"
 @interface RegisterViewController ()<UITextFieldDelegate>
@@ -332,11 +334,7 @@
 }
 -(void)xieYiButtonEvent:(UIButton *)button
 {
-    RegistXieYiViewController * xieyi=[RegistXieYiViewController new];
-    [self.navigationController pushViewController:xieyi animated:YES];
-    
-//    ZhuCeXieYiViewController *xieYiVC = [ZhuCeXieYiViewController new];
-//    [self.navigationController pushViewController:xieYiVC animated:YES];
+    [self.navigationController pushViewController:[TextContentViewController insWithTitle:@"注册协议" parameter:@"1" type:ContentTypeWeb] animated:YES];
 }
 -(void)chooseCityBtnEvent:(UIButton *)button
 {

@@ -50,7 +50,7 @@
             _contentText = [NSString stringWithFormat:@"%@",model[@"Text"]];
             [self reshView];
         }else{
-            
+            [CoreSVP showMessageInCenterWithMessage:msg];
         }
        
     }];

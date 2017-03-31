@@ -21,6 +21,8 @@
 #import "MyBankCardViewController.h"
 #import "CExpandHeader.h"
 #import "CellView.h"
+#import "TextContentViewController.h"
+
 @interface GeRenZhongXinViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSArray *titleArray;
@@ -475,9 +477,11 @@
         }
         case 3:
         {
-            //秋秋课堂
-            QQClassViewContoller *qqClassVC = [QQClassViewContoller new];
-            [self.navigationController pushViewController:qqClassVC animated:YES];
+            //闪电课堂
+//            QQClassViewContoller *qqClassVC = [QQClassViewContoller new];
+//            [self.navigationController pushViewController:qqClassVC animated:YES];
+            
+            [self.navigationController pushViewController:[TextContentViewController insWithTitle:@"闪课堂电" parameter:@"8" type:ContentTypeWeb] animated:YES];
             break;
         }
         case 4:

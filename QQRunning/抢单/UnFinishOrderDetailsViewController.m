@@ -291,7 +291,7 @@
     if (self.orderType == OrderTypeBuy || self.orderType == OrderTypeTake || self.orderType == OrderTypeBring) {
         if (_isQu) {/// 已经取过
             contentTextBefor=@"请在";
-            contentText=@"分钟内到达收货地点";
+            contentText=@"分钟内完成订单";
         }else{
             contentTextBefor=@"请在";
             contentText=@"分钟内到达取货地点";
@@ -660,7 +660,7 @@
     
     peiSongZhongTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.titleLabel.text = self.titleArray[indexPath.row];
-    cell.leftStepLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row + 1] ;
+    cell.leftStepLabel.text = [NSString stringWithFormat:@"%d",indexPath.row + 1] ;
     cell.stepLabel.text = self.stepArray[indexPath.row];
     cell.contentLabel.text = self.contentArray[indexPath.row];
     [cell.statusButton setTitle:_statusButtonTitleArray[indexPath.row] forState:UIControlStateNormal];

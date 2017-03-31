@@ -321,10 +321,12 @@
     
     NSString * addPrice = [[NSString stringWithFormat:@"%@",_dataDic[@"AddMoney"]] getValiedString];
     if (orderTypeIndex==0 || orderTypeIndex==1 || orderTypeIndex==2 || orderTypeIndex==3) {  /// 买送取
-       xingCheng = [[NSString stringWithFormat:@"%@",_dataDic[@"SongJuLi"]] getValiedString];
+       xingCheng = [[NSString stringWithFormat:@"%@",_dataDic[@"SongJuLi"]] isEmptyString]?@"0":[NSString stringWithFormat:@"%@",_dataDic[@"SongJuLi"]];
     }else{
-       xingCheng = [[NSString stringWithFormat:@"%@",_dataDic[@"QuJuLi"]] getValiedString];
+       xingCheng = [[NSString stringWithFormat:@"%@",_dataDic[@"QuJuLi"]] isEmptyString]?@"0":[NSString stringWithFormat:@"%@",_dataDic[@"QuJuLi"]];
     }
+    xingCheng =[NSString stringWithFormat:@"%.2f",[xingCheng floatValue]];
+    
     if (orderTypeIndex==OrderTypeHelp || orderTypeIndex==OrderTypeQueueUp) {
         startImageView.image=[UIImage imageNamed:@"sy_paiduixinxi"];
         endImageView.image=[UIImage imageNamed:@"sy_paiduishichang"];
